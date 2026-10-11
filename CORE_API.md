@@ -1,6 +1,6 @@
 # Shared Core API 1 · 0.1.0.dev4
 
-Community remains an independent local candidate, not a remote public release. Professional now consumes this pinned package; it does not carry a second copy of baseline equations.
+Community is an independent MIT development prerelease published to the approved GitHub/Gitee repositories. Professional now consumes this pinned package; it does not carry a second copy of baseline equations.
 
 Canonical shared modules: properties, thermal, geometry, geometry_performance, wang_plain_fin, water/refrigerant lumped models, inverse, storage, units and common schema boundary/solver/mass-flow-target validation. Professional compatibility files re-export canonical functions, and its water/refrigerant adapters route engineering models privately.
 

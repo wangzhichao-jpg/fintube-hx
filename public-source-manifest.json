@@ -18,11 +18,11 @@
     },
     {
       "path": "CONTRIBUTING.md",
-      "sha256": "999d838e22c1d438fef8e1ebacc87f55f4c15709fef897495377da3c8e644d84"
+      "sha256": "38bc24efb2855b42e67e0e7fa40f4b4946edea38f1e7a478472da7c2306a362e"
     },
     {
       "path": "CORE_API.md",
-      "sha256": "a6eb7b7c94f1ccc6b65b7da97c0fd6680173bf08d1bcb7941051ffce1a307bf6"
+      "sha256": "e5777b67ab9d1641386041a9c0429e3410f73e25a018859cac3d210bb6e7cc27"
     },
     {
       "path": "examples/condenser.json",
@@ -78,7 +78,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "09a591b2fd20f6081425e0699418532b6b189536d9a76f1f1a2dc7f6d28628d1"
+      "sha256": "4eb0f62f1745965ad70d3e94e1b21c0e06f33cc33610090bf84ba874c2b3fb91"
     },
     {
       "path": "references/python-hvac/condenser.json",
@@ -118,7 +118,7 @@
     },
     {
       "path": "RELEASE_CHECKLIST.md",
-      "sha256": "7950ec8c9afd07a437ac0307a124a78c3a783ff8ff11857f52013581532b2085"
+      "sha256": "b469d31a9bd461f17dc9b0b6713c3fd1f42b2ce384486fe145819985e6922418"
     },
     {
       "path": "requirements-development-lock.txt",

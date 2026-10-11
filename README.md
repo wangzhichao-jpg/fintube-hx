@@ -1,6 +1,6 @@
 # Fintube HX Community
 
-翅片管换热器社区版，当前0.1.0.dev4开发候选，**尚未公开发布**。批准范围是基础模型开放；逐管网络和工程增强首发保留专业版。此目录不依赖专业版代码，也不包含旧完整发行包或客户材料。
+翅片管换热器社区版，当前0.1.0.dev4开发预发行，**已在GitHub和Gitee公开，原创代码采用MIT**。批准范围是基础模型开放；逐管网络和工程增强首发保留专业版。此目录不依赖专业版代码，也不包含旧完整发行包或客户材料。
 
 ## 当前实际能力
 
@@ -30,4 +30,4 @@ uv pip install --python .venv\Scripts\python.exe --index-url https://pypi.tuna.t
 
 ## 授权和发布状态
 
-所有者已明确原创公共代码采用MIT，见LICENSE；许可不等于产品精度或制造保证。第三方许可/署名独立保留。本次目标为公开仓库 https://github.com/wangzhichao-jpg/fintube-hx 和 https://gitee.com/bigtaurus/fintube-hx；远程实际发布结果另行记录，不把目标URL当作已经上线。首发检查见RELEASE_CHECKLIST.md，参与开发见CONTRIBUTING.md。Professional现已安装并复用本核心；基础物性/热模型/几何/反求/单位与合同不再双份维护。API及私有扩展方向见CORE_API.md，允许清单/边界见PORTING.md及实施计划。
+所有者已明确原创公共代码采用MIT，见LICENSE；许可不等于产品精度或制造保证。第三方许可/署名独立保留。本次目标为公开仓库 https://github.com/wangzhichao-jpg/fintube-hx 和 https://gitee.com/bigtaurus/fintube-hx；两端已完成公开、同提交/同标签、无需凭据克隆及源码SHA核对；GitHub的Ubuntu/Windows CI均实际通过。Gitee不假定执行GitHub Actions或自动镜像。预发行不是完整工程产品或实测精度验收。首发检查见RELEASE_CHECKLIST.md，参与开发见CONTRIBUTING.md。Professional现已安装并复用本核心；基础物性/热模型/几何/反求/单位与合同不再双份维护。API及私有扩展方向见CORE_API.md，允许清单/边界见PORTING.md及实施计划。
