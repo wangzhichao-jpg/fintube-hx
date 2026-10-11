@@ -1,0 +1,30 @@
+{
+  "schema_version": "0.1",
+  "name": "community-water_wet",
+  "kind": "water",
+  "air": {
+    "t_db_c": 27.0,
+    "relative_humidity": 0.5,
+    "pressure_pa": 101325.0,
+    "volume_flow_m3_h": 1000.0
+  },
+  "fluid": {
+    "name": "Water",
+    "pressure_pa": 300000.0,
+    "inlet_t_c": 7.0,
+    "mass_flow_kg_s": 0.2
+  },
+  "model": {
+    "ua_w_k": 400.0,
+    "segments": 20,
+    "air_arrangement": "counterflow"
+  },
+  "solver": {
+    "max_iterations": 150,
+    "tolerance_k": 0.0001
+  },
+  "metadata": {
+    "source_kind": "synthetic_diagnostic",
+    "source": "Synthetic wet-contact diagnostic case, no experimental precision claim."
+  }
+}

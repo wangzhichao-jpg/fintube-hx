@@ -1,0 +1,85 @@
+{
+  "kind": "evaporator",
+  "status": "completed",
+  "source_commit": "94247560a667905bfbf67e45a58965a58254fce8",
+  "notebook": "docs/examples/vapor_compression/ex02_air_evaporator.ipynb",
+  "notebook_sha256": "4275ce10e8f2b62199924d27cb1033ab309bff07e17caa131a115405fb761ef5",
+  "executed_cells": [
+    2,
+    4,
+    7,
+    9,
+    13,
+    15,
+    17
+  ],
+  "evidence_kind": "software_reference_not_measured",
+  "notebook_inputs_modified": false,
+  "dependency_versions": {
+    "python-hvac": "0.1.3",
+    "CoolProp": "8.0.0",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "pint": "0.26.1"
+  },
+  "python": "3.12.13",
+  "notebook_saved_rounded_outputs": {
+    "heat_transfer_w": 5915.0,
+    "air_out_t_c": 13.1,
+    "fluid_mass_flow_kg_h": 142.096,
+    "air_pressure_drop_pa": 46.0
+  },
+  "warning_policy": "unchanged upstream cells suppress CoolPropWarning",
+  "computed": {
+    "heat_transfer_w": 5914.856429505656,
+    "air_out_t_c": 13.123713096034749,
+    "air_out_relative_humidity": 0.8619553823193502,
+    "air_out_h_j_kg": 33715.53142590889,
+    "air_out_w_kg_kg": 0.008127792886760181,
+    "fluid_out_t_c": 20.000000000000114,
+    "fluid_out_h_j_kg": 413668.9967824865,
+    "fluid_mass_flow_kg_h": 142.09633882873328,
+    "air_pressure_drop_pa": 45.89728625807997,
+    "superheat_k": 10.0,
+    "fluid_pressure_drop_pa": null,
+    "fluid_pressure_drop_scope": "upstream constant-pressure model; not a computed zero"
+  },
+  "normalized_boundaries": {
+    "air_t_c": 24.0,
+    "air_relative_humidity": 0.5,
+    "air_pressure_pa": 101325.0,
+    "air_dry_mass_flow_kg_s": 0.4166666666666667,
+    "air_actual_volume_flow_m3_h": 1281.1702504797606,
+    "fluid_in_t_c": 10.000000000000114,
+    "fluid_in_pressure_pa": 414607.4673626597,
+    "fluid_in_h_j_kg": 263896.71261525375,
+    "fluid_mass_flow_kg_s": 0.03947120523020369
+  },
+  "geometry": {
+    "face_width_m": 0.731,
+    "face_height_m": 0.244,
+    "rows": 6.0,
+    "transverse_pitch_m": 0.0254,
+    "longitudinal_pitch_m": 0.022,
+    "tube_od_m": 0.010199999999999999,
+    "tube_id_m": 0.008422,
+    "fin_thickness_m": 0.0003302,
+    "fin_pitch_m": 0.003175,
+    "fin_conductivity_w_m_k": 237.0,
+    "effective_total_tubes": 55.13779527559056,
+    "effective_tubes_first_row": 9.606299212598426,
+    "tube_inventory_scope": "upstream continuous staggered-bank effective tube count, not an explicit integer tube network"
+  },
+  "energy_diagnostics": {
+    "fluid_enthalpy_power_magnitude_w": 5911.69256616123,
+    "air_enthalpy_power_magnitude_w": 5914.029281537332
+  },
+  "differences_from_saved_rounding": {
+    "heat_transfer_w": -0.14357049434420333,
+    "air_out_t_c": 0.023713096034748915,
+    "fluid_mass_flow_kg_h": 0.0003388287332768414,
+    "air_pressure_drop_pa": -0.10271374192002725
+  },
+  "elapsed_s": 51.75,
+  "source_url": "https://github.com/TomLXXVI/python-hvac/blob/94247560a667905bfbf67e45a58965a58254fce8/docs/examples/vapor_compression/ex02_air_evaporator.ipynb"
+}

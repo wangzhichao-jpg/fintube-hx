@@ -1,0 +1,38 @@
+{
+  "schema_version": "0.1",
+  "name": "community-condenser_target",
+  "kind": "condenser",
+  "air": {
+    "t_db_c": 35.0,
+    "relative_humidity": 0.4,
+    "pressure_pa": 101325.0,
+    "volume_flow_m3_h": 2000.0
+  },
+  "fluid": {
+    "name": "R134a",
+    "pressure_pa": 1159924.238342344,
+    "inlet_t_c": 80.0,
+    "mass_flow_kg_s": 0.025
+  },
+  "model": {
+    "ua_w_k": 400.0,
+    "segments": 20,
+    "air_arrangement": "counterflow"
+  },
+  "solver": {
+    "max_iterations": 150,
+    "tolerance_k": 0.0001
+  },
+  "metadata": {
+    "source_kind": "synthetic_diagnostic",
+    "source": "Synthetic R134a condenser with saturation at 45 C, NOT measured product product data."
+  },
+  "target": {
+    "subcooling_k": 5.0,
+    "mass_flow_bounds_kg_s": [
+      0.003,
+      0.08
+    ],
+    "tolerance_k": 0.002
+  }
+}

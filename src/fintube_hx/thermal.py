@@ -1,0 +1,58 @@
+"""Air-side contact approximation, with condensate enthalpy relative to 0 C."""
+from __future__ import annotations
+from scipy.optimize import brentq
+from .properties import air_state, air_from_h_w
+
+LIQUID_WATER_CP = 4180.0  # J/kg/K; disclosed prototype condensate approximation
+
+
+def air_with_h_w(h: float, w: float, p: float) -> dict:
+    """Resolve a supersaturated mixture onto saturation at constant enthalpy.
+
+    This is a disclosed equilibrium-fog approximation, not a wet-fin correlation.
+    """
+    try:
+        return air_from_h_w(h, w, p)
+    except ValueError:
+        from CoolProp.CoolProp import PropsSI
+        # Stay below the boiling point and humid-air mole-fraction validity limit.
+        upper_t = min(80.0, PropsSI("T", "P", p * 0.5, "Q", 0, "Water") - 273.15)
+        t = brentq(lambda tc: air_state(tc, 1.0, p)["enthalpy_j_kg_da"] - h, -40, upper_t)
+        saturated = air_state(t, 1.0, p)
+        if saturated["humidity_ratio_kg_kg_da"] > w + 1e-8:
+            raise ValueError("Unable to create physically admissible air outlet")
+        return saturated
+
+
+def contact_air(air_in: dict, surface_t_c: float, fraction: float, m_da: float,
+                wet: bool | None = None, outlet_state: bool = True) -> tuple[dict, float, float]:
+    """Interpolate towards a cold saturated surface or dry sensible surface.
+
+    Return outlet, positive heat from air to fluid, condensate mass rate.
+    Condensate is assumed to drain at surface temperature and carry cp*T.
+    """
+    fraction = min(1.0, max(0.0, fraction))
+    p = air_in["pressure_pa"]
+    w_in, h_in = air_in["humidity_ratio_kg_kg_da"], air_in["enthalpy_j_kg_da"]
+    if wet is None:
+        wet = surface_t_c < air_in["dew_point_c"]
+    if wet and surface_t_c >= air_in["dew_point_c"]:
+        raise ValueError("Wet contact requested above the air dew point")
+    if wet:
+        surface = air_state(surface_t_c, 1.0, p)
+        w = w_in + fraction * (surface["humidity_ratio_kg_kg_da"] - w_in)
+        h = h_in + fraction * (surface["enthalpy_j_kg_da"] - h_in)
+        out = dict(surface) if fraction == 1.0 else air_with_h_w(h, w, p)
+        condensate = max(0.0, m_da * (w_in - out["humidity_ratio_kg_kg_da"]))
+        q = m_da * (h_in - out["enthalpy_j_kg_da"]) - condensate * LIQUID_WATER_CP * surface_t_c
+    else:
+        # Sensible exchange uses humid-air enthalpy at fixed humidity ratio.
+        from CoolProp.HumidAirProp import HAPropsSI
+        h_surface = HAPropsSI("H", "T", surface_t_c + 273.15, "W", w_in, "P", p)
+        h_out = h_in + fraction * (h_surface - h_in)
+        if not outlet_state:
+            # Identical heat; skips the outlet-state flash for root-finding residuals.
+            return None, m_da * (h_in - h_out), 0.0
+        out = air_from_h_w(h_out, w_in, p)
+        q, condensate = m_da * (h_in - out["enthalpy_j_kg_da"]), 0.0
+    return out, q, condensate

@@ -1,0 +1,97 @@
+{
+  "source_commit": "94247560a667905bfbf67e45a58965a58254fce8",
+  "comparison_class": "whole_coil_approximate_geometry_software_comparison",
+  "exact_geometry_parity": false,
+  "ua_fitted": false,
+  "measured_validation": false,
+  "shared_expression_and_property_dependency": [
+    "Wang j/f MIT expressions",
+    "CoolProp 8.0.0"
+  ],
+  "reference_geometry": {
+    "face_width_m": 0.9,
+    "face_height_m": 0.18,
+    "rows": 3.0,
+    "transverse_pitch_m": 0.0254,
+    "longitudinal_pitch_m": 0.022,
+    "tube_od_m": 0.010199999999999999,
+    "tube_id_m": 0.008422,
+    "fin_thickness_m": 0.0003302,
+    "fin_pitch_m": 0.003175,
+    "fin_conductivity_w_m_k": 237.0,
+    "effective_total_tubes": 20.25984251968504,
+    "effective_tubes_first_row": 7.086614173228346,
+    "tube_inventory_scope": "upstream continuous staggered-bank effective tube count, not an explicit integer tube network"
+  },
+  "community_geometry_metrics": {
+    "tube_count": 21,
+    "tubes_per_circuit": 3,
+    "equivalent_fin_count": 283.46456692913387,
+    "width_m": 0.9,
+    "height_m": 0.17779999999999999,
+    "air_depth_m": 0.066,
+    "frontal_area_m2": 0.16002,
+    "minimum_air_area_m2": 0.08207313408,
+    "free_area_ratio": 0.5128929763779527,
+    "collar_diameter_m": 0.0108604,
+    "air_hydraulic_diameter_m": 0.0035098192385660944,
+    "fin_area_m2": 5.595555975969557,
+    "bare_outer_area_m2": 0.577783995228501,
+    "total_outer_area_m2": 6.173339971198057,
+    "inner_area_m2": 0.5000655239092782,
+    "tube_path_length_m": 2.7,
+    "equivalent_annular_fin_outer_diameter_m": 0.026673699735844835
+  },
+  "mapping": {
+    "first_row_effective_to_integer": [
+      7.086614173228346,
+      7
+    ],
+    "face_height_m": [
+      0.18,
+      0.17779999999999999
+    ],
+    "tube_inventory": [
+      20.25984251968504,
+      21
+    ],
+    "collar_diameter_m": [
+      0.010199999999999999,
+      0.0108604
+    ],
+    "circuits": [
+      7.086614173228346,
+      7
+    ]
+  },
+  "physics_differences": [
+    "reference continuous staggered tube count vs equal integer tube rows",
+    "reference collar defaults to OD; Community OD+2 fin thickness",
+    "reference ignores wall conduction; Community includes tube-wall resistance with stated conductivity",
+    "different fin efficiency and internal convection/pressure corrections",
+    "different overall wet/segmented contact treatment and mean-property iteration",
+    "air/water pressure scopes differ; pressure numbers are not total-loss parity"
+  ],
+  "reference": {
+    "heat_transfer_w": 4084.459027282266,
+    "air_out_t_c": 15.916279381061429,
+    "air_out_relative_humidity": 0.8034206226469486,
+    "air_out_h_j_kg": 39000.92696051464,
+    "air_out_w_kg_kg": 0.009090093714624898,
+    "fluid_out_t_c": 11.107887174514019,
+    "fluid_out_h_j_kg": 46860.76837824627,
+    "fluid_mass_flow_kg_h": 852.979219449025,
+    "air_pressure_drop_pa": 13.048202610119754,
+    "fluid_pressure_drop_pa": 774.8123926938945,
+    "surface_condition": "wet",
+    "ua_w_k": 270.8460023548798
+  },
+  "community_summary": {
+    "heat_transfer_w": 4363.485371587488,
+    "fluid_out_t_c": 11.388722178944306,
+    "air_out_t_c": 16.772396859074377,
+    "air_out_relative_humidity": 0.6967986759441924
+  },
+  "capacity_difference_w": 279.02634430522176,
+  "capacity_difference_fraction": 0.06831414942381775
+}

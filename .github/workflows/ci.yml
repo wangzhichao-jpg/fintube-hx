@@ -1,0 +1,30 @@
+name: Community checks
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  community:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned dependencies (TLS enabled)
+        run: python -m pip install --index-url https://pypi.tuna.tsinghua.edu.cn/simple -c requirements-development-lock.txt ".[test]"
+      - name: Source regression
+        run: python -m pytest -q --junitxml=community-tests.xml
+      - name: Build wheel
+        run: python -m pip wheel --index-url https://pypi.tuna.tsinghua.edu.cn/simple --no-deps . --wheel-dir dist
+      - name: API and declared capabilities
+        run: python -m fintube_hx capabilities
+      - name: Artifact (not a PyPI or remote release publication)
+        uses: actions/upload-artifact@v4
+        with:
+          name: community-checks-${{ matrix.os }}
+          path: |
+            community-tests.xml
+            dist/*.whl
