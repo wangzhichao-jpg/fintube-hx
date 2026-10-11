@@ -1,0 +1,51 @@
+{
+  "condenser.json": {
+    "heat_transfer_w": 3652.6512918906274,
+    "fluid_out_t_c": 45.0,
+    "source_kind": "historical_synthetic_or_analytical_software_regression_not_independent_measurement"
+  },
+  "condenser_target.json": {
+    "heat_transfer_w": 3426.189148325731,
+    "fluid_out_t_c": 39.99999903480091,
+    "source_kind": "historical_synthetic_or_analytical_software_regression_not_independent_measurement",
+    "mass_flow_kg_s": 0.016816563204675717
+  },
+  "evaporator.json": {
+    "heat_transfer_w": 3264.4169942408084,
+    "fluid_out_t_c": 26.999989999994966,
+    "source_kind": "historical_synthetic_or_analytical_software_regression_not_independent_measurement"
+  },
+  "evaporator_target.json": {
+    "heat_transfer_w": 7391.441271126498,
+    "fluid_out_t_c": 11.999998651569285,
+    "source_kind": "historical_synthetic_or_analytical_software_regression_not_independent_measurement",
+    "mass_flow_kg_s": 0.049443419258068666
+  },
+  "water_dry.json": {
+    "heat_transfer_w": 4229.672426202915,
+    "fluid_out_t_c": 12.040934283203967,
+    "source_kind": "historical_synthetic_or_analytical_software_regression_not_independent_measurement"
+  },
+  "water_geometry.json": {
+    "heat_transfer_w": 3910.523678160323,
+    "fluid_out_t_c": 11.660237627175206,
+    "source_kind": "historical_synthetic_or_analytical_software_regression_not_independent_measurement"
+  },
+  "water_geometry_target.json": {
+    "heat_transfer_w": 3839.659259319122,
+    "fluid_out_t_c": 11.99998353499251,
+    "source_kind": "historical_synthetic_or_analytical_software_regression_not_independent_measurement",
+    "mass_flow_kg_s": 0.18304382635949595
+  },
+  "water_target.json": {
+    "heat_transfer_w": 4233.299631669155,
+    "fluid_out_t_c": 12.000000085679972,
+    "source_kind": "historical_synthetic_or_analytical_software_regression_not_independent_measurement",
+    "mass_flow_kg_s": 0.2018087407805983
+  },
+  "water_wet.json": {
+    "heat_transfer_w": 6375.842585503415,
+    "fluid_out_t_c": 14.602153977942294,
+    "source_kind": "historical_synthetic_or_analytical_software_regression_not_independent_measurement"
+  }
+}

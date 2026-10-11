@@ -1,0 +1,1681 @@
+{
+  "commit": "94247560a667905bfbf67e45a58965a58254fce8",
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha": "1e09611b0d3fff65842411da627d27c18ed832e8"
+    },
+    {
+      "path": "LICENSE.md",
+      "sha": "e95ed4efe0d7b8e5b67e045e9a2aaf15cad28c9d"
+    },
+    {
+      "path": "README.md",
+      "sha": "dff360ad618881030910f0afa1371e1c98567fd7"
+    },
+    {
+      "path": "dist/python_hvac-0.1.0-py3-none-any.whl",
+      "sha": "73d0a6f63fb9a29b19a24db071cd1935d0535e93"
+    },
+    {
+      "path": "dist/python_hvac-0.1.0.tar.gz",
+      "sha": "48a825c7bd8c18a98faba3826479ba068a8a89fa"
+    },
+    {
+      "path": "dist/python_hvac-0.1.1-py3-none-any.whl",
+      "sha": "ec5efb5e5bc5e1eab5b559a124603086ad86fa0e"
+    },
+    {
+      "path": "dist/python_hvac-0.1.1.tar.gz",
+      "sha": "d8b149712ef6ab577f9a6ac379dc43ceaf0e3273"
+    },
+    {
+      "path": "dist/python_hvac-0.1.2-py3-none-any.whl",
+      "sha": "9d194010b1e06a5de0d448a4889a2c209aa16af2"
+    },
+    {
+      "path": "dist/python_hvac-0.1.2.tar.gz",
+      "sha": "3dc414e65dac40cfc2744dbae2cbc0201a8caba0"
+    },
+    {
+      "path": "dist/python_hvac-0.1.3-py3-none-any.whl",
+      "sha": "04f9453ce1231801b0cfdb3766ba52b1c1d43cae"
+    },
+    {
+      "path": "dist/python_hvac-0.1.3.tar.gz",
+      "sha": "31df91e3626d3ff44b5250f553d0864bf808a100"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_01/airco_proc_01.ipynb",
+      "sha": "ad1223f451bcfdaede60a54c9ce6b0782f965cdb"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_01/airco_proc_02.ipynb",
+      "sha": "d8606697ec1eaa661e45245c5cc2b91bd551c2c2"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_01/charts/psych_chart.pickle",
+      "sha": "1fc67ed21c88dcf775a87b6bee2b1ad438ac828d"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_01/images/airco_cav.png",
+      "sha": "41f79efbe046f014736db190be70ef0cab34197f"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_01/images/airco_vav.png",
+      "sha": "ff082a82cf3ad0d39ee305887e80a7aa338808e2"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_01/images/cooling_ventilation_bypass.png",
+      "sha": "b061daf5878bc98990cbe69a0d380f211112afdc"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_01/images/cooling_with_reheat.png",
+      "sha": "91061323fd4523975a71a8fcd928b5ae36c872c8"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_01/images/heating_and_humidification.png",
+      "sha": "6d071d64f1ad16b967e0706340807bd220107373"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_02/charts/psych_chart.pickle",
+      "sha": "b7a84aca7bdedf6bb9bb4fd0c49b7fd5c2766ea4"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_02/cooling_coil_load.py",
+      "sha": "3d177a0cc2b8474183f3badc59e7e69b8258bc6f"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_03/air_cooler_selection.py",
+      "sha": "15e9e28acdb0eab2530c17f7acfff97513b3e31a"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_04/economizer.ipynb",
+      "sha": "e5663d0a92ec98ebe12108d23eac19cc1670b04d"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_05/building_model.py",
+      "sha": "f4cabe5a37d1990e352614cbf7c48b2b1f7bcf94"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_05/charts/chart_00.png",
+      "sha": "fd2c80255d4c94ad39c5e5c8e103bac990852ed7"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_05/charts/chart_01.png",
+      "sha": "722580a29514ce33634843e317e1446a1b27f394"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_05/charts/chart_02.png",
+      "sha": "1c6fecfee9819548235c2f091150f261e92e2f62"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_05/charts/chart_03.png",
+      "sha": "4f625b4f4e5fec9364678b8d188f0a6a774bb859"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_05/charts/chart_04.png",
+      "sha": "90c57a0a2d8c13266c6d53a408464656fbcf28a0"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_05/charts/chart_05.png",
+      "sha": "cff8b6a07bb334a3ae2055bedc21b61014c2e96c"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_05/charts/chart_06.png",
+      "sha": "ec7477bf3448e89d7d339cf1f068a74d89fddf5f"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_05/charts/psych_chart.pickle",
+      "sha": "f009654a71757cec3dd05bd3c196533ab9e597b9"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_05/data/data.pickle",
+      "sha": "5077e3486055523b04b4fc3a3cb0770f5c341099"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_05/part_load_operation.py",
+      "sha": "6c9701d59faef326fc1e9376b3329e4ad5e9fbad"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_05/tmy_gent_2005_2020.csv",
+      "sha": "434f95c504dc0088fd1d8435d873936bb8d48080"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_06/charts/psych_chart.pickle",
+      "sha": "80eed78afffa70073d6c0723aa9fe23be983e7b9"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_06/single_zone_winter_peak_design.py",
+      "sha": "f354d20c0a4ab07ccaa66040135bce66915d1204"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_07/charts/psych_chart.pickle",
+      "sha": "5681ca7eb561bad55959448caf4ac5e52fbce659"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_07/sim.log",
+      "sha": "bd093c8a4106e6d55de332fdde3ece4129b8f67b"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_07/sim_sorted.log",
+      "sha": "1cedf171855156cf2e0146fc082c99305ced6f2f"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_07/tmy_gent_2005_2020.csv",
+      "sha": "434f95c504dc0088fd1d8435d873936bb8d48080"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_07/vav_heating_part_load.py",
+      "sha": "064da9dbf73c4a50dc0413894a24ddba40702754"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_08/charts/psych_chart.pickle",
+      "sha": "fdf111fe87002226ac902c69b97a49d00b029d27"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_08/images/airco_vav.png",
+      "sha": "ff082a82cf3ad0d39ee305887e80a7aa338808e2"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_08/notebook_styling/__init__.py",
+      "sha": "76d3d604746f2ed29a16489d9222d85fbd85873c"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_08/notebook_styling/my_styles.css",
+      "sha": "f4ad37a185e7609b89f42ce7c67ca42ef7639d57"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_08/vav_multizone_design_01.ipynb",
+      "sha": "6544b3b52f575983a040c8ce018f3555ff20b71e"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_08/vav_multizone_design_02.ipynb",
+      "sha": "1119798d2ffc5c907b46f929b1221944ea7e1fe4"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_09/cooling_coil_sizing.ipynb",
+      "sha": "18b5d6b243933bfe0018673a5cd78fb7d58afa30"
+    },
+    {
+      "path": "docs/examples/air_conditioning/example_10/multizone_vav_part_load.py",
+      "sha": "7529cec9d07d75dacfcb9fbb472ab9088bd003b8"
+    },
+    {
+      "path": "docs/examples/air_cooling_coil/air_cooling_coil_01.ipynb",
+      "sha": "39e2d397efb405e71a10120eaebf52f759c71065"
+    },
+    {
+      "path": "docs/examples/air_cooling_coil/air_cooling_coil_02.ipynb",
+      "sha": "fbe274c0e738594e27ad875f653fb590db911017"
+    },
+    {
+      "path": "docs/examples/air_cooling_coil/air_cooling_coil_03.py",
+      "sha": "08628bf3487538664856dd217d0653749a9ae287"
+    },
+    {
+      "path": "docs/examples/air_cooling_coil/air_cooling_coil_04.py",
+      "sha": "9b7daa45e02dd9a42923beb5217c2bcdb957d5e1"
+    },
+    {
+      "path": "docs/examples/air_cooling_coil/charts/psych_chart.pickle",
+      "sha": "06d8c9ef7f7d915108a49bb47a4cd396bc0ca21d"
+    },
+    {
+      "path": "docs/examples/air_diffusion/script_01.py",
+      "sha": "fa5cedd15989946cfefa6a6b488f1f463c104faf"
+    },
+    {
+      "path": "docs/examples/air_diffusion/script_02a.py",
+      "sha": "d692c4a421836eeb17341b815c9b1cae03f0222c"
+    },
+    {
+      "path": "docs/examples/air_diffusion/script_02b.py",
+      "sha": "89ea185debdaadcbd7ded7be8b752fcf13570fda"
+    },
+    {
+      "path": "docs/examples/air_diffusion/script_02c.py",
+      "sha": "3ec9275a8860be7b799299d5ba03084843fb957b"
+    },
+    {
+      "path": "docs/examples/air_diffusion/script_03.py",
+      "sha": "d28c64bb46f8a96b25fb7901b848e2b44e4830bc"
+    },
+    {
+      "path": "docs/examples/air_diffusion/script_04.py",
+      "sha": "d0a83290d9507284cce32bc46d416ffb0d367a79"
+    },
+    {
+      "path": "docs/examples/air_diffusion/script_05.py",
+      "sha": "bd0f495e154f2ad4538647c0f6f7d3c3d7eec223"
+    },
+    {
+      "path": "docs/examples/air_diffusion/sidewall_supply_analysis.ipynb",
+      "sha": "a066f9fca1281f9cf1c9cdf96406cda080388974"
+    },
+    {
+      "path": "docs/examples/air_diffusion/sidewall_supply_design.ipynb",
+      "sha": "e54486b3aca477f83445803e60f49d427f8ea709"
+    },
+    {
+      "path": "docs/examples/air_diffusion/sidewall_supply_plotter.py",
+      "sha": "518189ecbfae2e44b2e94f6eb1630233d1186fed"
+    },
+    {
+      "path": "docs/examples/cooling_load_calc/01_construction_assembly.ipynb",
+      "sha": "fbe55092bbb4309f4febd39ac32e1902a5ebae4e"
+    },
+    {
+      "path": "docs/examples/cooling_load_calc/02_exterior_building_elem.ipynb",
+      "sha": "df3b0da841cd26b7f2354d78a9001ef42937bd92"
+    },
+    {
+      "path": "docs/examples/cooling_load_calc/03_windows.ipynb",
+      "sha": "72cb77501a24c522497c07c1b55c43ef00d9bdea"
+    },
+    {
+      "path": "docs/examples/cooling_load_calc/04_internal_heat_gains.ipynb",
+      "sha": "b4fafa2c245904febda24be86004b1d719d8e6b7"
+    },
+    {
+      "path": "docs/examples/cooling_load_calc/05_thermal_zone.ipynb",
+      "sha": "2b2986da782f8757fcdaaf4bc8176b08c65f9d1c"
+    },
+    {
+      "path": "docs/examples/cooling_load_calc/06_thermal_zone_sim1.ipynb",
+      "sha": "73e8d677956fb60afbc376d2835cffce6e7b2388"
+    },
+    {
+      "path": "docs/examples/cooling_load_calc/07_thermal_zone_sim2.ipynb",
+      "sha": "e66a79f81878aec9177842d40f78e6d94a20a229"
+    },
+    {
+      "path": "docs/examples/cooling_load_calc/construction_shelf/assemblies.bak",
+      "sha": "a728d3f909662c9596b25e3cf80423d96cee6d4b"
+    },
+    {
+      "path": "docs/examples/cooling_load_calc/construction_shelf/assemblies.dat",
+      "sha": "258ecb87ab050400eb13665978f0c27cdc5efd61"
+    },
+    {
+      "path": "docs/examples/cooling_load_calc/construction_shelf/assemblies.dir",
+      "sha": "a728d3f909662c9596b25e3cf80423d96cee6d4b"
+    },
+    {
+      "path": "docs/examples/cooling_load_calc/static/feedback-system-scheme.pdf",
+      "sha": "0bf72b361cf43f78755e582783cd711c4f6b5085"
+    },
+    {
+      "path": "docs/examples/cooling_load_calc/static/feedback-system-scheme.png",
+      "sha": "706871abaa4724e26298d3bc405253937f62a112"
+    },
+    {
+      "path": "docs/examples/cooling_load_calc/thermal_zone_example.py",
+      "sha": "93fb0b311a930b07b24e7e561a5d70d32e37e16a"
+    },
+    {
+      "path": "docs/examples/cooling_load_calc/tmy_data/tmy_50.911_3.192_2005_2020.csv",
+      "sha": "dbea8e66356e85e0174f0ca68067e35364c54d03"
+    },
+    {
+      "path": "docs/examples/cooling_load_calc/window_shelf/windows.bak",
+      "sha": "61f939da2b217470df3bd1385eab07f9626fc15d"
+    },
+    {
+      "path": "docs/examples/cooling_load_calc/window_shelf/windows.dat",
+      "sha": "af6ddd420ecbf2012cd6cb2850b0547e2a6c929e"
+    },
+    {
+      "path": "docs/examples/cooling_load_calc/window_shelf/windows.dir",
+      "sha": "61f939da2b217470df3bd1385eab07f9626fc15d"
+    },
+    {
+      "path": "docs/examples/energy_estimation/example_01.py",
+      "sha": "ea2a320f74f8594831b89dcaae3f201661168654"
+    },
+    {
+      "path": "docs/examples/energy_estimation/example_02.ipynb",
+      "sha": "bfe1216d57e804e3216c2806e3c908a1461d1819"
+    },
+    {
+      "path": "docs/examples/energy_estimation/hp_atlantic_alfea_extensa_AI5_W35.csv",
+      "sha": "73f80dc34d09d637d28cb336cb01135ea1eef4c7"
+    },
+    {
+      "path": "docs/examples/energy_estimation/hp_atlantic_alfea_extensa_AI5_W55.csv",
+      "sha": "7f9b879fb2cb079f0324001be48eac286dc3128f"
+    },
+    {
+      "path": "docs/examples/energy_estimation/hp_performance_table.pdf",
+      "sha": "13ccaba97114292941b712bb04c2d9a84991bc38"
+    },
+    {
+      "path": "docs/examples/energy_estimation/jupyter_addons/__init__.py",
+      "sha": "94f50e1cb69f5d28faee5e662c25551d0c41bfe0"
+    },
+    {
+      "path": "docs/examples/energy_estimation/my_styles.css",
+      "sha": "f4ad37a185e7609b89f42ce7c67ca42ef7639d57"
+    },
+    {
+      "path": "docs/examples/energy_estimation/tmy_ghent.csv",
+      "sha": "b8a38e54296f6c4f52fc6a46b4f5841bbcdfcd86"
+    },
+    {
+      "path": "docs/examples/fluid_flow/example_01/network_analysis.ipynb",
+      "sha": "37b8718a8917509ca74fe8aa85b346c2ee89385a"
+    },
+    {
+      "path": "docs/examples/fluid_flow/example_01/network_config.csv",
+      "sha": "edfede5683b1bfb8be74d83581263b112e9cded7"
+    },
+    {
+      "path": "docs/examples/fluid_flow/example_01/network_scheme.pdf",
+      "sha": "3075bf16e690204f3bd3d2617714ba5943ffa7c8"
+    },
+    {
+      "path": "docs/examples/fluid_flow/example_02/R50_supply.ipynb",
+      "sha": "f2b23dcb8b1399ecbda161f27ac91161d5e49e19"
+    },
+    {
+      "path": "docs/examples/fluid_flow/example_02/R50_supply.png",
+      "sha": "10b9561664b21bbe6e2e10a27704e728196feafc"
+    },
+    {
+      "path": "docs/examples/fluid_flow/example_03/hydronic_network.pickle",
+      "sha": "d6e4bffe487d5166b77a73459a1e825415da883b"
+    },
+    {
+      "path": "docs/examples/fluid_flow/example_03/hydronic_network.png",
+      "sha": "d5e9082a7aae911ee671e60261794907163927e0"
+    },
+    {
+      "path": "docs/examples/fluid_flow/example_03/hydronic_system_design.ipynb",
+      "sha": "e2f6785a5d85b2260ae5babdd375bf20a9faa180"
+    },
+    {
+      "path": "docs/examples/fluid_flow/example_03/network_config.csv",
+      "sha": "5d0c2f292a956ef028b64379b54c2a455be691e2"
+    },
+    {
+      "path": "docs/examples/fluid_flow/example_03/pipe_schedules/copper_tube.ods",
+      "sha": "c0693e0cdc248e7c870412eaaba6bf74661367e0"
+    },
+    {
+      "path": "docs/examples/fluid_flow/example_03/pipe_schedules/henco_standard_pex.ods",
+      "sha": "b697e5dda322fa69d04686164192597757209605"
+    },
+    {
+      "path": "docs/examples/fluid_flow/example_03/pipe_schedules/steel_pipe_sch40.ods",
+      "sha": "859194889e03a58610450725c661946c9e01aa85"
+    },
+    {
+      "path": "docs/examples/fluid_flow/example_04/analysis_network.py",
+      "sha": "55662cac00c280b70ff91edd5dab3a68d0399870"
+    },
+    {
+      "path": "docs/examples/fluid_flow/example_04/input-analysis.csv",
+      "sha": "6dd07826236e5deb5ca4868410880dbbc988fb62"
+    },
+    {
+      "path": "docs/examples/fluid_flow/example_04/network_scheme.pdf",
+      "sha": "01b695cefe8a0228330cf3aab70768d172949973"
+    },
+    {
+      "path": "docs/examples/fluid_flow/example_04/pump-curve-data.xlsx",
+      "sha": "1250f11cd8e4d84d848e163655a2b1dc1f32a623"
+    },
+    {
+      "path": "docs/examples/fluid_flow/example_04/pump_curve.py",
+      "sha": "2a2a562fc44faf5daf8863a42025af94f9bb7249"
+    },
+    {
+      "path": "docs/examples/heat_transfer/external_forced_convection/example_01.py",
+      "sha": "0aa1ef151d43cfeb29e0dd690868b151d0297304"
+    },
+    {
+      "path": "docs/examples/heat_transfer/external_forced_convection/example_02.py",
+      "sha": "3d9bed121be1159c387d95fc2cbab73ff0266ff6"
+    },
+    {
+      "path": "docs/examples/heat_transfer/external_forced_convection/example_03.py",
+      "sha": "ed637e8cac8165d885e8e0b4690e0c50ef196137"
+    },
+    {
+      "path": "docs/examples/heat_transfer/external_forced_convection/example_04.py",
+      "sha": "60b3a03ced940ff784489bbb368569ac7030e94f"
+    },
+    {
+      "path": "docs/examples/heat_transfer/external_forced_convection/example_05.py",
+      "sha": "52509b133e074018ea40ebb737a71ca530eb70c3"
+    },
+    {
+      "path": "docs/examples/heat_transfer/external_forced_convection/example_06.py",
+      "sha": "6f945e2c474909e8daddc8e4d2e38204fdc501e5"
+    },
+    {
+      "path": "docs/examples/heat_transfer/external_forced_convection/example_07.py",
+      "sha": "d46f3a6b4e7cb2f1b0e1aae19ebf7fcfc8fc9679"
+    },
+    {
+      "path": "docs/examples/heat_transfer/external_forced_convection/example_08.py",
+      "sha": "5a11b5f5528e4e2510350a847bb11593ac16a3fe"
+    },
+    {
+      "path": "docs/examples/heat_transfer/internal_forced_convection/example_01.py",
+      "sha": "8de94a22fe00d8d587b24e810f74399f9ee7bd67"
+    },
+    {
+      "path": "docs/examples/heat_transfer/internal_forced_convection/example_02.py",
+      "sha": "8a87e50409e74e171d70769a3b8abfa1c63d529c"
+    },
+    {
+      "path": "docs/examples/heat_transfer/internal_forced_convection/example_03.py",
+      "sha": "7f8041d4079b02ac11a9e824bb82043dfa074e5f"
+    },
+    {
+      "path": "docs/examples/heat_transfer/internal_forced_convection/example_04.py",
+      "sha": "69659e1e8356052f8950cf65561a39424e23e003"
+    },
+    {
+      "path": "docs/examples/heat_transfer/internal_forced_convection/example_05.py",
+      "sha": "1ce0389e316c92f11bd6768cd64832899af4af57"
+    },
+    {
+      "path": "docs/examples/heat_transfer/internal_forced_convection/example_06.py",
+      "sha": "7fd0fd65698cfabf94598792c1ff2bd9bfaf8c1d"
+    },
+    {
+      "path": "docs/examples/heat_transfer/internal_forced_convection/example_07.py",
+      "sha": "e73808c0340166b93caecca0664192f212753616"
+    },
+    {
+      "path": "docs/examples/heat_transfer/internal_forced_convection/example_08.py",
+      "sha": "a7dd0986a5ae599a6717c4c9c23e35597b5745d2"
+    },
+    {
+      "path": "docs/examples/heat_transfer/internal_forced_convection/example_09.py",
+      "sha": "eb9212f06f21745b9d6c2712df8f93b4eea01cb0"
+    },
+    {
+      "path": "docs/examples/heating_load_calc/example_01/floor_plan.pdf",
+      "sha": "9bae06d1044102b888b38b85c50b1d12fa5bc75e"
+    },
+    {
+      "path": "docs/examples/heating_load_calc/example_01/house.py",
+      "sha": "4a071b380239a4f344c4794f0d8b74464b96b263"
+    },
+    {
+      "path": "docs/examples/heating_load_calc/example_02/design_calc.py",
+      "sha": "29332aff4e2f8cab9e2003054468427ca1e85493"
+    },
+    {
+      "path": "docs/examples/heating_load_calc/example_02/energy_estimation.py",
+      "sha": "346be07c3abab77cec51571a6798845c8196863f"
+    },
+    {
+      "path": "docs/examples/heating_load_calc/example_02/tmy_50.911_3.192_2005_2020.csv",
+      "sha": "dbea8e66356e85e0174f0ca68067e35364c54d03"
+    },
+    {
+      "path": "docs/examples/heating_load_calc/info.md",
+      "sha": "5923b75a0b650c0b18b61727bed2e1e249a71654"
+    },
+    {
+      "path": "docs/examples/kitchen_ventilation/example_01.py",
+      "sha": "98c31af1deb8ccda05634b6948d0f3d5458f9218"
+    },
+    {
+      "path": "docs/examples/kitchen_ventilation/example_02.py",
+      "sha": "ae8e65d3de75c3630e64bd956d34ff675ee5a808"
+    },
+    {
+      "path": "docs/examples/radiant_emitter/ex01_panel_radiator.py",
+      "sha": "987f315a801a4fa31452982090e6dd47bb398257"
+    },
+    {
+      "path": "docs/examples/radiant_emitter/ex02_radiant_floor.py",
+      "sha": "e1baea4ddf14f8ce1f01c3c36c8cfa0827c1e536"
+    },
+    {
+      "path": "docs/examples/refrigerant_piping/copper-fittings.csv",
+      "sha": "12966ab7a43a04244c0d9ace9f891eb1531d120c"
+    },
+    {
+      "path": "docs/examples/refrigerant_piping/copper-tube-ACR-A.bak",
+      "sha": "03f3e3219e8fb2ee135df09cd254d69cc459ffca"
+    },
+    {
+      "path": "docs/examples/refrigerant_piping/copper-tube-ACR-A.dat",
+      "sha": "0e401f03ef42d02f38f1c2b5cdece10b4ce1f980"
+    },
+    {
+      "path": "docs/examples/refrigerant_piping/copper-tube-ACR-A.dir",
+      "sha": "03f3e3219e8fb2ee135df09cd254d69cc459ffca"
+    },
+    {
+      "path": "docs/examples/refrigerant_piping/copper-tube-ACR-D.bak",
+      "sha": "38090593e116fd29cb6ad98c2d878805170ebec0"
+    },
+    {
+      "path": "docs/examples/refrigerant_piping/copper-tube-ACR-D.dat",
+      "sha": "af7a41c09e3430d4acb7118fa7f5df528d01ba60"
+    },
+    {
+      "path": "docs/examples/refrigerant_piping/copper-tube-ACR-D.dir",
+      "sha": "38090593e116fd29cb6ad98c2d878805170ebec0"
+    },
+    {
+      "path": "docs/examples/refrigerant_piping/copper-tube-L.bak",
+      "sha": "53e59a58d0812fd25711307e9ab48017df69e13f"
+    },
+    {
+      "path": "docs/examples/refrigerant_piping/copper-tube-L.dat",
+      "sha": "0decd14df816a2436d1eb7a45e81df0c93aea4fc"
+    },
+    {
+      "path": "docs/examples/refrigerant_piping/copper-tube-L.dir",
+      "sha": "53e59a58d0812fd25711307e9ab48017df69e13f"
+    },
+    {
+      "path": "docs/examples/refrigerant_piping/copper_tubing.py",
+      "sha": "8fa3be57255c37c9764209bc6f41ee5251c13e3b"
+    },
+    {
+      "path": "docs/examples/refrigerant_piping/example_01.ipynb",
+      "sha": "41297b9e5021eeacbb8ac17202777e907e6121c5"
+    },
+    {
+      "path": "docs/examples/sun/example_01.py",
+      "sha": "17fde6c0a13828368d16f566e896dd59cdc3d27e"
+    },
+    {
+      "path": "docs/examples/sun/example_02.py",
+      "sha": "fea085b7ccd3521948057825e61f53386e8053c6"
+    },
+    {
+      "path": "docs/examples/sun/example_03.py",
+      "sha": "eb225ab268d13f83289b8e580b9a30f5fa4aae37"
+    },
+    {
+      "path": "docs/examples/sun/example_04.py",
+      "sha": "5908a69961f96fd1c7ebd9a18fe265eb5ecfcd74"
+    },
+    {
+      "path": "docs/examples/sun/example_05.py",
+      "sha": "cc344eb544320a3667feb7310a7965ab5c58d4ec"
+    },
+    {
+      "path": "docs/examples/sun/example_06.py",
+      "sha": "0642a571ebdcf7b4da19a5d929ca3d256bf20f2b"
+    },
+    {
+      "path": "docs/examples/sun/example_07.py",
+      "sha": "36d182d59dcdac4b724a3dd1880301a83236211c"
+    },
+    {
+      "path": "docs/examples/sun/example_08.py",
+      "sha": "d2b53859c41e7b7e6bebbc825a5bfa05871358c6"
+    },
+    {
+      "path": "docs/examples/sun/example_09.py",
+      "sha": "f3dfc9bfe0c82664118b3b1139e8faf6416d3857"
+    },
+    {
+      "path": "docs/examples/sun/example_10.py",
+      "sha": "13d8e9f73858f96edb9d01d7fda7fc1840c8ca80"
+    },
+    {
+      "path": "docs/examples/sun/example_11.py",
+      "sha": "99f59c356bae06396f72c80398f56969c9779d36"
+    },
+    {
+      "path": "docs/examples/sun/example_12.py",
+      "sha": "8c187f00f586068db774da8058bb75174c40a01b"
+    },
+    {
+      "path": "docs/examples/sun/example_13.py",
+      "sha": "28c57c8bf777e71752bb0732fa0ddaf0f2bd2128"
+    },
+    {
+      "path": "docs/examples/sun/example_14.py",
+      "sha": "9cd7aea5939b372cf48d3d2a2545587a63811924"
+    },
+    {
+      "path": "docs/examples/sun/example_15.py",
+      "sha": "0a5a5e252ac3c1c86ddf0e77d852702e045dc937"
+    },
+    {
+      "path": "docs/examples/sun/example_16.py",
+      "sha": "9f0a0eb201375037c3f5547ba62a627ec7e49180"
+    },
+    {
+      "path": "docs/examples/sun/example_17.ipynb",
+      "sha": "f20fdfc07b46467e1c74c0465fdc91addbe3bf63"
+    },
+    {
+      "path": "docs/examples/vapor_compression/analysis_results/07_multi_analysis_1.ods",
+      "sha": "4af0495b0ca91286beeca673e604094f90de4f39"
+    },
+    {
+      "path": "docs/examples/vapor_compression/compressor_data/DSF175-4.csv",
+      "sha": "c7873af4e6641906919f9c21537737a3503f71b2"
+    },
+    {
+      "path": "docs/examples/vapor_compression/compressor_data/VTZ038-G_R134a.csv",
+      "sha": "29e3615eb8d48ad021f85d6fd9712dbe9f72c0f2"
+    },
+    {
+      "path": "docs/examples/vapor_compression/compressor_data/VTZ054-G_R134a.csv",
+      "sha": "879994cc867c7d87ba772c5b053c75aa011aa049"
+    },
+    {
+      "path": "docs/examples/vapor_compression/compressor_data/VZH088CGM.csv",
+      "sha": "22fb232db05e4247da0cad59a61f98f2cbf8e7c7"
+    },
+    {
+      "path": "docs/examples/vapor_compression/compressor_data/VZH117CGM_R410a.csv",
+      "sha": "beb38c8e0b66739122469766e1c0f897ad64ebb9"
+    },
+    {
+      "path": "docs/examples/vapor_compression/compressor_data/VZH170CGM_R410a.csv",
+      "sha": "fed79a682742f3beebe03e0094244d542a4eb6f8"
+    },
+    {
+      "path": "docs/examples/vapor_compression/compressor_data/ZR144KCE-TFD.csv",
+      "sha": "69e2ca0333005af56e9695540b206efac6ebf517"
+    },
+    {
+      "path": "docs/examples/vapor_compression/ex01_prelim_calc.ipynb",
+      "sha": "574f640a40cfe879a4f8b895f6e93b035b720e13"
+    },
+    {
+      "path": "docs/examples/vapor_compression/ex02_air_evaporator.ipynb",
+      "sha": "26be2297ced31cceada836a4a395832f4cc97296"
+    },
+    {
+      "path": "docs/examples/vapor_compression/ex03_air_condenser.ipynb",
+      "sha": "32a23657fdbac8d167cea55925da5687508706ee"
+    },
+    {
+      "path": "docs/examples/vapor_compression/ex04_compressor.ipynb",
+      "sha": "f0c45a58a9ab78f77bf1e5081d12be917f84ed39"
+    },
+    {
+      "path": "docs/examples/vapor_compression/ex05_vcm_rating_1.ipynb",
+      "sha": "a59510cf3918b4794ba101a5c685deeb6ff32a89"
+    },
+    {
+      "path": "docs/examples/vapor_compression/ex06_vcm_rating_2.ipynb",
+      "sha": "820ef6b8415c97702aac12cc68cb3c871eb4712e"
+    },
+    {
+      "path": "docs/examples/vapor_compression/ex07_multi_vcm_analysis_part_a.py",
+      "sha": "817e04f4954ab8357ca9d5f7b7555c7ba81e3a3d"
+    },
+    {
+      "path": "docs/examples/vapor_compression/ex07_multi_vcm_analysis_part_b.py",
+      "sha": "4f5d5484f6f349223cf352e81c4c32475675b3b9"
+    },
+    {
+      "path": "docs/examples/vapor_compression/ex08_condensing_unit.py",
+      "sha": "b7874d2c20069458c9da19876a8a3bc3dabe4597"
+    },
+    {
+      "path": "docs/examples/vapor_compression/ex09_heat_pump_design_and_sim/VRJ028-K_R410A.csv",
+      "sha": "cb417dd123899bcc83d3fec4ff8567d0e1ea1ef9"
+    },
+    {
+      "path": "docs/examples/vapor_compression/ex09_heat_pump_design_and_sim/design_parameters.py",
+      "sha": "07708eef4f135f0dda8c8854e1a2102b572b1630"
+    },
+    {
+      "path": "docs/examples/vapor_compression/ex09_heat_pump_design_and_sim/heat_pump_design.ipynb",
+      "sha": "ce3ffa23e0e2072b26ade06820d5b1cd40234967"
+    },
+    {
+      "path": "docs/examples/vapor_compression/ex09_heat_pump_design_and_sim/heat_pump_simulation.ipynb",
+      "sha": "2f41729a6bdbd5194b345ed5756371bd9043c0b0"
+    },
+    {
+      "path": "docs/examples/vapor_compression/ex09_heat_pump_design_and_sim/heat_pump_simulation.py",
+      "sha": "beb8558fedcbaacb5f63cb86414bbb80a41ec70f"
+    },
+    {
+      "path": "docs/examples/vapor_compression/ex09_heat_pump_design_and_sim/readme.md",
+      "sha": "a932a39be2e2d8d45f5cf78c6c7f7f42bf63cc26"
+    },
+    {
+      "path": "docs/examples/vapor_compression/log_files/vcm_ex07_1.log",
+      "sha": "8f1d961770743690204f3741ad86b9558ea3813b"
+    },
+    {
+      "path": "docs/examples/vapor_compression/log_files/vcm_ex07_1_sorted.log",
+      "sha": "ff18be5acc1decf26e12357aa407032b78f8611a"
+    },
+    {
+      "path": "docs/examples/vapor_compression/rating algorithm air condenser.md",
+      "sha": "84d996ce3c0054403b81156f7409594099f1d02c"
+    },
+    {
+      "path": "docs/examples/vapor_compression/rating algorithm air evaporator.md",
+      "sha": "86324129c64a543dc9f42a28105ef581cdfeff2d"
+    },
+    {
+      "path": "docs/examples/vapor_compression/rating of a vapor compression machine.md",
+      "sha": "bfe5a967288ccad75028544b445a30114b28090a"
+    },
+    {
+      "path": "docs/examples/vapor_compression/vapor_compression_scheme.pdf",
+      "sha": "3c9c6fdd20b0628ccfcc98033eca6d7cdee5dae1"
+    },
+    {
+      "path": "docs/examples/vrf_system/capacity_tables.pdf",
+      "sha": "11090de8c792ff4b79e584c4a83e9929220a4617"
+    },
+    {
+      "path": "docs/examples/vrf_system/indoor_units.py",
+      "sha": "858d5f8f6ce910eb4a380d21f7c90020e5a07233"
+    },
+    {
+      "path": "docs/examples/vrf_system/model_pury_P450.py",
+      "sha": "99bf19bb65c7b684beea314c1127f0b8d17e9083"
+    },
+    {
+      "path": "docs/examples/vrf_system/model_pury_P550.py",
+      "sha": "ab37242a709fdcc8f507454df91e9fa895ae650a"
+    },
+    {
+      "path": "docs/examples/vrf_system/model_pury_P600.py",
+      "sha": "5800719e946aaf80bf5273dbdc94fdf0975ceb9b"
+    },
+    {
+      "path": "docs/examples/vrf_system/models/pury-p450-heating.pickle",
+      "sha": "872fefef10345b03b8c7f8af935f8dddd70a0655"
+    },
+    {
+      "path": "docs/examples/vrf_system/models/pury-p550-heating.pickle",
+      "sha": "969ae05220147dec7ad125406c7b3ea8d2b40762"
+    },
+    {
+      "path": "docs/examples/vrf_system/models/pury-p600-heating.pickle",
+      "sha": "c721b960f42cd99392561ef28665129fed2d65f0"
+    },
+    {
+      "path": "docs/examples/vrf_system/multi_vrf_systems_analysis.py",
+      "sha": "5268c4babe940fa91858d588a86c1b18020cd938"
+    },
+    {
+      "path": "docs/examples/vrf_system/single_vrf_system_analysis.ipynb",
+      "sha": "7697d95b1fbdfaa330e6ead08c64040c868f7e83"
+    },
+    {
+      "path": "docs/examples/vrf_system/tmy/tmy_50.811_3.310_2005_2020.csv",
+      "sha": "4814c018f43a9df68d5b26ef6c1e2546903a6114"
+    },
+    {
+      "path": "docs/wtcb_catalog/wtcb_catalog.pdf",
+      "sha": "505c79bc5483a64f68346c61d1a0dde1f1b217c0"
+    },
+    {
+      "path": "environment.yml",
+      "sha": "051e31c9ede299e0ee5e7f7ba6ac08ce56d9c132"
+    },
+    {
+      "path": "hvac/__init__.py",
+      "sha": "301d3e675017bc2f3c8130f3a505ec26de726462"
+    },
+    {
+      "path": "hvac/air_conditioning/__init__.py",
+      "sha": "33ec9ded563868f805218b05d01c8f3beccd4ca1"
+    },
+    {
+      "path": "hvac/air_conditioning/core/__init__.py",
+      "sha": "d3d4217133dc786d6f741d741effd18b7fc5bd37"
+    },
+    {
+      "path": "hvac/air_conditioning/core/abc_process.py",
+      "sha": "4803c72c347dc72c2b7dbdf72a2f39b76f9a5735"
+    },
+    {
+      "path": "hvac/air_conditioning/core/equation.py",
+      "sha": "ae04cdc5cce65696be585051aa475ae86a6b6d1a"
+    },
+    {
+      "path": "hvac/air_conditioning/core/process.py",
+      "sha": "0407b7d0cdf506c34570bb15edd37067c0aa1fe7"
+    },
+    {
+      "path": "hvac/air_conditioning/core/space_condition_line.py",
+      "sha": "5b590067c39efe525653a2bad6012e2b1aae9886"
+    },
+    {
+      "path": "hvac/air_conditioning/multi_zone/__init__.py",
+      "sha": "d4e1548c3d501a864311174629acfab226793dc6"
+    },
+    {
+      "path": "hvac/air_conditioning/multi_zone/design.py",
+      "sha": "a766b69ac9f71bce416b9ed983a5441fa423e244"
+    },
+    {
+      "path": "hvac/air_conditioning/multi_zone/part_load.py",
+      "sha": "77f3241504ed05b1a25db55f0b28994bad86c1ee"
+    },
+    {
+      "path": "hvac/air_conditioning/single_zone/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "hvac/air_conditioning/single_zone/cooling_coil_sizing.py",
+      "sha": "d9cf02f4cb0c87582acd8268a1c59efad7122918"
+    },
+    {
+      "path": "hvac/air_conditioning/single_zone/cooling_design.py",
+      "sha": "142c0930859512d91036c205eceea43e3b0fd358"
+    },
+    {
+      "path": "hvac/air_conditioning/single_zone/heating_design.py",
+      "sha": "d4222681b1c02f37ee36c7860781293c2f6b8f58"
+    },
+    {
+      "path": "hvac/air_conditioning/single_zone/vav_heating_sim.py",
+      "sha": "69f8b251e62463d382ed717e6f3a53f5df4297b2"
+    },
+    {
+      "path": "hvac/air_diffusion/__init__.py",
+      "sha": "db9c454379cfdf4e21dadbe619a37a374e02a216"
+    },
+    {
+      "path": "hvac/air_diffusion/air_jets/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "hvac/air_diffusion/air_jets/air_jets.py",
+      "sha": "6efe9c040d1a5cabe81a4732a153a9d88532f339"
+    },
+    {
+      "path": "hvac/air_diffusion/air_jets/archimedes_number.py",
+      "sha": "e90fc95bc3a1229d9fa87b3eb7cb71253a3c241b"
+    },
+    {
+      "path": "hvac/air_diffusion/air_jets/free_vertical_jets.py",
+      "sha": "671869f7220decdbcbfc5f5b8b8a69dc618cf913"
+    },
+    {
+      "path": "hvac/air_diffusion/design/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "hvac/air_diffusion/design/ceiling_supply.py",
+      "sha": "88f87f6682a0f994d47794ad418d69354b313ebb"
+    },
+    {
+      "path": "hvac/air_diffusion/design/side_wall_supply.py",
+      "sha": "9ee364c69856addac17c7f483c219fd472c5561b"
+    },
+    {
+      "path": "hvac/air_diffusion/design/sill_supply.py",
+      "sha": "994649e5f4a08fab00ef62e184cb3e5609d83d07"
+    },
+    {
+      "path": "hvac/charts/__init__.py",
+      "sha": "3510fe986fa6ae99ab8787bd165b08f5fe56ece3"
+    },
+    {
+      "path": "hvac/charts/log_ph_diagram.py",
+      "sha": "7da72608b9e910c9fca3a2779cbdec5f07270ba9"
+    },
+    {
+      "path": "hvac/charts/matplotlibwrapper/__init__.py",
+      "sha": "f8928d3fecd40e021debfa5fabbbb673585df3ba"
+    },
+    {
+      "path": "hvac/charts/matplotlibwrapper/axes.py",
+      "sha": "389d7f228fe30ddd2799ab7b67c9b4e0f1adec3e"
+    },
+    {
+      "path": "hvac/charts/matplotlibwrapper/chart_2D.py",
+      "sha": "759b6edfba8f265e178a441456678dd97bd8f3fc"
+    },
+    {
+      "path": "hvac/charts/psychrometric_chart.py",
+      "sha": "5be3d1badc8c2c25deb632cf786512d6dd17b3ff"
+    },
+    {
+      "path": "hvac/control/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "hvac/control/controller.py",
+      "sha": "ae458261c9dfd37e4832a4da5f6f094b007c893e"
+    },
+    {
+      "path": "hvac/cooling_load_calc/__init__.py",
+      "sha": "79639732d87e8b3f45cfbb11ac0d7f1a8cb1d355"
+    },
+    {
+      "path": "hvac/cooling_load_calc/building/__init__.py",
+      "sha": "b91c060aefbd64beaec5e87e731e1c3722149c5c"
+    },
+    {
+      "path": "hvac/cooling_load_calc/building/building_elements.py",
+      "sha": "ab75f35cb2a4e1388ca193237edf91eebf9c1e66"
+    },
+    {
+      "path": "hvac/cooling_load_calc/building/construction_assembly.py",
+      "sha": "a6e65ea74cf1e636c70854439de6a5932e061cb4"
+    },
+    {
+      "path": "hvac/cooling_load_calc/building/fenestration.py",
+      "sha": "53e15f5ab63327d9b3733c5b94fb320e7234d8dd"
+    },
+    {
+      "path": "hvac/cooling_load_calc/building/thermal_zone.py",
+      "sha": "2ed4fa4a257b95728c6a4bae264dd33ad349a791"
+    },
+    {
+      "path": "hvac/cooling_load_calc/building/weather_data.py",
+      "sha": "58325b43fa73b39cb21ea47a3b41a627b8f9392e"
+    },
+    {
+      "path": "hvac/cooling_load_calc/construction_data/__init__.py",
+      "sha": "5d1f8cd02e8b7bb1f405dc1c9c8e84136d4340cf"
+    },
+    {
+      "path": "hvac/cooling_load_calc/construction_data/shelves/__init__.py",
+      "sha": "ce9d51bd753b7ff85dc394a16e9ae359fa35acdb"
+    },
+    {
+      "path": "hvac/cooling_load_calc/construction_data/shelves/construction_assembly_shelf.py",
+      "sha": "c2246d17b4f47eea1f2cd94f454cbbacce0b4a83"
+    },
+    {
+      "path": "hvac/cooling_load_calc/construction_data/shelves/material_shelf.py",
+      "sha": "60740965d414bda9f756aa71ca56008cfe37f742"
+    },
+    {
+      "path": "hvac/cooling_load_calc/construction_data/shelves/window_shelf.py",
+      "sha": "ce292a148e6ff55578de17cc53f7184bc8dbdf10"
+    },
+    {
+      "path": "hvac/cooling_load_calc/construction_data/wtcb/__init__.py",
+      "sha": "ea4b429b77f965c2917f2edd96648e072718e9da"
+    },
+    {
+      "path": "hvac/cooling_load_calc/construction_data/wtcb/exterior_walls.py",
+      "sha": "39eaa5bbd9606aa043a2732f1a5cc59ce9cb906f"
+    },
+    {
+      "path": "hvac/cooling_load_calc/construction_data/wtcb/floors.py",
+      "sha": "e9ea138381120b9159df38c640134d8dac5dd5d1"
+    },
+    {
+      "path": "hvac/cooling_load_calc/construction_data/wtcb/interior_walls.py",
+      "sha": "4cbe37ed769f1bd977e5d65547d88fa5098cc6cd"
+    },
+    {
+      "path": "hvac/cooling_load_calc/construction_data/wtcb/materials.py",
+      "sha": "6de2986d0ce9e617a3705c34168223fc8f723a9b"
+    },
+    {
+      "path": "hvac/cooling_load_calc/construction_data/wtcb/roofs.py",
+      "sha": "1b98d5ad3027b0c3edf031a6d79bba4e61c8d158"
+    },
+    {
+      "path": "hvac/cooling_load_calc/construction_data/wtcb/setup.py",
+      "sha": "f59cc72760b9ebb6480c599791875cd5869b5f14"
+    },
+    {
+      "path": "hvac/cooling_load_calc/construction_data/wtcb/windows.py",
+      "sha": "b17ef5667c4d0be8211caa9324854486a3c7b75a"
+    },
+    {
+      "path": "hvac/cooling_load_calc/internal_heat_gains/__init__.py",
+      "sha": "1d5302b35e05e1b606c533e9571f0f70c94d0665"
+    },
+    {
+      "path": "hvac/cooling_load_calc/internal_heat_gains/equipment.py",
+      "sha": "9f0a88f13528ec752a6f360935468a0fb4b0c1ba"
+    },
+    {
+      "path": "hvac/cooling_load_calc/internal_heat_gains/internal_heat_gains.py",
+      "sha": "316d0ee54a990cf1826788b0fdcee47ac89fd7c6"
+    },
+    {
+      "path": "hvac/cooling_load_calc/internal_heat_gains/lighting.py",
+      "sha": "5d42765584e6fe6da4aca4eb9168b33c70045c09"
+    },
+    {
+      "path": "hvac/cooling_load_calc/thermal_models/__init__.py",
+      "sha": "20aaf1902935a8ba95a2b552d8e28f1cd71f161c"
+    },
+    {
+      "path": "hvac/cooling_load_calc/thermal_models/ext_build_elem_model.py",
+      "sha": "93d13a421a0060454033a6bb120203e5b44c6e84"
+    },
+    {
+      "path": "hvac/cooling_load_calc/thermal_models/thermal_network.py",
+      "sha": "4d285a7aef575b29d00a6cf37cfe876b0b383470"
+    },
+    {
+      "path": "hvac/cooling_load_calc/thermal_models/thermal_zone_model.py",
+      "sha": "18d82226e89c83bc8bc4517afa6fbd7de16a08d1"
+    },
+    {
+      "path": "hvac/cooling_load_calc/thermal_models/units.py",
+      "sha": "c0c3c6d8639f97d740fae6b36d5a8fd84f8f1410"
+    },
+    {
+      "path": "hvac/cooling_load_calc/time_conversion/__init__.py",
+      "sha": "bb231865fd480ed80110d0470305870cdbc8820d"
+    },
+    {
+      "path": "hvac/cooling_load_calc/time_conversion/time_conversion.py",
+      "sha": "374cf16096313f32c3953b593eae5d580dd7a82e"
+    },
+    {
+      "path": "hvac/cooling_load_calc/ventilation/__init__.py",
+      "sha": "08e67b7e5232fecd47e8ffb802012538b858f65c"
+    },
+    {
+      "path": "hvac/cooling_load_calc/ventilation/space_ventilation.py",
+      "sha": "32fa629a0e0292363b3cfc118fa36363a31e6065"
+    },
+    {
+      "path": "hvac/cooling_load_calc/ventilation/ventilation_zone.py",
+      "sha": "e286b61d86dc03ec6a32e1b7650939ebddf90428"
+    },
+    {
+      "path": "hvac/energy_estimation/__init__.py",
+      "sha": "c0b4703351ba0ecfb32e890251342177f86105b3"
+    },
+    {
+      "path": "hvac/energy_estimation/bin_table.py",
+      "sha": "c0042df94ab0ecd10d6bc656dd2f84e8ee606fd4"
+    },
+    {
+      "path": "hvac/energy_estimation/energy_estimation.py",
+      "sha": "df5401fc11813f8c4aecf3627bf6cf94d763e4cc"
+    },
+    {
+      "path": "hvac/energy_estimation/heat_pump.py",
+      "sha": "6bf33a671211d83632f5621cba4edd2740bd8baa"
+    },
+    {
+      "path": "hvac/energy_estimation/load.py",
+      "sha": "6da14d98081a3dc358ed542d789b752615241f3a"
+    },
+    {
+      "path": "hvac/fluid_flow/__init__.py",
+      "sha": "e8facf96ef688e60f1b4a8bf3d2ade0c09810b9e"
+    },
+    {
+      "path": "hvac/fluid_flow/conduit/__init__.py",
+      "sha": "a9be0e3288f9cdc91d61588de77ff5dc2c7770d8"
+    },
+    {
+      "path": "hvac/fluid_flow/conduit/conduit.py",
+      "sha": "ba50a7c847ff3ba97d893a2abcee4a6a9646ec47"
+    },
+    {
+      "path": "hvac/fluid_flow/conduit/cross_section.py",
+      "sha": "ccf5e021209145579a5793ca098d38be389c25b0"
+    },
+    {
+      "path": "hvac/fluid_flow/conduit/exceptions.py",
+      "sha": "cc153fa3147344f2d25aa2082f193314c8e51efc"
+    },
+    {
+      "path": "hvac/fluid_flow/fittings/__init__.py",
+      "sha": "f2e8d3ba55a3e6870623ad50a58e39681607c3f4"
+    },
+    {
+      "path": "hvac/fluid_flow/fittings/abstract_fitting.py",
+      "sha": "6cb40869b29ffcc4cec5307ef15bf6932abe0684"
+    },
+    {
+      "path": "hvac/fluid_flow/fittings/duct/__init__.py",
+      "sha": "cc0d6864346aa73d98db6a996475969d1dcc6469"
+    },
+    {
+      "path": "hvac/fluid_flow/fittings/duct/general.py",
+      "sha": "0b9d6eed7401adf473128cc48644c67e62855797"
+    },
+    {
+      "path": "hvac/fluid_flow/fittings/duct/smacna.py",
+      "sha": "05d8d22ac7e81b719efebf2124306bebdb735022"
+    },
+    {
+      "path": "hvac/fluid_flow/fittings/pipe/__init__.py",
+      "sha": "8a061f3d4615323a14fb6e9b8cf331ef2ee4c0ae"
+    },
+    {
+      "path": "hvac/fluid_flow/fittings/pipe/crane.py",
+      "sha": "3112d0b32ce871cfc7844a42ac232f78d51c4192"
+    },
+    {
+      "path": "hvac/fluid_flow/fittings/pipe/general.py",
+      "sha": "1c2796c87d7bed7ee63a834dc7dc0d4eaec919eb"
+    },
+    {
+      "path": "hvac/fluid_flow/network/__init__.py",
+      "sha": "5cd8ba61e3664f244d3b444e0e37cb73a9d1564b"
+    },
+    {
+      "path": "hvac/fluid_flow/network/network.py",
+      "sha": "60391873717701a9e6cf7e2ccfe8fd4f7b681aaf"
+    },
+    {
+      "path": "hvac/fluid_flow/schedule/__init__.py",
+      "sha": "51634fdad79bdd9d6748cfe1ce9899474005bc66"
+    },
+    {
+      "path": "hvac/fluid_flow/schedule/duct_schedule.py",
+      "sha": "478ce9b6bb1479bc7e7a9c577310713e4cc5065a"
+    },
+    {
+      "path": "hvac/fluid_flow/schedule/pipe_schedule.py",
+      "sha": "df3bebc31fb693478744fb962934ea38c26c40f0"
+    },
+    {
+      "path": "hvac/fluid_flow/utils/__init__.py",
+      "sha": "d88620bbdffe0a6ea5157d3e93ebf840fe7bcc7b"
+    },
+    {
+      "path": "hvac/fluid_flow/utils/misc.py",
+      "sha": "7d505ad07fa7aa7debb73847c428d7c4565185c9"
+    },
+    {
+      "path": "hvac/fluid_flow/utils/pump_curve.py",
+      "sha": "2ce4227ba891676b36b84e18ae61e5bc4676bd36"
+    },
+    {
+      "path": "hvac/fluid_flow/utils/system_curve.py",
+      "sha": "dfd05d45a65ea1a63500662bb1cf9b981e7c00c7"
+    },
+    {
+      "path": "hvac/fluids/__init__.py",
+      "sha": "d03bae58597ec8d6c8ce92811b1e58394f67e038"
+    },
+    {
+      "path": "hvac/fluids/constants.py",
+      "sha": "b22b9f867fce8066a84c99c0f4f79e7584bbe7cc"
+    },
+    {
+      "path": "hvac/fluids/exceptions.py",
+      "sha": "7296d154c58a4de0572203ac413fc8f38cda9410"
+    },
+    {
+      "path": "hvac/fluids/fluid.py",
+      "sha": "33777443579d5282ae7e989167c2f7f5f6d4c2bb"
+    },
+    {
+      "path": "hvac/fluids/fluid_experimental.py",
+      "sha": "27c506067fdbcc446863c95501b34a0bac991b16"
+    },
+    {
+      "path": "hvac/fluids/humid_air.py",
+      "sha": "26d8d0fdb0c74b74d402aa80d0b42e75d049ad13"
+    },
+    {
+      "path": "hvac/fluids/ice.py",
+      "sha": "8693d94dcbc76e02ce58d4d2526b63b530bcadf4"
+    },
+    {
+      "path": "hvac/fluids/water.py",
+      "sha": "19b615b302158482a4d832810b03b4d9b9f0f7bd"
+    },
+    {
+      "path": "hvac/heat_exchanger/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "hvac/heat_exchanger/recuperator/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "hvac/heat_exchanger/recuperator/fintube/__init__.py",
+      "sha": "8937279a3124fa93bcdf6e74cf708f307f8b7d70"
+    },
+    {
+      "path": "hvac/heat_exchanger/recuperator/fintube/continuous_fin/__init__.py",
+      "sha": "1e0f01509aea8a4ccd01f87895ffcc250c497dd5"
+    },
+    {
+      "path": "hvac/heat_exchanger/recuperator/fintube/continuous_fin/air_condenser.py",
+      "sha": "cbb6806681073ca3e807fe92b65c5dfb73faae9e"
+    },
+    {
+      "path": "hvac/heat_exchanger/recuperator/fintube/continuous_fin/air_evaporator.py",
+      "sha": "feb5b83e213ffd3f667c15a8f4e5f7eecb852709"
+    },
+    {
+      "path": "hvac/heat_exchanger/recuperator/fintube/continuous_fin/air_to_water.py",
+      "sha": "c5e8b38475b8edeea0e06d75417aa9948b9493f4"
+    },
+    {
+      "path": "hvac/heat_exchanger/recuperator/fintube/continuous_fin/correlations.py",
+      "sha": "8a55265edcc22762f138aa4d6c6f7ae4e2ee4c59"
+    },
+    {
+      "path": "hvac/heat_exchanger/recuperator/fintube/continuous_fin/geometry.py",
+      "sha": "379f35146e9d4089ed0ed3f96458a7cd5cf702e3"
+    },
+    {
+      "path": "hvac/heat_exchanger/recuperator/fintube/geometry.py",
+      "sha": "b984c82a968240f96685089697b0f4a04d48f1f7"
+    },
+    {
+      "path": "hvac/heat_exchanger/recuperator/general/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "hvac/heat_exchanger/recuperator/general/corrections.py",
+      "sha": "6ecdb66aa046d78a3654be007063ae0cad0c2806"
+    },
+    {
+      "path": "hvac/heat_exchanger/recuperator/general/eps_ntu.py",
+      "sha": "a2782badcb964eb901f957a4703a3fd04637a4c7"
+    },
+    {
+      "path": "hvac/heat_exchanger/recuperator/general/eps_ntu_wet.py",
+      "sha": "edfbdd28b2e4c73487cfd35270c385d9e8cad2b9"
+    },
+    {
+      "path": "hvac/heat_exchanger/regenerator/__init__.py",
+      "sha": "5e140eaedeb3392a7c0d763a606808e4e5507155"
+    },
+    {
+      "path": "hvac/heat_exchanger/regenerator/definitions.py",
+      "sha": "705ab5db6af219f06f646ad5e9210624d044724c"
+    },
+    {
+      "path": "hvac/heat_exchanger/regenerator/epsilon_ntu.py",
+      "sha": "537842982d23df2b08bce7929392a4cc2d49f409"
+    },
+    {
+      "path": "hvac/heat_exchanger/regenerator/rotary_regenerator.py",
+      "sha": "9e79be0a1a319f3f9ce24087dd1cc16ea6e484ac"
+    },
+    {
+      "path": "hvac/heat_transfer/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "hvac/heat_transfer/bare_tube_bank/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "hvac/heat_transfer/bare_tube_bank/_tube_bank_data.py",
+      "sha": "6c857fbdfa4e4645671f3b1a54bb13bf2fdc0bbc"
+    },
+    {
+      "path": "hvac/heat_transfer/bare_tube_bank/tube_bank.py",
+      "sha": "8047e4f260882cd8d36d8d15f3aeb0a81229ba40"
+    },
+    {
+      "path": "hvac/heat_transfer/boiling/__init__.py",
+      "sha": "d57de36ec415503bdd77bb960161e6df517bf9a2"
+    },
+    {
+      "path": "hvac/heat_transfer/boiling/flow_boiling.py",
+      "sha": "8b6ff6a8936fe38bae15fe1c9e84bfad72b7c508"
+    },
+    {
+      "path": "hvac/heat_transfer/boiling/pool_boiling.py",
+      "sha": "b26efde31f60d6532e08f53079b08a9e96677d4f"
+    },
+    {
+      "path": "hvac/heat_transfer/condensation/__init__.py",
+      "sha": "a74ad354fce56a16e50e4c46f3d798354a1d82be"
+    },
+    {
+      "path": "hvac/heat_transfer/condensation/film_condensation.py",
+      "sha": "8b6b8623415a286ca2148f9967f449a799884d30"
+    },
+    {
+      "path": "hvac/heat_transfer/condensation/flow_condensation.py",
+      "sha": "f357ca9db78fdd020265edf4c467606d24f373fd"
+    },
+    {
+      "path": "hvac/heat_transfer/finned_surface/__init__.py",
+      "sha": "ecfbd623f0072668dd5b3c2699c4c3190a294156"
+    },
+    {
+      "path": "hvac/heat_transfer/finned_surface/finned_surface.py",
+      "sha": "b33d7c69ad60e1934ded05a3d816e3e0bf864f67"
+    },
+    {
+      "path": "hvac/heat_transfer/finned_surface/fins.py",
+      "sha": "7afe64db108afdcf2b90037d3ea49ce4bd8e2a52"
+    },
+    {
+      "path": "hvac/heat_transfer/forced_convection/__init__.py",
+      "sha": "fcf1b3f56fb52625c8a4bcda95e0b99895aa3d39"
+    },
+    {
+      "path": "hvac/heat_transfer/forced_convection/external_flow/__init__.py",
+      "sha": "a16d0e60dec4c151c7d4d0829a09a0092ca03ec4"
+    },
+    {
+      "path": "hvac/heat_transfer/forced_convection/external_flow/cylinder.py",
+      "sha": "995d251e4a759b70b867b897a6864adcfe909992"
+    },
+    {
+      "path": "hvac/heat_transfer/forced_convection/external_flow/general.py",
+      "sha": "dcd0b3a1cfcea428f7a92429e77c8cb466265a6f"
+    },
+    {
+      "path": "hvac/heat_transfer/forced_convection/external_flow/non_circular_cylinder.py",
+      "sha": "45b4634b0779c608d2689565e19d1c0f0e734549"
+    },
+    {
+      "path": "hvac/heat_transfer/forced_convection/external_flow/plate.py",
+      "sha": "07d0b3beb08da4430023a254625e3afde8b6cfa4"
+    },
+    {
+      "path": "hvac/heat_transfer/forced_convection/external_flow/sphere.py",
+      "sha": "7af2271adc06ead96a2b3c2ccad3699965e88049"
+    },
+    {
+      "path": "hvac/heat_transfer/forced_convection/internal_flow/__init__.py",
+      "sha": "48dc042e73bd63bebd97a7bb775d343cd48d3858"
+    },
+    {
+      "path": "hvac/heat_transfer/forced_convection/internal_flow/energy_balance.py",
+      "sha": "1780780993baa905a347ee052d7ef9da1ce9c743"
+    },
+    {
+      "path": "hvac/heat_transfer/forced_convection/internal_flow/laminar_flow/__init__.py",
+      "sha": "5d50eda81dd334b51c65a195a3a8dd942376a3f8"
+    },
+    {
+      "path": "hvac/heat_transfer/forced_convection/internal_flow/laminar_flow/friction_factor.py",
+      "sha": "6db15203259b100a12896cd200cc6cb073264654"
+    },
+    {
+      "path": "hvac/heat_transfer/forced_convection/internal_flow/laminar_flow/nusselt_number.py",
+      "sha": "40a4e06cfcaa823ff0654975a827d96b68049ec0"
+    },
+    {
+      "path": "hvac/heat_transfer/forced_convection/internal_flow/tube.py",
+      "sha": "fce12a08fbf7b10d5f034d15c298598c804ccb60"
+    },
+    {
+      "path": "hvac/heat_transfer/forced_convection/internal_flow/turbulent_flow/__init__.py",
+      "sha": "5d50eda81dd334b51c65a195a3a8dd942376a3f8"
+    },
+    {
+      "path": "hvac/heat_transfer/forced_convection/internal_flow/turbulent_flow/friction_factor.py",
+      "sha": "d4cbbb218033c64e8b412bb1fca583b02d7ed095"
+    },
+    {
+      "path": "hvac/heat_transfer/forced_convection/internal_flow/turbulent_flow/nusselt_number.py",
+      "sha": "33128cf11289f568b7dfe875f1deeaf9b968454d"
+    },
+    {
+      "path": "hvac/heat_transfer/free_convection/__init__.py",
+      "sha": "3a1535f75f40065cc4b7766fd86172aef162a33a"
+    },
+    {
+      "path": "hvac/heat_transfer/free_convection/external_flow/__init__.py",
+      "sha": "32f7e05e260729f9bcba1917ef140fc22d658c1f"
+    },
+    {
+      "path": "hvac/heat_transfer/free_convection/external_flow/horizontal_cylinder.py",
+      "sha": "7aad83616f90417a332fbb926c43a8a9ddde8c4b"
+    },
+    {
+      "path": "hvac/heat_transfer/free_convection/external_flow/horizontal_plate.py",
+      "sha": "36c9f0b3fb369f4bdcc6ed71486a60536f3e5f18"
+    },
+    {
+      "path": "hvac/heat_transfer/free_convection/external_flow/sphere.py",
+      "sha": "6db44c5b44c08eaa30012c180b148ae821e54fa3"
+    },
+    {
+      "path": "hvac/heat_transfer/free_convection/external_flow/tilted_plate.py",
+      "sha": "8ca00dd8024ea448a04020b98f29585ba2a55eb5"
+    },
+    {
+      "path": "hvac/heat_transfer/free_convection/external_flow/vertical_cylinder.py",
+      "sha": "078c64bae12e3f4328d2355fa19451256161e42e"
+    },
+    {
+      "path": "hvac/heat_transfer/free_convection/external_flow/vertical_plate.py",
+      "sha": "3e78cfc30e788b0f065d2a0d2c08d80d7aef6936"
+    },
+    {
+      "path": "hvac/heat_transfer/free_convection/general.py",
+      "sha": "4b26ed977eea1fb50f089e0ecc2a210ad61adbd0"
+    },
+    {
+      "path": "hvac/heat_transfer/free_convection/internal_flow/__init__.py",
+      "sha": "ebc315a11c66e665af70199d11167f81bc371b41"
+    },
+    {
+      "path": "hvac/heat_transfer/free_convection/internal_flow/enclosure.py",
+      "sha": "42bd9e0fbc0e915637ba4b59fc1455f85a512571"
+    },
+    {
+      "path": "hvac/heat_transfer/free_convection/internal_flow/vertical_channel.py",
+      "sha": "53edfae630d588fb42638ebef061206796c596c7"
+    },
+    {
+      "path": "hvac/heat_transfer/mixed_convection/__init__.py",
+      "sha": "881a500ceba0f8026acad4d5b5eac2e395613bb4"
+    },
+    {
+      "path": "hvac/heat_transfer/mixed_convection/general.py",
+      "sha": "d30fb955f01b630b848e55c02c37beebd22a3f97"
+    },
+    {
+      "path": "hvac/heat_transfer/radiation/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "hvac/heat_transfer/radiation/black_body.py",
+      "sha": "53c67a176b260484f62a4b26452063134a008d10"
+    },
+    {
+      "path": "hvac/heat_transfer/radiation/view_factors/__init__.py",
+      "sha": "4ac8e74a65a8273c304aec3e8b1536224174378b"
+    },
+    {
+      "path": "hvac/heating_load_calc/__init__.py",
+      "sha": "eb92577ba6bdbe5258e26ad334545f0325c7153e"
+    },
+    {
+      "path": "hvac/heating_load_calc/building/__init__.py",
+      "sha": "b47d43cc98fb4c169eee6072fe74b0277b089f7a"
+    },
+    {
+      "path": "hvac/heating_load_calc/building/building.py",
+      "sha": "57dc6a0c3672ccfd34b4d2b5788ab7fcb7f5c901"
+    },
+    {
+      "path": "hvac/heating_load_calc/building/building_entity.py",
+      "sha": "5bafcc1ed4f93a3e7277af4fa3f403d0bc937f93"
+    },
+    {
+      "path": "hvac/heating_load_calc/building/space.py",
+      "sha": "62b2e07bfa17b73cf0be291edf8982c7fc52d634"
+    },
+    {
+      "path": "hvac/heating_load_calc/building/ventilation_zone.py",
+      "sha": "9ce32e5be31cc844aa5e7fd31e57c568ec14fb6d"
+    },
+    {
+      "path": "hvac/heating_load_calc/core/__init__.py",
+      "sha": "cad51db5dd99999cd42965e619b867333a8bfefd"
+    },
+    {
+      "path": "hvac/heating_load_calc/core/building_element.py",
+      "sha": "f0b0dff1c17d1c3374da64cd9a5e4b6001485ce4"
+    },
+    {
+      "path": "hvac/hydronics/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "hvac/hydronics/expansion_tank.py",
+      "sha": "7e5666e2c3e7a7cdfa9073ab0d375b8ea95c8d3f"
+    },
+    {
+      "path": "hvac/kitchen_ventilation/__init__.py",
+      "sha": "fecd94b054bde67f5effb5386097fdda36b4cc01"
+    },
+    {
+      "path": "hvac/kitchen_ventilation/detailed_calculation.py",
+      "sha": "e0a222f0342a6dbd18f0ff8999761da8d4cf9c22"
+    },
+    {
+      "path": "hvac/kitchen_ventilation/preliminary_calculation.py",
+      "sha": "4add2df10e293c7a1d0400bb99b41a1adac9fce6"
+    },
+    {
+      "path": "hvac/logging.py",
+      "sha": "e0beab3054a2e73753b638b81cdc23e42aa3822d"
+    },
+    {
+      "path": "hvac/misc.py",
+      "sha": "ff30158cdb5086aca970b99e06a95ba8711095f6"
+    },
+    {
+      "path": "hvac/pint_setup.py",
+      "sha": "3d23858a2708e145e2255fe276c292cae63f337e"
+    },
+    {
+      "path": "hvac/radiant_emitter/__init__.py",
+      "sha": "36919807c288c071d86977af0a3831822503c814"
+    },
+    {
+      "path": "hvac/radiant_emitter/panel_radiator.py",
+      "sha": "1281657265605875443d8da281956742a42b265f"
+    },
+    {
+      "path": "hvac/radiant_emitter/radiant_floor.py",
+      "sha": "4e682a6cbf7565a653ef97e5c5381da2d510432b"
+    },
+    {
+      "path": "hvac/refrigerant_piping/__init__.py",
+      "sha": "82929243f55bc29f8b84632879341cd0afc5966e"
+    },
+    {
+      "path": "hvac/refrigerant_piping/copper_fittings.py",
+      "sha": "b095408af9acee3bfc16af64cbf52ff26e0ff087"
+    },
+    {
+      "path": "hvac/refrigerant_piping/copper_tubing.py",
+      "sha": "8643ec2846aeb1d72bde2be9b1e399371016ef94"
+    },
+    {
+      "path": "hvac/refrigerant_piping/sizing.py",
+      "sha": "6dddcbfeb772895b5a87b41c129527fe11860e61"
+    },
+    {
+      "path": "hvac/sun/__init__.py",
+      "sha": "dd329efb7a8310f1994618767e08fb1223674729"
+    },
+    {
+      "path": "hvac/sun/clear_sky.py",
+      "sha": "aa5981cc8615ca5a8979046bdeec2ba809310d73"
+    },
+    {
+      "path": "hvac/sun/correlation.py",
+      "sha": "f0701042c739117dea9c503110d4230620391294"
+    },
+    {
+      "path": "hvac/sun/geometry.py",
+      "sha": "1603148f6cf444d30717472f56c0ad9148ffb02e"
+    },
+    {
+      "path": "hvac/sun/radiation.py",
+      "sha": "33b50b3b1187fd9947492a95e1629d43c5f25fdc"
+    },
+    {
+      "path": "hvac/sun/shading.py",
+      "sha": "b7912b96e12be8ce0df28accc412754ad424fcf6"
+    },
+    {
+      "path": "hvac/sun/sun_chart.py",
+      "sha": "dcda30d285336e9038418bc808a35ca9d63638d5"
+    },
+    {
+      "path": "hvac/sun/surface.py",
+      "sha": "4e231a29435ef982cec6baa10b10d7019cc4e3a2"
+    },
+    {
+      "path": "hvac/sun/time.py",
+      "sha": "8bdadd9d1203b8e5a26edf79fe97eef2198f69b6"
+    },
+    {
+      "path": "hvac/sun/tmy.py",
+      "sha": "1a873df5727b6cbc57062a12c1ae1b91cbad27b4"
+    },
+    {
+      "path": "hvac/sun/transposition.py",
+      "sha": "3f2e021d30304f39635711e9e52bc89c0847fd6a"
+    },
+    {
+      "path": "hvac/sun/utilizability.py",
+      "sha": "200f22a096340dc6e45548dc3f3ceacb292a00f3"
+    },
+    {
+      "path": "hvac/vapor_compression/__init__.py",
+      "sha": "9d17ca511ac88b7f4f3547cef8a9950d33b95c3f"
+    },
+    {
+      "path": "hvac/vapor_compression/capillary_tube.py",
+      "sha": "fd1e99d2674861a6e17e107e7e289cad303c5b24"
+    },
+    {
+      "path": "hvac/vapor_compression/condensing_unit.py",
+      "sha": "4564b3518c661d68823e2410a2eb9951b838b0fa"
+    },
+    {
+      "path": "hvac/vapor_compression/machine.py",
+      "sha": "3345b350b9a5f5b25c4b2207fa428dbab8fc8d7e"
+    },
+    {
+      "path": "hvac/vapor_compression/real_compressor.py",
+      "sha": "bfcb00f085905963e65c2ae753f62c90bf91bed6"
+    },
+    {
+      "path": "hvac/vapor_compression/reciprocating_compressor.py",
+      "sha": "c36ae6edfe81c12ba5157f94a23223d0968b4346"
+    },
+    {
+      "path": "hvac/vapor_compression/refrigerant_lines.py",
+      "sha": "7fe66fe7f165d939c07caaf5a448d47b2181ab8e"
+    },
+    {
+      "path": "hvac/vrf_system/__init__.py",
+      "sha": "a3c73e5de85dc0dc929707b156046604d10aac07"
+    },
+    {
+      "path": "hvac/vrf_system/energy_estimation.py",
+      "sha": "3191fc2be674aa342502a16ee59c2d348a90b66e"
+    },
+    {
+      "path": "hvac/vrf_system/indoor_unit.py",
+      "sha": "6b8c48bf3b7f7a54be7993971ec019b5562fac7b"
+    },
+    {
+      "path": "hvac/vrf_system/model.py",
+      "sha": "e8740b25a842c04fb49034ca2b79a446bc82ac6c"
+    },
+    {
+      "path": "hvac/vrf_system/vrf.py",
+      "sha": "f624e1e83b694dc840b197ef27f0e173f2f92be5"
+    },
+    {
+      "path": "poetry.lock",
+      "sha": "641ab5bda9222d6a20ae79c446ab397a1bff985a"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha": "562db235be6d0c157e032378ac36e274ed459c31"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "schema_version": "0.1",
+  "name": "community-water_geometry",
+  "kind": "water",
+  "air": {
+    "t_db_c": 27.0,
+    "relative_humidity": 0.2,
+    "pressure_pa": 101325.0,
+    "volume_flow_m3_h": 1000.0
+  },
+  "fluid": {
+    "name": "Water",
+    "pressure_pa": 300000.0,
+    "inlet_t_c": 7.0,
+    "mass_flow_kg_s": 0.2
+  },
+  "model": {
+    "ua_mode": "geometry",
+    "segments": 20,
+    "air_arrangement": "counterflow"
+  },
+  "solver": {
+    "max_iterations": 150,
+    "tolerance_k": 0.0001
+  },
+  "metadata": {
+    "source_kind": "synthetic_diagnostic",
+    "source": "Synthetic plain/smooth geometry, not a measured product coil. UA and core friction losses derived from declared correlations."
+  },
+  "geometry": {
+    "fin_type": "plain",
+    "tube_type": "smooth",
+    "arrangement": "staggered",
+    "rows": 2,
+    "tubes_per_row": 20,
+    "circuits_count": 4,
+    "tube_length_m": 0.5,
+    "tube_outer_diameter_m": 0.0095,
+    "tube_inner_diameter_m": 0.0087,
+    "transverse_pitch_m": 0.025,
+    "longitudinal_pitch_m": 0.022,
+    "fin_pitch_m": 0.002,
+    "fin_thickness_m": 0.0001,
+    "fin_conductivity_w_m_k": 205.0,
+    "tube_conductivity_w_m_k": 385.0,
+    "tube_roughness_m": 0.0
+  }
+}

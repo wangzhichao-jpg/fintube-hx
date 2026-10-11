@@ -1,0 +1,59 @@
+{
+  "private_source_files_included": false,
+  "files": [
+    {
+      "public_path": "src/fintube_hx/properties.py",
+      "source_kind": "approved_baseline_extraction",
+      "source_module": "properties.py",
+      "initial_source_sha256": "d53caf8e85afdefd8ee7022d2fb33b3caccc651708fc19d9701ee3d27b61b973"
+    },
+    {
+      "public_path": "src/fintube_hx/thermal.py",
+      "source_kind": "approved_baseline_extraction",
+      "source_module": "thermal.py",
+      "initial_source_sha256": "d33284c490b2bc6523e3b39fc67d5ea4ceebfbe546e166881b378c018041f82a"
+    },
+    {
+      "public_path": "src/fintube_hx/geometry.py",
+      "source_kind": "approved_baseline_extraction",
+      "source_module": "geometry.py",
+      "initial_source_sha256": "139ca9fbcef0d7f1fd379ad64fe7f7ede8d13c5f7d36581a5fa513f60e4a556b"
+    },
+    {
+      "public_path": "src/fintube_hx/wang_plain_fin.py",
+      "source_kind": "approved_baseline_extraction",
+      "source_module": "wang_plain_fin.py",
+      "initial_source_sha256": "1ccb90d8bbc63f5964830d83ae20e480db793a5a9906da2c7f3fc2b2be2463f4"
+    },
+    {
+      "public_path": "src/fintube_hx/geometry_performance.py",
+      "source_kind": "approved_baseline_extraction",
+      "source_module": "geometry_performance.py",
+      "initial_source_sha256": "6d0ed1efd6b12ba4a18acad938a1e9d94e153e1be2f86dfa21deaa753a4dfa25"
+    },
+    {
+      "public_path": "src/fintube_hx/water.py",
+      "source_kind": "approved_baseline_extraction",
+      "source_module": "water.py",
+      "initial_source_sha256": "4ee4996e9e6ce0aa949c09d8fd2dbd24cc1989249462e3602569e3df1a25bfe8"
+    },
+    {
+      "public_path": "src/fintube_hx/refrigerant.py",
+      "source_kind": "approved_baseline_extraction",
+      "source_module": "refrigerant.py",
+      "initial_source_sha256": "6d0c148a5a1b2c2659d5957b75232ca52cd5d497eac61dd524b84d104a285b4f"
+    },
+    {
+      "public_path": "src/fintube_hx/storage.py",
+      "source_kind": "approved_baseline_extraction",
+      "source_module": "storage.py",
+      "initial_source_sha256": "b399bbfb9cb754db521a673d164017966bc9832a2c33b556cf9d48216c2fe578"
+    },
+    {
+      "public_path": "src/fintube_hx/scan.py",
+      "source_kind": "approved_baseline_extraction",
+      "source_module": "scan.py",
+      "initial_source_sha256": "240020168e962cc392ad2c34c57feac7a04c6e15f7bcc8b533741c4dd8caa3aa"
+    }
+  ]
+}

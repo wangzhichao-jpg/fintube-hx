@@ -1,0 +1,110 @@
+"""Counterflow epsilon-NTU water baseline, with disclosed wet-contact approximation."""
+from __future__ import annotations
+from ht.hx import effectiveness_from_NTU
+from .schema import validate_case
+from .properties import air_state, air_mass_flow, fluid_pt, fluid_ph
+from .thermal import contact_air, LIQUID_WATER_CP
+
+
+def simulate_water(case: dict) -> dict:
+    c = validate_case(case)
+    if c["kind"] != "water":
+        raise ValueError("Water model requires kind=water")
+    if c["fluid"]["name"].lower() != "water":
+        raise NotImplementedError("This first baseline supports pure Water only, not solutions")
+    if c["model"]["air_arrangement"] != "counterflow":
+        raise ValueError("Water baseline supports counterflow only")
+    a, f = c["air"], c["fluid"]
+    ain = air_state(a["t_db_c"], a["relative_humidity"], a["pressure_pa"])
+    fin = fluid_ph(f["name"], f["pressure_pa"], f["inlet_h_j_kg"]) if "inlet_h_j_kg" in f else fluid_pt(f["name"], f["pressure_pa"], f["inlet_t_c"])
+    if fin["cp_j_kg_k"] is None or fin["temperature_c"] <= 0:
+        raise ValueError("Water baseline requires liquid inlet above 0 C; freezing is not modelled")
+    from CoolProp.CoolProp import PhaseSI
+    if PhaseSI("P", f["pressure_pa"], "H", fin["enthalpy_j_kg"], f["name"]) != "liquid":
+        raise ValueError("Water baseline requires a liquid state")
+    m_da, mf, ua = air_mass_flow(a), f["mass_flow_kg_s"], c["model"].get("ua_w_k", 0.)
+    geometry_mode = c["model"]["ua_mode"] == "geometry"
+    geometry_detail = None
+    tin = fin["temperature_c"]
+    wet = tin < ain["dew_point_c"] and tin < ain["t_db_c"]
+    cp_water = fin["cp_j_kg_k"]
+    old_t = tin; converged = False; mean_water_temperature = tin
+    max_iter, tol = c["solver"]["max_iterations"], c["solver"]["tolerance_k"]
+    for iteration in range(1, max_iter + 1):
+        if geometry_mode:
+            from .geometry_performance import water_geometry_performance
+            geometry_detail = water_geometry_performance(c, mean_water_temperature)
+            ua = geometry_detail["ua_w_k"]
+        ca = m_da * ain["cp_j_kg_da_k"]
+        ua_effective = ua
+        if wet:
+            sat = air_state(tin, 1.0, a["pressure_pa"])
+            cp_air_effective = (ain["enthalpy_j_kg_da"] - sat["enthalpy_j_kg_da"]) / (ain["t_db_c"] - tin)
+            ca = m_da * cp_air_effective
+            # In geometry mode the known water/wall resistances must not be
+            # spuriously multiplied by the air-side latent enhancement.
+            ratio = cp_air_effective / ain["cp_j_kg_da_k"]
+            if geometry_mode:
+                from .geometry_performance import wet_geometry_conductance
+                wet_detail = wet_geometry_conductance(geometry_detail, ratio)
+                geometry_detail["wet_model"] = wet_detail
+                ua_effective = wet_detail["effective_ua_w_k"]
+            else:
+                ua_effective = ua * ratio
+        cw = mf * cp_water
+        cmin, cmax = min(ca, cw), max(ca, cw)
+        epsilon = effectiveness_from_NTU(ua_effective / cmin, cmin / cmax, "counterflow") if ua else 0.0
+        fraction = epsilon * cmin / ca
+        if fraction == 0:
+            aout, q_to_water, condensate = dict(ain), 0.0, 0.0
+        else:
+            aout, q_to_water, condensate = contact_air(ain, tin, fraction, m_da)
+        fout = fluid_ph(f["name"], f["pressure_pa"], fin["enthalpy_j_kg"] + q_to_water / mf)
+        if fout["cp_j_kg_k"] is None:
+            raise ValueError("Computed water outlet is not single phase")
+        mean = fluid_pt(f["name"], f["pressure_pa"], (tin + fout["temperature_c"]) / 2)
+        cp_water = mean["cp_j_kg_k"]
+        mean_water_temperature = mean["temperature_c"]
+        if abs(fout["temperature_c"] - old_t) <= tol:
+            converged = True; break
+        old_t = fout["temperature_c"]
+    fout["mass_flow_kg_s"] = mf
+    air_net = m_da * (ain["enthalpy_j_kg_da"] - aout["enthalpy_j_kg_da"]) - condensate * LIQUID_WATER_CP * tin
+    fluid_heat = mf * (fout["enthalpy_j_kg"] - fin["enthalpy_j_kg"])
+    warnings = [
+        "水盘管采用整体逆流ε-NTU基线，恒定水压；segments参数不生成虚假的逐管结果。",
+        ("当前压降仅作芯体/直管摩擦预测；流量分配、溶液物性和真实压力状态耦合未实现。" if geometry_mode else
+         "当前未实现水侧/空气侧压降、实际几何UA、流量分配和溶液物性。"),
+        "凝水焓采用0℃参考的4180*T近似，凝水排出温度取进水温度。",
+    ]
+    if wet:
+        warnings.append("湿工况采用入口水温作为有效露点及热质传递类比的接触因子近似，不是严格部分湿翅片模型。")
+        if geometry_mode:
+            warnings.append("几何湿段只修改空气侧热阻/等效翅片效率；压降仍为干表面摩擦基线，未考虑水膜阻力。")
+    if not converged:
+        warnings.append("平均物性迭代未在给定次数内收敛。")
+    if geometry_detail:
+        warnings.extend(geometry_detail["warnings"])
+    result = {
+        "case_name": c["name"], "kind": "water", "model_version": "water-geometry-lumped-0.2" if geometry_mode else "water-eps-ntu-contact-0.1",
+        "ua_w_k": ua, "effective_ua_w_k": ua_effective,
+        "heat_transfer_w": abs(fluid_heat), "signed_air_to_fluid_w": fluid_heat,
+        "air_in": ain, "air_out": aout, "fluid_in": fin, "fluid_out": fout,
+        "dry_air_mass_flow_kg_s": m_da, "condensate_kg_s": condensate,
+        "sensible_heat_w": abs(m_da * ain["cp_j_kg_da_k"] * (ain["t_db_c"] - aout["t_db_c"])),
+        "energy_balance_relative_error": abs(fluid_heat - air_net) / max(abs(fluid_heat), 1.0),
+        "iterations": iteration, "converged": converged, "warnings": warnings,
+        "segments": [], "air_surface_condition": "wet_approximation" if wet else "dry",
+    }
+    if geometry_detail:
+        result["geometry_model"] = geometry_detail
+    return result
+
+
+def solve_water_target(case: dict) -> dict:
+    c = validate_case(case)
+    if not c.get('target') or 'outlet_temperature_c' not in c['target']:
+        raise ValueError('Water target requires outlet_temperature_c')
+    from .inverse import solve_mass_flow
+    return solve_mass_flow(c, 'outlet_temperature_c', lambda r: r['fluid_out']['temperature_c'],
+                           simulate_water, xtol=1e-10)

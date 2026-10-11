@@ -1,0 +1,54 @@
+{
+  "schema_version": "0.1",
+  "name": "python-hvac-water-explicit-integer-mapping",
+  "kind": "water",
+  "air": {
+    "t_db_c": 27.0,
+    "relative_humidity": 0.46970966722523616,
+    "pressure_pa": 101325.0,
+    "volume_flow_m3_h": 850.0
+  },
+  "fluid": {
+    "name": "Water",
+    "pressure_pa": 200000.00001955408,
+    "mass_flow_kg_s": 0.23693867206917363,
+    "inlet_t_c": 7.0
+  },
+  "model": {
+    "ua_mode": "geometry",
+    "water_model": "lumped",
+    "air_arrangement": "counterflow",
+    "segments": 160
+  },
+  "geometry": {
+    "fin_type": "plain",
+    "tube_type": "smooth",
+    "arrangement": "staggered",
+    "rows": 3,
+    "tubes_per_row": 7,
+    "circuits_count": 7,
+    "tube_length_m": 0.9,
+    "tube_outer_diameter_m": 0.010199999999999999,
+    "tube_inner_diameter_m": 0.008422,
+    "transverse_pitch_m": 0.0254,
+    "longitudinal_pitch_m": 0.022,
+    "fin_pitch_m": 0.003175,
+    "fin_thickness_m": 0.0003302,
+    "fin_conductivity_w_m_k": 237.0,
+    "tube_conductivity_w_m_k": 385.0,
+    "tube_roughness_m": 0.0
+  },
+  "solver": {
+    "max_iterations": 300,
+    "tolerance_k": 1e-05
+  },
+  "metadata": {
+    "source_kind": "software_reference_explicit_modified_geometry",
+    "source": "python-hvac commit 94247560a667905bfbf67e45a58965a58254fce8 docs/examples/air_cooling_coil/air_cooling_coil_01.ipynb",
+    "not_exact_notebook_reproduction": true,
+    "tube_wall_conductivity_assumed_w_m_k": 385.0,
+    "roughness_assumed_m": 0.0,
+    "ua_fitted": false,
+    "mapping_notes": "round effective first-row tube count to integer; preserve pitches/width, changing face height; explicit integer equal circuit count; not same tube inventory/collar/wet/pressure assumptions"
+  }
+}

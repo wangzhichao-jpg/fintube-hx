@@ -1,0 +1,340 @@
+{
+  "version": "0.1.0.dev4",
+  "edition": "community",
+  "publication_status": "local_review_not_published",
+  "original_license_status": "MIT_owner_approved",
+  "files": [
+    {
+      "path": ".github/workflows/ci.yml",
+      "sha256": "44049a3f53d3302baf9bedd4b5f432d748a997776e8b0a917f0f78212a3eb4c2"
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "f7132079fe22f4f3f7d44e7f829c1d0ac83d227482c49023bd9da79c8d0315b6"
+    },
+    {
+      "path": "CONTRIBUTING.md",
+      "sha256": "999d838e22c1d438fef8e1ebacc87f55f4c15709fef897495377da3c8e644d84"
+    },
+    {
+      "path": "CORE_API.md",
+      "sha256": "a6eb7b7c94f1ccc6b65b7da97c0fd6680173bf08d1bcb7941051ffce1a307bf6"
+    },
+    {
+      "path": "examples/condenser.json",
+      "sha256": "5fbd7f0940a9af407c498a0af6b6008858e235288aa648617cfc5aafd945b5c3"
+    },
+    {
+      "path": "examples/condenser_target.json",
+      "sha256": "72fcb39f8172f64eda7feb6f4aa071da3828702d9500fc0d789a07e40b139cd1"
+    },
+    {
+      "path": "examples/evaporator.json",
+      "sha256": "94de9d425ed6dcfe8c3e01798790faad963ee35813b798518b41e698f253c1c5"
+    },
+    {
+      "path": "examples/evaporator_target.json",
+      "sha256": "329b49367a5dee155035af2a24eec8577981efeb7f64c72e32572b7eee45d0dc"
+    },
+    {
+      "path": "examples/water_dry.json",
+      "sha256": "3fb4dc8e1611ec5dc652c36ab970f55483007e7b79d4e871217ec4c878261ac2"
+    },
+    {
+      "path": "examples/water_geometry.json",
+      "sha256": "283caae2e20299d013024b4dce660d4e624e729187d9939d0dd57f6f8d2b6758"
+    },
+    {
+      "path": "examples/water_geometry_target.json",
+      "sha256": "aa2b8a9d9737c3e4eae259814b147f879e9b730cd6be7215c9d9894ff3aae521"
+    },
+    {
+      "path": "examples/water_target.json",
+      "sha256": "142f1e0da9a68f179c2eac5a78f6e6143c4644ebfc2dbc38258e8bdefb06fa1f"
+    },
+    {
+      "path": "examples/water_wet.json",
+      "sha256": "cdc8b613203405a5262478192d5770c6a438cfd71ce7af871690a87d91ea8b8d"
+    },
+    {
+      "path": "initial-port-provenance.json",
+      "sha256": "82b72c6f55cfb4c6095a52997a1cf3f8053102424ab3c04a80bba92e70f294ed"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "0e636cab3ff14be14fb3a4efcf107a7a9295b046260291b55701b0d2f4cfd4c3"
+    },
+    {
+      "path": "PORTING.md",
+      "sha256": "3b0812cb689b1ef49b7a3a89b26068f90f37d26168b9b625090470403e7af1e5"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "41e1c0c41fa2e309fea8b511bf96a22ed05ad5e0e3c7e04a5281e4b2753a0e99"
+    },
+    {
+      "path": "README.md",
+      "sha256": "09a591b2fd20f6081425e0699418532b6b189536d9a76f1f1a2dc7f6d28628d1"
+    },
+    {
+      "path": "references/python-hvac/condenser.json",
+      "sha256": "5b2503b445e6d728a6c7587d4603dbbd9c8a5a1f3b6cd49935a82defc0447a52"
+    },
+    {
+      "path": "references/python-hvac/evaporator.json",
+      "sha256": "272a7a38c87d936f59d5eff7c0d27427f74cb41bbb549e2aa117593db063c9ac"
+    },
+    {
+      "path": "references/python-hvac/README.md",
+      "sha256": "15c44966d03670d81c532e912cfca1261104fa4f794f2986c5e1ab4aae4b114d"
+    },
+    {
+      "path": "references/python-hvac/reproduce.py",
+      "sha256": "b9395ff276d13fbd0f27f30b0178d727d65b57a4babb563926e159229276db6b"
+    },
+    {
+      "path": "references/python-hvac/requirements-reference-lock.txt",
+      "sha256": "94d00dfaf26711d0dacd1bc75fc6aef623b69ae147960f5ec573b823909160fa"
+    },
+    {
+      "path": "references/python-hvac/source-tree.json",
+      "sha256": "a8e339bae367f5a65452ebe8c92cf7a46360e5ed83c2efcf9d9584e7a3246061"
+    },
+    {
+      "path": "references/python-hvac/water-community-comparison.json",
+      "sha256": "2db1f003de4acffda81f00b6cc0932c1181f2b93c128604e4bd0dad094e2bf6b"
+    },
+    {
+      "path": "references/python-hvac/water-community-input.json",
+      "sha256": "37641866f448373caea130ba74a7a46811cf44433386a71388eb9670c5daff06"
+    },
+    {
+      "path": "references/python-hvac/water.json",
+      "sha256": "a23fa95c264555342b028b881f0aae758d0003e4b15e3188362d68c2c751bbdb"
+    },
+    {
+      "path": "RELEASE_CHECKLIST.md",
+      "sha256": "7950ec8c9afd07a437ac0307a124a78c3a783ff8ff11857f52013581532b2085"
+    },
+    {
+      "path": "requirements-development-lock.txt",
+      "sha256": "1d685ee8f427506ef70a7c2efd08c8d7ee1d52580e449acc213c348f6c91c525"
+    },
+    {
+      "path": "src/fintube_hx/__init__.py",
+      "sha256": "97530f1b2be4c60c306b5c65b374d39098c0f7eb88469fc9a88adda06100fd2a"
+    },
+    {
+      "path": "src/fintube_hx/__main__.py",
+      "sha256": "307299fda7b77d22c64cb51430ec75e5f59d78e9c948786afb3b2544fe45e4b7"
+    },
+    {
+      "path": "src/fintube_hx/cli.py",
+      "sha256": "ff3fa5f653eb454765556270838d9a3f045277a768515ccbd4d932248a51cec5"
+    },
+    {
+      "path": "src/fintube_hx/engine.py",
+      "sha256": "39d3c570dc3b5fac37073567fd28ab47576f548b16e74476b57c1d8c5e902e5b"
+    },
+    {
+      "path": "src/fintube_hx/geometry.py",
+      "sha256": "139ca9fbcef0d7f1fd379ad64fe7f7ede8d13c5f7d36581a5fa513f60e4a556b"
+    },
+    {
+      "path": "src/fintube_hx/geometry_performance.py",
+      "sha256": "6d0ed1efd6b12ba4a18acad938a1e9d94e153e1be2f86dfa21deaa753a4dfa25"
+    },
+    {
+      "path": "src/fintube_hx/inverse.py",
+      "sha256": "53eab0048b57f966442327a05660f6640c36d5639952bed39929cec3b40888a6"
+    },
+    {
+      "path": "src/fintube_hx/properties.py",
+      "sha256": "d53caf8e85afdefd8ee7022d2fb33b3caccc651708fc19d9701ee3d27b61b973"
+    },
+    {
+      "path": "src/fintube_hx/refrigerant.py",
+      "sha256": "d812d4049cc799174a217f963915efe96ef714304e23fe17ee94d1041a7e257b"
+    },
+    {
+      "path": "src/fintube_hx/reporting.py",
+      "sha256": "c509c64d06c7b07bfb893f65bb70bd4db720c09eb84466e48e698e52ee66b24f"
+    },
+    {
+      "path": "src/fintube_hx/scan.py",
+      "sha256": "240020168e962cc392ad2c34c57feac7a04c6e15f7bcc8b533741c4dd8caa3aa"
+    },
+    {
+      "path": "src/fintube_hx/schema.py",
+      "sha256": "bb5583db9ab36a74023581da0e8fac7a97e8490bcc535d5749cbcf0232595a46"
+    },
+    {
+      "path": "src/fintube_hx/spreadsheet.py",
+      "sha256": "6f20996a23fae94a5501c5c0e7bafbc80e7c111f46e21b83fef1d450969fc1be"
+    },
+    {
+      "path": "src/fintube_hx/storage.py",
+      "sha256": "b399bbfb9cb754db521a673d164017966bc9832a2c33b556cf9d48216c2fe578"
+    },
+    {
+      "path": "src/fintube_hx/thermal.py",
+      "sha256": "d33284c490b2bc6523e3b39fc67d5ea4ceebfbe546e166881b378c018041f82a"
+    },
+    {
+      "path": "src/fintube_hx/units.py",
+      "sha256": "c9208fff0a50d47124edeafa99330deedc4568571ce4b4dc1898ab42fea5daf1"
+    },
+    {
+      "path": "src/fintube_hx/wang_plain_fin.py",
+      "sha256": "1ccb90d8bbc63f5964830d83ae20e480db793a5a9906da2c7f3fc2b2be2463f4"
+    },
+    {
+      "path": "src/fintube_hx/water.py",
+      "sha256": "df8796188a09714fd7ff9579f3393fdf22e879a468800fa146e4830122a14361"
+    },
+    {
+      "path": "src/fintube_hx.egg-info/dependency_links.txt",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "src/fintube_hx.egg-info/entry_points.txt",
+      "sha256": "cdc9e7400661657ccacd7454168dc061d8a0c9e2038a54c67ef22df2cf17acf2"
+    },
+    {
+      "path": "src/fintube_hx.egg-info/PKG-INFO",
+      "sha256": "9387517eed70a204da922c763f224f42a0b58e269bcc4801de1e5b7840e4b749"
+    },
+    {
+      "path": "src/fintube_hx.egg-info/requires.txt",
+      "sha256": "c19682531b34b1eed203829d5069a2a01a4de400cb3e2da7f1550f0085fae778"
+    },
+    {
+      "path": "src/fintube_hx.egg-info/SOURCES.txt",
+      "sha256": "60459eea6c09c9aeb253c6f96fed29693a94710fb689f119db1b5793c9d35b67"
+    },
+    {
+      "path": "src/fintube_hx.egg-info/top_level.txt",
+      "sha256": "5d57326a727760d70d5c650c046767ecbdb4db91819ff6dc08837423872e8fec"
+    },
+    {
+      "path": "tests/baseline-reference.json",
+      "sha256": "523611b98c3a459b3eb04bda85c77b40c0603c3ddf1d3aaa80dbd47911320ca0"
+    },
+    {
+      "path": "tests/test_community.py",
+      "sha256": "e64dc417be82e48abefb56640b71617203da2c6e4cdd7db84a0f14e1d87a8905"
+    },
+    {
+      "path": "tests/test_reference_evidence.py",
+      "sha256": "1b944b81b702f49aa7b81c762fb24567d9625995d125f3f1959119b457f31101"
+    },
+    {
+      "path": "tests/test_units_inverse.py",
+      "sha256": "bf5629c56ff4439812e64664b72618bccba443f827d06957b9a21a1a4b30dc83"
+    },
+    {
+      "path": "third_party_licenses/CoolProp/licenses/LICENSE",
+      "sha256": "33cfa17c9d0abe742bcbe532c52e79bc08704a0c30dbcc61dd76011b1ebe127e"
+    },
+    {
+      "path": "third_party_licenses/et_xmlfile/LICENCE.python",
+      "sha256": "4ccdaaebc0f44b83720ec0399bb7ab329adce067dd62f73c5535a2dc05628ab2"
+    },
+    {
+      "path": "third_party_licenses/et_xmlfile/LICENCE.rst",
+      "sha256": "0c84bb42f5d367e5ebf9fc2dde35b16141df5ee0fdc189250858bc6c5560f69e"
+    },
+    {
+      "path": "third_party_licenses/fluids/licenses/LICENSE.txt",
+      "sha256": "89e1ac506f4cae373e1f5c20700c73d69892cef189f6de8dd26301acaa0710aa"
+    },
+    {
+      "path": "third_party_licenses/ht/licenses/LICENSE.txt",
+      "sha256": "0066a88479661eb03701a3e1f9c32be428779a5f4ad7b6bbed7d6bc1fa36f7c4"
+    },
+    {
+      "path": "third_party_licenses/numpy/licenses/LICENSE.txt",
+      "sha256": "a804dff0ead9fadc5293456410bcbfc32bf024be9c4513459663fb7b442d2341"
+    },
+    {
+      "path": "third_party_licenses/numpy/licenses/numpy/_core/include/numpy/libdivide/LICENSE.txt",
+      "sha256": "d544761558b510866c21f7e8a2d5716fca76e0b98117e3b6b86314db7244d150"
+    },
+    {
+      "path": "third_party_licenses/numpy/licenses/numpy/_core/src/common/pythoncapi-compat/COPYING",
+      "sha256": "aea41976c720f91bd19725c16916a1ace40eb1ea42620d340e587a5de4bbcea0"
+    },
+    {
+      "path": "third_party_licenses/numpy/licenses/numpy/_core/src/highway/LICENSE",
+      "sha256": "d208152e2777ffd0126eacc1bd21c0320d69e4e6b622d21a2a12a47e8ef73763"
+    },
+    {
+      "path": "third_party_licenses/numpy/licenses/numpy/_core/src/multiarray/dragon4_LICENSE.txt",
+      "sha256": "b0fd592d4ead563148e3977e7b589169d46a5ef2ff133c755a81af880a3fc919"
+    },
+    {
+      "path": "third_party_licenses/numpy/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md",
+      "sha256": "a732977853530066790c42817087f4829b518dd98d340c916acbfd227e39d3cb"
+    },
+    {
+      "path": "third_party_licenses/numpy/licenses/numpy/_core/src/umath/svml/LICENSE",
+      "sha256": "585483905b13d4b42f800c55ba99e89d6e2e33ccd5f503e201c07531d148ff41"
+    },
+    {
+      "path": "third_party_licenses/numpy/licenses/numpy/fft/pocketfft/LICENSE.md",
+      "sha256": "8db000e158c162e7249787852d8c69764706502ccee725c06641b31c1e95c8af"
+    },
+    {
+      "path": "third_party_licenses/numpy/licenses/numpy/linalg/lapack_lite/LICENSE.txt",
+      "sha256": "19060ef465e1797d682ee0fc3081bd25ab1395e995e43d25c9d13c95d9a3cd6b"
+    },
+    {
+      "path": "third_party_licenses/numpy/licenses/numpy/ma/LICENSE",
+      "sha256": "d78dbb208b80d92b4d333e41a4baae50d12444f46e53199fa7726a91de6e2da7"
+    },
+    {
+      "path": "third_party_licenses/numpy/licenses/numpy/random/LICENSE.md",
+      "sha256": "b4bc2f4fa1c95778f1ed3dd8f14706bece399475b978f9f34b5d3cd72521b48a"
+    },
+    {
+      "path": "third_party_licenses/numpy/licenses/numpy/random/src/distributions/LICENSE.md",
+      "sha256": "cf5619f25b112d5ce7c896efffc8e610bcb345dfadcc19f2c1460aa48fff2c9e"
+    },
+    {
+      "path": "third_party_licenses/numpy/licenses/numpy/random/src/mt19937/LICENSE.md",
+      "sha256": "92c10699884321f1c2947fe2a70ab23b0fbf1507f756d89dd08f38c61fc3d4fa"
+    },
+    {
+      "path": "third_party_licenses/numpy/licenses/numpy/random/src/pcg64/LICENSE.md",
+      "sha256": "41190663b77bee5302386495a07b7eabfbfa571aa0ae2f11da6764162062fc4f"
+    },
+    {
+      "path": "third_party_licenses/numpy/licenses/numpy/random/src/philox/LICENSE.md",
+      "sha256": "322ac46d870c8aeead6c53adcccc839296fb3c8e456eae155081297daf7f8013"
+    },
+    {
+      "path": "third_party_licenses/numpy/licenses/numpy/random/src/sfc64/LICENSE.md",
+      "sha256": "28cad82ce1379dc529df30da78ec012d7d0d1d576b03ddcb93388aee53659f59"
+    },
+    {
+      "path": "third_party_licenses/numpy/licenses/numpy/random/src/splitmix64/LICENSE.md",
+      "sha256": "454ec7350e478e037061850b67395753b425b1cb0a34bbc26290b020bf89d763"
+    },
+    {
+      "path": "third_party_licenses/openpyxl/LICENCE.rst",
+      "sha256": "0c84bb42f5d367e5ebf9fc2dde35b16141df5ee0fdc189250858bc6c5560f69e"
+    },
+    {
+      "path": "third_party_licenses/python-hvac/LICENSE.md",
+      "sha256": "d9d5f242d7cb8692dbd2f4c1c85649da66ddb4b3294829b9b504c3081f90f1b4"
+    },
+    {
+      "path": "third_party_licenses/scipy/LICENSE.txt",
+      "sha256": "f0f5c56b298ec9795df1199edc328a987242716d14a1bde6813112e22dc15f99"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "sha256": "9af6eaf75ad50616e7878205e8bfecaa8244bcc5e92fc6857b0690be3d7e5152"
+    }
+  ]
+}

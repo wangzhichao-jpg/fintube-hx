@@ -1,0 +1,86 @@
+"""SI plain-continuous-fin / staggered smooth-tube geometry; no invented circuit route.
+Minimum-area expression adapted from python-hvac, Copyright (c) 2023 Tom
+Christiaens (MIT); full notice: third_party_licenses/python-hvac/LICENSE.md.
+"""
+from __future__ import annotations
+from copy import deepcopy
+import math
+
+
+def validate_geometry(value: dict, equal_circuits: bool = True) -> dict:
+    if not isinstance(value,dict):
+        raise ValueError('geometry must be an object for geometry-derived UA')
+    g=deepcopy(value)
+    allowed={'fin_type','tube_type','arrangement','rows','tubes_per_row','circuits_count','tube_length_m',
+             'tube_outer_diameter_m','tube_inner_diameter_m','transverse_pitch_m','longitudinal_pitch_m',
+             'fin_pitch_m','fin_thickness_m','fin_conductivity_w_m_k','tube_conductivity_w_m_k','tube_roughness_m',
+             'notes','drawing_reference'}
+    unknown=set(g)-allowed
+    if unknown:
+        raise ValueError('Unsupported active geometry fields: '+', '.join(sorted(unknown)))
+    if g.get('fin_type')!='plain' or g.get('tube_type')!='smooth' or g.get('arrangement')!='staggered':
+        raise NotImplementedError('Geometry baseline currently supports plain continuous fins and staggered smooth tubes only')
+    for key in ['rows','tubes_per_row','circuits_count']:
+        v=g.get(key)
+        if isinstance(v,bool) or not isinstance(v,int) or v<1:
+            raise ValueError(f'geometry.{key} must be a positive integer')
+    if g['rows']>6:
+        raise ValueError('Wang plain-fin baseline restricted to 1..6 rows')
+    if g['tubes_per_row']>500 or g['circuits_count']>500:
+        raise ValueError('Geometry exceeds baseline size limit')
+    for key in ['tube_length_m','tube_outer_diameter_m','tube_inner_diameter_m','transverse_pitch_m',
+                'longitudinal_pitch_m','fin_pitch_m','fin_thickness_m','fin_conductivity_w_m_k','tube_conductivity_w_m_k']:
+        v=g.get(key)
+        if isinstance(v,bool) or not isinstance(v,(int,float)) or not math.isfinite(v) or v<=0:
+            raise ValueError(f'geometry.{key} must be a finite positive SI number')
+        g[key]=float(v)
+    g.setdefault('tube_roughness_m',0.)
+    rough=g['tube_roughness_m']
+    if isinstance(rough,bool) or not isinstance(rough,(int,float)) or not math.isfinite(rough) or rough<0:
+        raise ValueError('geometry.tube_roughness_m must be finite and nonnegative')
+    if rough/g['tube_inner_diameter_m']>.05:
+        raise ValueError('Tube relative roughness outside this baseline')
+    if g['tube_inner_diameter_m']>=g['tube_outer_diameter_m']:
+        raise ValueError('Tube inner diameter must be smaller than outer diameter')
+    if g['fin_thickness_m']>=g['fin_pitch_m']:
+        raise ValueError('Fin thickness must be less than fin pitch')
+    if g['fin_pitch_m']>g['tube_length_m']:
+        raise ValueError('At least one equivalent fin pitch must fit the tube length')
+    collar=g['tube_outer_diameter_m']+2*g['fin_thickness_m']
+    diagonal=math.hypot(g['transverse_pitch_m']/2,g['longitudinal_pitch_m'])
+    if min(g['transverse_pitch_m'],diagonal)<=collar:
+        raise ValueError('Collar/tube collision in transverse or staggered spacing')
+    total=g['rows']*g['tubes_per_row']
+    if g['circuits_count']>total or (equal_circuits and total%g['circuits_count']):
+        raise ValueError('Equal-circuit baseline requires total tubes divisible by circuits_count')
+    return g
+
+
+def geometry_metrics(value: dict, equal_circuits: bool = True) -> dict:
+    g=validate_geometry(value,equal_circuits=equal_circuits)
+    nr,nt,nc=g['rows'],g['tubes_per_row'],g['circuits_count']
+    L,pt,pl=g['tube_length_m'],g['transverse_pitch_m'],g['longitudinal_pitch_m']
+    do,di,tf,pf=g['tube_outer_diameter_m'],g['tube_inner_diameter_m'],g['fin_thickness_m'],g['fin_pitch_m']
+    dc=do+2*tf;H=nt*pt;depth=nr*pl;total=nr*nt;nf=L/pf
+    a_face=L*H
+    # Staggered minimum-area expression adapted from MIT python-hvac geometry.py.
+    # Includes the outermost transverse gap rather than treating every gap as periodic.
+    gap_transverse=.5*(pt-dc)*(1-tf/pf)
+    gap_diagonal=math.hypot(pt/2,pl)-dc-(pt-dc)*tf/pf
+    gap=2*min(gap_transverse,gap_diagonal)
+    a_min=((nt-1)*gap+(pt-dc)*(1-tf/pf))*L
+    a_fin_faces=2*(H*depth-total*math.pi*dc**2/4)*nf
+    a_fin_edges=2*(H+depth)*tf*nf
+    a_fin=a_fin_faces+a_fin_edges
+    a_bare=math.pi*dc*L*(1-tf/pf)*total
+    a_out=a_fin+a_bare
+    if a_min<=0 or a_min>=a_face or a_fin<=0:
+        raise ValueError('Geometry produces nonphysical minimum flow or fin area')
+    dh=4*a_min*depth/a_out
+    return {'tube_count':total,'tubes_per_circuit':total//nc if equal_circuits else total/nc,'equivalent_fin_count':nf,
+            'width_m':L,'height_m':H,'air_depth_m':depth,'frontal_area_m2':a_face,
+            'minimum_air_area_m2':a_min,'free_area_ratio':a_min/a_face,
+            'collar_diameter_m':dc,'air_hydraulic_diameter_m':dh,
+            'fin_area_m2':a_fin,'bare_outer_area_m2':a_bare,'total_outer_area_m2':a_out,
+            'inner_area_m2':math.pi*di*L*total,'tube_path_length_m':L*total/nc,
+            'equivalent_annular_fin_outer_diameter_m':2*math.sqrt(pt*pl/math.pi)}
