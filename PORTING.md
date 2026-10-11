@@ -1,21 +1,53 @@
-# Public/private porting record
+# Model Scope & Integration Guide
 
-## Approved edition boundary
+This document describes the scope of the `fintube_hx` baseline models and guidelines for extending or integrating them into external workflows.
 
-User confirmed python-hvac as the reference and approved basic models public, actual tube networks and engineering enhancements private for the first release. Public original-code licence remains a publication decision; no remote publishing has occurred.
+---
 
-## What this candidate includes
+## 1. Supported Model Scope
 
-The nine source files listed in initial-port-provenance.json were extracted from the independently developed basic models. Network routing/imports were removed from water.py and refrigerant.py. The Community schema, engine, CLI, baseline inverse and XLSX layer are public-only implementations. Baseline inverse retains bounded search, exact-flow memoization, nonconverged/nonfinite rejection and final cold verification, without network seeds.
+The baseline package provides clean, reproducible reference models for fin-tube heat exchanger thermal rating:
 
-Only nine synthetic/analytical baseline examples are included. tests/baseline-reference.json contains numerical regression outputs and explicitly states that these are historical software results, not measurements. No network examples, enterprise data, proprietary manuals, full releases or original host logs are included.
+1. **Air-to-Water Heat Exchanger**
+   - **Input-UA Mode**: Fast thermal rating with user-supplied overall UA ($W/K$).
+   - **Geometric Mode**: Predicts overall conductance from tube and plain-fin dimensions using:
+     - Air side: Wang & Chi (2000) plain fin correlation.
+     - Water side: Hausen (laminar entry) and Gnielinski (turbulent) internal flow correlations, with Churchill friction factors.
+     - Sensible heating and wet cooling (condensation) regimes.
 
-Adapted MIT plain-fin/minimum-area expressions retain their source notices. Other libraries retain their supplied licences. No restricted EGSim or unconfirmed ACHP implementation is copied.
+2. **Refrigerant Evaporator & Condenser**
+   - **Input-UA Mode**: Fast rating based on refrigerant saturation properties and input overall conductance.
+   - Handles subcooled liquid, two-phase saturation, and superheated vapor regions.
 
-## Still open
+3. **Parametric & Inverse Solvers**
+   - Single-variable parameter scans over arbitrary inputs (air flow, fluid flow, inlet temperature, etc.).
+   - Inverse mass-flow rate targeting for specified outlet temperatures or superheat/subcooling.
 
-Professional now consumes this pinned shared core through tested adapters and compatibility imports under 软件研发/src/fintube_hx_pro. Duplicated baseline physical/geometry/property implementations were removed. Common boundary, solver and mass-flow-target contracts and the inverse engine are shared; engineering state seeds, tube marching, air-column models and capacity design remain private. See CORE_API.md. Professional consumes the installed wheel, with a version/API/SHA-256 lock, not a sibling source-path fallback.
+---
 
-Public API currently includes engine.run_case, engine.capabilities, schema.validate_case, scan.scan_case and native JSON/CSV/XLSX output. Inputs share schema version0.1 but the public validator is stricter and explicitly rejects inactive/unknown fields. The private validator must reconcile common-field rules during shared-core integration.
+## 2. Model Assumptions & Boundaries
 
-GUI forms, complete python-hvac example reproduction, licence approval, publication candidate audit and GitHub/Gitee repositories/releases are later milestones, not completed work.
+- **Fin Type**: Continuous plain flat fins with round tubes in a staggered layout. Enhanced surfaces (wavy, louvered, slit) and microchannel geometries are not covered by this baseline core.
+- **Airflow**: 1D uniform face velocity and row-by-row air mixing. Two-dimensional maldistribution and CFD velocity profile mappings are external to this core.
+- **Tube Circuiting**: The baseline models use lumped cross-counterflow formulations. Individual tube-by-tube network marching and header pressure balancing can be built on top of the provided resistance and property utilities.
+
+---
+
+## 3. Integrating with Other Software
+
+`fintube_hx` is designed as a standalone Python library that can easily integrate into larger engineering pipelines or optimization loops:
+
+```python
+from fintube_hx.engine import run_case
+from fintube_hx.schema import validate_case
+
+def evaluate_hx_design(params: dict) -> float:
+    case = build_case_from_params(params)
+    validate_case(case)
+    result = run_case(case)
+    if not result["converged"]:
+        raise ValueError("Calculation did not converge")
+    return result["heat_transfer_w"]
+```
+
+Inputs and outputs are standard JSON-serializable dictionaries, making it straightforward to wrap the core into REST APIs, GUI front-ends, or optimization frameworks.

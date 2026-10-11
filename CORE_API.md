@@ -1,15 +1,70 @@
-# Shared Core API 1 · 0.1.0.dev4
+# Core Architecture & API Specification
 
-Community is an independent MIT development prerelease published to the approved GitHub/Gitee repositories. Professional now consumes this pinned package; it does not carry a second copy of baseline equations.
+`fintube_hx` provides a modular, lightweight computational engine for fin-tube heat exchanger rating and inverse design. This document outlines the architecture, internal modules, and API contracts.
 
-Canonical shared modules: properties, thermal, geometry, geometry_performance, wang_plain_fin, water/refrigerant lumped models, inverse, storage, units and common schema boundary/solver/mass-flow-target validation. Professional compatibility files re-export canonical functions, and its water/refrigerant adapters route engineering models privately.
+---
 
-Public model entry remains engine.run_case and rejects actual tube networks, air-column fields and engineering capacity targets. normalize_boundaries accepts explicitly declared extension fields for schema composition only; it is not a private-model simulator.
+## 1. Module Hierarchy
 
-inverse.solve_mass_flow accepts an optional opaque continuation strategy with capture(case,result), seed.usable(case), evaluate(case,seed). Public code supplies no engineering seed or network solver. Final answers are cold-recomputed; biased or failed initial-state evaluations cannot publish an unchecked answer. Professional owns the actual NetworkSeed implementation.
+The package is organized into decoupled layers:
 
-Unit conversions explicitly name quantity/unit; gauge pressure needs a visible positive atmospheric absolute pressure. No default standard/outlet air-volume convention is inferred.
+- **`fintube_hx.properties`**  
+  Interface to CoolProp and humid air thermophysical properties. Handles single-phase transport properties, saturation curves, and phase equilibrium queries.
+- **`fintube_hx.thermal`**  
+  Fundamental heat and mass transfer building blocks, including sensible/latent heat exchange, wet coil contact factors, and condensate drain energy accounting.
+- **`fintube_hx.geometry` & `fintube_hx.wang_plain_fin`**  
+  Continuous plain-fin and staggered-tube geometry metrics (fin area, primary area, minimum free flow area, hydraulic diameter) and the Wang & Chi (2000) air-side Colburn $j$ and Fanning $f$ correlations.
+- **`fintube_hx.water` & `fintube_hx.refrigerant`**  
+  Coil rating implementations for liquid water coils, direct expansion evaporators, and air-cooled condensers.
+- **`fintube_hx.inverse`**  
+  Robust inverse solvers. Employs bounded 1D root-finding (Brent / bisection) to determine required mass flow rate for a target outlet air/fluid temperature, superheat, or subcooling.
+- **`fintube_hx.schema` & `fintube_hx.units`**  
+  Schema normalization, strict contract validation, and explicit engineering unit conversions.
+- **`fintube_hx.engine`**  
+  Top-level facade coordinating case validation, model dispatching, forward evaluation, and inverse solving.
+- **`fintube_hx.spreadsheet` & `fintube_hx.reporting`**  
+  Native Excel (.xlsx) and CSV export utilities for case snapshots, multi-run batches, and parametric scans.
 
-Professional records package/version/API as scalar provenance fields, preserving existing Excel/Word output contracts. Installation uses a local wheel with a SHA-256 lock; there is no sibling sys.path fallback or hidden import of the private package.
+---
 
-Original code is MIT licensed (see LICENSE); approved public targets are wangzhichao-jpg/fintube-hx on GitHub and bigtaurus/fintube-hx on Gitee. Publication must be checked, not inferred from target URLs. Basic Chinese GUI for Community, three unchanged python-hvac notebooks are now reproduced with independent scripts and locked reference data; exact Community refrigerant geometric comparison and release documentation remain later tasks.
+## 2. API Design Principles
+
+### Deterministic & Conservation-Enforcing
+Every rating calculation checks energy balance closure:
+$$\Delta \dot{Q} = |\dot{Q}_{\text{air}} - \dot{Q}_{\text{fluid}}|$$
+Energy residuals are explicitly recorded in results. Out-of-bounds states or non-converged iterations are reported as distinct non-converged states rather than fabricated approximations.
+
+### Snapshot-Based Immutability
+All calculations operate on self-contained JSON-serializable dictionaries. Solvers do not mutate their input cases. Output dictionaries contain complete metadata, execution timestamps, convergence metrics, and full copies of the requested inputs.
+
+### Strict Validation
+The schema validator (`validate_case`) strictly checks input fields against supported models before dispatching to numerical solvers. Unknown fields or mutually contradictory options (such as supplying both two-phase inlet temperature and enthalpy) are rejected with clear diagnostics.
+
+---
+
+## 3. Python Integration
+
+### Direct Case Evaluation
+```python
+from fintube_hx.engine import run_case
+from fintube_hx.storage import load_case
+
+case = load_case("examples/water_geometry.json")
+result = run_case(case)
+
+assert result["converged"]
+print(f"Capacity: {result['heat_transfer_w']:.2f} W")
+```
+
+### Inverse Mass Flow Solving
+When `case["target"]` is specified (e.g., target outlet temperature), `run_case` automatically engages the inverse solver:
+```json
+{
+  "target": {
+    "outlet_temperature_c": 12.0,
+    "mass_flow_bounds_kg_s": [0.01, 0.5],
+    "tolerance_k": 0.001
+  }
+}
+```
+The solver returns both the solved operating inputs and the final verified state.
