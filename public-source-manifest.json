@@ -5,6 +5,10 @@
   "original_license_status": "MIT_owner_approved",
   "files": [
     {
+      "path": ".gitattributes",
+      "sha256": "4ad9c360bc5294eb943fb6df20bcf6d7b4936ae07fb3299b51abeaf3b956c4e8"
+    },
+    {
       "path": ".github/workflows/ci.yml",
       "sha256": "44049a3f53d3302baf9bedd4b5f432d748a997776e8b0a917f0f78212a3eb4c2"
     },
