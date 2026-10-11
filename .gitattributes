@@ -1,0 +1,2 @@
+# Preserve reviewed bytes and SHA-256 evidence across Windows/Linux clones.
+* -text
