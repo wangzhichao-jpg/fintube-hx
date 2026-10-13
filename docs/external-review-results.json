@@ -1,0 +1,217 @@
+{
+  "before": {
+    "mapped_water": {
+      "q_w": 4363.485371587488,
+      "air_out_c": 16.772396859074377,
+      "water_out_c": 11.388722178944306,
+      "air_core_dp_pa": 15.471259789365769,
+      "water_straight_dp_pa": 2435.3694142246272,
+      "wet_fin_efficiency": 0.9317911562310575,
+      "dry_fin_efficiency": 0.9539863765615834,
+      "normalized_segments": 160
+    },
+    "wet_transition_test": {
+      "dew_c": 15.701489172227241,
+      "conditions_note": "Mapped reference input with RH changed from .47 to .50; water inlet swept, remaining fields fixed",
+      "series": [
+        {
+          "inlet_water_c": 12.5,
+          "q_w": 2973.870141032825,
+          "condensate_kg_s": 0.0003142959502918098,
+          "surface_policy": "wet_approximation"
+        },
+        {
+          "inlet_water_c": 16.5,
+          "q_w": 1725.2135666205895,
+          "condensate_kg_s": 0.0,
+          "surface_policy": "dry"
+        },
+        {
+          "inlet_water_c": 15.691489172227241,
+          "q_w": 1857.1778839136146,
+          "condensate_kg_s": 1.1650544185916575e-06,
+          "surface_policy": "wet_approximation"
+        },
+        {
+          "inlet_water_c": 15.71148917222724,
+          "q_w": 1851.6317274739467,
+          "condensate_kg_s": 0.0,
+          "surface_policy": "dry"
+        },
+        {
+          "inlet_water_c": 15.701389172227241,
+          "q_w": 1853.3306719627465,
+          "condensate_kg_s": 1.1657791078424996e-08,
+          "surface_policy": "wet_approximation"
+        },
+        {
+          "inlet_water_c": 15.70158917222724,
+          "q_w": 1853.2155105082122,
+          "condensate_kg_s": 0.0,
+          "surface_policy": "dry"
+        }
+      ]
+    },
+    "water_segments": [
+      {
+        "segments": 1,
+        "q_w": 4363.485371587488
+      },
+      {
+        "segments": 20,
+        "q_w": 4363.485371587488
+      }
+    ],
+    "single_phase_cells": [
+      {
+        "mass_flow_kg_s": 0.002,
+        "q_w": 73.84121356883168,
+        "fluid_out_c": 25.00000999996655,
+        "capacity_limited": true
+      },
+      {
+        "mass_flow_kg_s": 0.02,
+        "q_w": 362.2206853764368,
+        "fluid_out_c": 38.033904460775716,
+        "capacity_limited": false
+      }
+    ],
+    "diagonal_minimum_area": {
+      "geometry": {
+        "fin_type": "plain",
+        "tube_type": "smooth",
+        "arrangement": "staggered",
+        "rows": 2,
+        "tubes_per_row": 20,
+        "circuits_count": 4,
+        "tube_length_m": 0.5,
+        "tube_outer_diameter_m": 0.0095,
+        "tube_inner_diameter_m": 0.0087,
+        "transverse_pitch_m": 0.03,
+        "longitudinal_pitch_m": 0.0127,
+        "fin_pitch_m": 0.002,
+        "fin_thickness_m": 0.0001,
+        "fin_conductivity_w_m_k": 205.0,
+        "tube_conductivity_w_m_k": 385.0,
+        "tube_roughness_m": 0.0
+      },
+      "program_m2": 0.17948847086342476,
+      "independent_m2": 0.18931692232025352,
+      "relative_error_percent": -5.191533507080095,
+      "transverse_gap_m": 0.019284999999999997,
+      "two_diagonal_gaps_m": 0.018913097086342475
+    },
+    "nonmonotonic_bounds_message": "Target outlet state is unreachable within the supplied mass-flow bounds"
+  },
+  "after": {
+    "mapped_water": {
+      "q_w": 4363.485371587488,
+      "air_out_c": 16.772396859074377,
+      "water_out_c": 11.388722178944306,
+      "air_core_dp_pa": 15.471259789365769,
+      "water_straight_dp_pa": 2435.3694142246272,
+      "wet_fin_efficiency": 0.9317911562310575,
+      "dry_fin_efficiency": 0.9539863765615834,
+      "normalized_segments": 160
+    },
+    "wet_transition_test": {
+      "dew_c": 15.701489172227241,
+      "conditions_note": "Mapped reference input with RH changed from .47 to .50; water inlet swept, remaining fields fixed",
+      "series": [
+        {
+          "inlet_water_c": 12.5,
+          "q_w": 2973.870141032825,
+          "condensate_kg_s": 0.0003142959502918098,
+          "surface_policy": "wet_approximation"
+        },
+        {
+          "inlet_water_c": 16.5,
+          "q_w": 1725.2135666205895,
+          "condensate_kg_s": 0.0,
+          "surface_policy": "dry"
+        },
+        {
+          "inlet_water_c": 15.691489172227241,
+          "q_w": 1857.1778839136146,
+          "condensate_kg_s": 1.1650544185916575e-06,
+          "surface_policy": "wet_approximation"
+        },
+        {
+          "inlet_water_c": 15.71148917222724,
+          "q_w": 1851.6317274739467,
+          "condensate_kg_s": 0.0,
+          "surface_policy": "dry"
+        },
+        {
+          "inlet_water_c": 15.701389172227241,
+          "q_w": 1853.3306719627465,
+          "condensate_kg_s": 1.1657791078424996e-08,
+          "surface_policy": "wet_approximation"
+        },
+        {
+          "inlet_water_c": 15.70158917222724,
+          "q_w": 1853.2155105082122,
+          "condensate_kg_s": 0.0,
+          "surface_policy": "dry"
+        }
+      ]
+    },
+    "water_segments": [
+      {
+        "segments": 1,
+        "q_w": 4363.485371587488
+      },
+      {
+        "segments": 20,
+        "q_w": 4363.485371587488
+      }
+    ],
+    "single_phase_cells": [
+      {
+        "mass_flow_kg_s": 0.002,
+        "q_w": 73.84121356883168,
+        "fluid_out_c": 25.00000999996655,
+        "capacity_limited": true
+      },
+      {
+        "mass_flow_kg_s": 0.02,
+        "q_w": 362.2206853764368,
+        "fluid_out_c": 38.033904460775716,
+        "capacity_limited": false
+      }
+    ],
+    "diagonal_minimum_area": {
+      "geometry": {
+        "fin_type": "plain",
+        "tube_type": "smooth",
+        "arrangement": "staggered",
+        "rows": 2,
+        "tubes_per_row": 20,
+        "circuits_count": 4,
+        "tube_length_m": 0.5,
+        "tube_outer_diameter_m": 0.0095,
+        "tube_inner_diameter_m": 0.0087,
+        "transverse_pitch_m": 0.03,
+        "longitudinal_pitch_m": 0.0127,
+        "fin_pitch_m": 0.002,
+        "fin_thickness_m": 0.0001,
+        "fin_conductivity_w_m_k": 205.0,
+        "tube_conductivity_w_m_k": 385.0,
+        "tube_roughness_m": 0.0
+      },
+      "program_m2": 0.18931692232025352,
+      "independent_m2": 0.18931692232025352,
+      "relative_error_percent": 0.0,
+      "transverse_gap_m": 0.019284999999999997,
+      "two_diagonal_gaps_m": 0.018913097086342475
+    },
+    "nonmonotonic_bounds_message": "Target is not bracketed by the supplied mass-flow endpoints; interior roots of a nonmonotonic response are not excluded"
+  },
+  "source_commit_reviewed": "e8c603aa3df001fb089062021c7a1659035c1d17",
+  "new_source_version": "0.1.0.dev5",
+  "tests": {
+    "passed": 56,
+    "original": 48,
+    "new": 8
+  }
+}

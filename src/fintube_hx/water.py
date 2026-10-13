@@ -95,6 +95,8 @@ def simulate_water(case: dict) -> dict:
         "energy_balance_relative_error": abs(fluid_heat - air_net) / max(abs(fluid_heat), 1.0),
         "iterations": iteration, "converged": converged, "warnings": warnings,
         "segments": [], "air_surface_condition": "wet_approximation" if wet else "dry",
+        "numerical_controls": {"segments_requested": c["model"]["segments"],
+                               "segments_applied": False, "water_model": "lumped"},
     }
     if geometry_detail:
         result["geometry_model"] = geometry_detail

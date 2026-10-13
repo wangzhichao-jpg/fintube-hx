@@ -1,2 +1,0 @@
-[console_scripts]
-fintube-hx = fintube_hx.cli:main

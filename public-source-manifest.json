@@ -1,8 +1,9 @@
 {
-  "version": "0.1.0.dev4",
+  "version": "0.1.0.dev5",
   "edition": "community",
-  "publication_status": "local_review_not_published",
+  "publication_status": "reviewed_public_source_candidate",
   "original_license_status": "MIT_owner_approved",
+  "review": "docs/EXTERNAL_REVIEW_2026-10-13.md",
   "files": [
     {
       "path": ".gitattributes",
@@ -22,7 +23,39 @@
     },
     {
       "path": "CORE_API.md",
-      "sha256": "79356d3a18eae0bf24dba5303854ca0b0df6ff5cf26fefa15851dc4d10793734"
+      "sha256": "4d47c198ce511fc82e5afbdd100bf4b30d9c1c163c59bc2cb94d063c4e61bcae"
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "0e636cab3ff14be14fb3a4efcf107a7a9295b046260291b55701b0d2f4cfd4c3"
+    },
+    {
+      "path": "PORTING.md",
+      "sha256": "955661fbba2be962313313558d3a47bc80edf3c8596e0ce9e5f5ec4f12837c94"
+    },
+    {
+      "path": "README.md",
+      "sha256": "ff283921618fffb6e58e6b4d5f6631ed905f5ea326b5e07f693099bdc2fe1c7d"
+    },
+    {
+      "path": "README.zh-CN.md",
+      "sha256": "5657c81bfe08fb0ad837830ee9b20847445699b50e847f74c5c054580131a6f7"
+    },
+    {
+      "path": "RELEASE_CHECKLIST.md",
+      "sha256": "76c84d7f4673a1d19d0201d56699052bcadcef02bed855e225fd9384ffb40d80"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "sha256": "9af6eaf75ad50616e7878205e8bfecaa8244bcc5e92fc6857b0690be3d7e5152"
+    },
+    {
+      "path": "docs/EXTERNAL_REVIEW_2026-10-13.md",
+      "sha256": "a4a8747ac7584bb683e75826aceb100d99fc59190649246535783f868c9a1df7"
+    },
+    {
+      "path": "docs/external-review-results.json",
+      "sha256": "92e1c391ec82bcb4da7737f89626906ae8c9af6cf06672b035c88d09240537d7"
     },
     {
       "path": "examples/condenser.json",
@@ -65,20 +98,12 @@
       "sha256": "82b72c6f55cfb4c6095a52997a1cf3f8053102424ab3c04a80bba92e70f294ed"
     },
     {
-      "path": "LICENSE",
-      "sha256": "0e636cab3ff14be14fb3a4efcf107a7a9295b046260291b55701b0d2f4cfd4c3"
-    },
-    {
-      "path": "PORTING.md",
-      "sha256": "955661fbba2be962313313558d3a47bc80edf3c8596e0ce9e5f5ec4f12837c94"
-    },
-    {
       "path": "pyproject.toml",
-      "sha256": "41e1c0c41fa2e309fea8b511bf96a22ed05ad5e0e3c7e04a5281e4b2753a0e99"
+      "sha256": "5d051c9f2d531dbb530ea08fe32b7078a13260d15870ea3df3bf4c36b06c2400"
     },
     {
-      "path": "README.md",
-      "sha256": "6a33a24090fc6fc29110325cf4c5cd048aed31e8a404339773193867033a2e3a"
+      "path": "references/python-hvac/README.md",
+      "sha256": "3316bae66268d0cf03f1ad9131bd531c8ba01d2c91384c725311d922fa061571"
     },
     {
       "path": "references/python-hvac/condenser.json",
@@ -87,10 +112,6 @@
     {
       "path": "references/python-hvac/evaporator.json",
       "sha256": "272a7a38c87d936f59d5eff7c0d27427f74cb41bbb549e2aa117593db063c9ac"
-    },
-    {
-      "path": "references/python-hvac/README.md",
-      "sha256": "2fced9451e2f701b0c36a3fc0d322bffed45d6bfca3dd4bceed01dbf78e8ce57"
     },
     {
       "path": "references/python-hvac/reproduce.py",
@@ -117,16 +138,12 @@
       "sha256": "a23fa95c264555342b028b881f0aae758d0003e4b15e3188362d68c2c751bbdb"
     },
     {
-      "path": "RELEASE_CHECKLIST.md",
-      "sha256": "76c84d7f4673a1d19d0201d56699052bcadcef02bed855e225fd9384ffb40d80"
-    },
-    {
       "path": "requirements-development-lock.txt",
       "sha256": "1d685ee8f427506ef70a7c2efd08c8d7ee1d52580e449acc213c348f6c91c525"
     },
     {
       "path": "src/fintube_hx/__init__.py",
-      "sha256": "97530f1b2be4c60c306b5c65b374d39098c0f7eb88469fc9a88adda06100fd2a"
+      "sha256": "a8e25e6ccbc53bef4b3e04e784d13527b60b82ce47a366c70fcaed39b2182e62"
     },
     {
       "path": "src/fintube_hx/__main__.py",
@@ -142,7 +159,7 @@
     },
     {
       "path": "src/fintube_hx/geometry.py",
-      "sha256": "139ca9fbcef0d7f1fd379ad64fe7f7ede8d13c5f7d36581a5fa513f60e4a556b"
+      "sha256": "c7b1abe0d1a29b0dccc113f709875dced31b9037358b1db523d307eb49b17e21"
     },
     {
       "path": "src/fintube_hx/geometry_performance.py",
@@ -150,7 +167,7 @@
     },
     {
       "path": "src/fintube_hx/inverse.py",
-      "sha256": "53eab0048b57f966442327a05660f6640c36d5639952bed39929cec3b40888a6"
+      "sha256": "e27afe0be7cd693596c83349ec7e596612f1b509833f7bd0e64c9a6fda002a98"
     },
     {
       "path": "src/fintube_hx/properties.py",
@@ -194,31 +211,7 @@
     },
     {
       "path": "src/fintube_hx/water.py",
-      "sha256": "df8796188a09714fd7ff9579f3393fdf22e879a468800fa146e4830122a14361"
-    },
-    {
-      "path": "src/fintube_hx.egg-info/dependency_links.txt",
-      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
-    },
-    {
-      "path": "src/fintube_hx.egg-info/entry_points.txt",
-      "sha256": "cdc9e7400661657ccacd7454168dc061d8a0c9e2038a54c67ef22df2cf17acf2"
-    },
-    {
-      "path": "src/fintube_hx.egg-info/PKG-INFO",
-      "sha256": "9387517eed70a204da922c763f224f42a0b58e269bcc4801de1e5b7840e4b749"
-    },
-    {
-      "path": "src/fintube_hx.egg-info/requires.txt",
-      "sha256": "c19682531b34b1eed203829d5069a2a01a4de400cb3e2da7f1550f0085fae778"
-    },
-    {
-      "path": "src/fintube_hx.egg-info/SOURCES.txt",
-      "sha256": "60459eea6c09c9aeb253c6f96fed29693a94710fb689f119db1b5793c9d35b67"
-    },
-    {
-      "path": "src/fintube_hx.egg-info/top_level.txt",
-      "sha256": "5d57326a727760d70d5c650c046767ecbdb4db91819ff6dc08837423872e8fec"
+      "sha256": "43d0589bbbc20189513726f4b050cb176e34bc3efbfd05e8f9f1f64837e131cc"
     },
     {
       "path": "tests/baseline-reference.json",
@@ -227,6 +220,10 @@
     {
       "path": "tests/test_community.py",
       "sha256": "e64dc417be82e48abefb56640b71617203da2c6e4cdd7db84a0f14e1d87a8905"
+    },
+    {
+      "path": "tests/test_external_review.py",
+      "sha256": "8bce188cd5462cbd40d2c7e2d6f00d905488836ea3ae426a5f8bf112be2895a5"
     },
     {
       "path": "tests/test_reference_evidence.py",
@@ -337,8 +334,8 @@
       "sha256": "f0f5c56b298ec9795df1199edc328a987242716d14a1bde6813112e22dc15f99"
     },
     {
-      "path": "THIRD_PARTY_NOTICES.md",
-      "sha256": "9af6eaf75ad50616e7878205e8bfecaa8244bcc5e92fc6857b0690be3d7e5152"
+      "path": "tools/reproduce_external_review.py",
+      "sha256": "98d385dcfb32b537af78fe8d2d240d5ceacb8acad3417bd921e332e2f8506531"
     }
   ]
 }

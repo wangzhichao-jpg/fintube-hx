@@ -17,7 +17,7 @@ The package is organized into decoupled layers:
 - **`fintube_hx.water` & `fintube_hx.refrigerant`**  
   Coil rating implementations for liquid water coils, direct expansion evaporators, and air-cooled condensers.
 - **`fintube_hx.inverse`**  
-  Robust inverse solvers. Employs bounded 1D root-finding (Brent / bisection) to determine required mass flow rate for a target outlet air/fluid temperature, superheat, or subcooling.
+  Bounded 1D Brent root-finding for water outlet temperature, refrigerant superheat or subcooling. Outlet-air-temperature targets are not implemented. A user bracket selects one root; monotonicity and global uniqueness are not certified.
 - **`fintube_hx.schema` & `fintube_hx.units`**  
   Schema normalization, strict contract validation, and explicit engineering unit conversions.
 - **`fintube_hx.engine`**  
