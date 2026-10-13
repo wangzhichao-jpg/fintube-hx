@@ -9,7 +9,12 @@ from scipy.optimize import brentq
 
 
 def solve_mass_flow(case,target_key,output,simulate,xtol=1e-9,*,continuation=None):
-    """continuation.capture(case,result)->seed, seed.usable(case), evaluate(case,seed)."""
+    """Solve one root bracketed by the user bounds; monotonicity is not assumed.
+
+    Same-sign endpoints do not prove that interior roots are absent. The caller
+    must supply a bracket for the desired root of a nonmonotonic response.
+    continuation.capture(case,result)->seed, seed.usable(case), evaluate(case,seed).
+    """
     target=case['target'];goal=target[target_key];bounds=target['mass_flow_bounds_kg_s'];tolerance=target.get('tolerance_k',.001)
     forward=deepcopy(case);forward.pop('target',None)
     cache={};trace=[];cache_hits=0;warm_enabled=continuation is not None
@@ -42,7 +47,9 @@ def solve_mass_flow(case,target_key,output,simulate,xtol=1e-9,*,continuation=Non
         return residual
     left,right=evaluate(bounds[0]),evaluate(bounds[1])
     if abs(left)<=tolerance and abs(right)<=tolerance:raise ValueError('Target does not determine a unique mass flow within these bounds')
-    if left*right>0:raise ValueError('Target outlet state is unreachable within the supplied mass-flow bounds')
+    if left*right>0:
+        raise ValueError('Target is not bracketed by the supplied mass-flow endpoints; '
+                         'interior roots of a nonmonotonic response are not excluded')
     class TargetReached(Exception):
         def __init__(self,flow):self.flow=flow
     def root(phase='search'):
@@ -59,6 +66,7 @@ def solve_mass_flow(case,target_key,output,simulate,xtol=1e-9,*,continuation=Non
     result=cache[flow][0];result['operating_inputs']=deepcopy(forward)
     result['target_solution']={'mass_flow_kg_s':flow,target_key:goal,'residual_k':error,
         'evaluations':sum(len(t['attempts']) for t in trace),'cache_hits':cache_hits,'cold_verified':True,
+        'root_selection':'one_root_in_supplied_bracket','uniqueness_verified':False,
         'total_forward_iterations':sum(a.get('iterations',0) for t in trace for a in t['attempts']),
         'forward_elapsed_s':sum(a['elapsed_s'] for t in trace for a in t['attempts']),'evaluation_trace':trace}
     return result

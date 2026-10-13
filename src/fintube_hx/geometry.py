@@ -66,7 +66,9 @@ def geometry_metrics(value: dict, equal_circuits: bool = True) -> dict:
     # Staggered minimum-area expression adapted from MIT python-hvac geometry.py.
     # Includes the outermost transverse gap rather than treating every gap as periodic.
     gap_transverse=.5*(pt-dc)*(1-tf/pf)
-    gap_diagonal=math.hypot(pt/2,pl)-dc-(pt-dc)*tf/pf
+    # Fin blockage follows the same diagonal clear gap, not the transverse one.
+    # Both candidate flow cuts have the axial open fraction (1 - tf/pf).
+    gap_diagonal=(math.hypot(pt/2,pl)-dc)*(1-tf/pf)
     gap=2*min(gap_transverse,gap_diagonal)
     a_min=((nt-1)*gap+(pt-dc)*(1-tf/pf))*L
     a_fin_faces=2*(H*depth-total*math.pi*dc**2/4)*nf

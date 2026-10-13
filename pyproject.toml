@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fintube-hx"
-version = "0.1.0.dev4"
+version = "0.1.0.dev5"
 description = "Standalone Community fin-tube heat exchanger baseline candidate"
 license = "MIT"
 license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md", "third_party_licenses/**/*"]
