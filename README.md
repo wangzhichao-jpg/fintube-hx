@@ -57,7 +57,7 @@ print(result["heat_transfer_w"], result["fluid_out"]["temperature_c"])
 
 ## Current engineering scope
 
-The water wet/dry policy uses inlet water temperature and a contact approximation, not local wall temperature or partially wet area. Air properties are inlet-based; water properties use an iterated mean temperature. Collar diameter is approximated as OD + 2×fin thickness; equivalent fin count is L/fin pitch. The outer-edge geometry is idealized.
+The water wet/dry policy uses inlet water temperature and a contact approximation, not local wall temperature or partially wet area. Air properties are inlet-based; water properties use an iterated mean temperature. Wang uses the fin-collar diameter, not the bare-tube OD. For the equal-thickness collar convention this is Dc = OD + 2×fin thickness; actual formed collar dimensions are not independently specified in this baseline. Equivalent fin count is L/fin pitch. The outer-edge geometry is idealized.
 
 There are no actual tube-route networks, row-by-row crossflow, intermediate split/merge junctions, brine properties, louver/wavy fins, enhanced tubes, fouling/contact resistances, or frost model. Evaporation at/below 0°C is rejected. Correlation range checks reject extrapolation rather than silently clipping geometry.
 
@@ -65,7 +65,9 @@ There are no actual tube-route networks, row-by-row crossflow, intermediate spli
 
 [`references/python-hvac/`](references/python-hvac/README.md) contains a pinned source reproduction and a mapped water case. The mapped case produces **4363.49 W**, versus **4084.46 W** in the reproduced reference (+6.83%); this is a **software comparison with differing geometry/model definitions**, not a measured accuracy result or a fitted calibration.
 
-The [external review response](docs/EXTERNAL_REVIEW_2026-10-13.md) records confirmed issues, corrections and reasons for disputed claims. Version **0.1.0.dev5** corrects fin blockage in the diagonal minimum-flow gap and the misleading inverse-bracket error message; existing transverse-gap reference capacities are unchanged.
+For lumped refrigerant models, an omitted `solver.max_iterations` defaults to `max(200, 2*segments + 20)`. An explicit limit is never increased; a low budget is disclosed and an unconverged run still exits with code 2. Version **0.1.0.dev6** adds this budget correction; it does not change heat-transfer equations.
+
+The [v3 follow-up](docs/EXTERNAL_REVIEW_V3.md) records the controlled wet-branch diagnostic and corrected current-version status. The [external review response](docs/EXTERNAL_REVIEW_2026-10-13.md) records confirmed issues, corrections and reasons for disputed claims. Version **0.1.0.dev5** corrects fin blockage in the diagonal minimum-flow gap and the misleading inverse-bracket error message; existing transverse-gap reference capacities are unchanged.
 
 ## License
 

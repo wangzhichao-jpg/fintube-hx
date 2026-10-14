@@ -3,7 +3,7 @@ from __future__ import annotations
 from copy import deepcopy
 import math
 from scipy.optimize import brentq
-from .schema import validate_case
+from .schema import validate_case, recommended_iteration_budget
 from .properties import air_state, air_mass_flow, fluid_pt, fluid_ph, saturation
 from .thermal import contact_air, LIQUID_WATER_CP
 
@@ -98,6 +98,9 @@ def simulate_refrigerant(case: dict) -> dict:
         "有效表面温度取段内制冷剂温度均值，湿段使用接触因子近似；未实现严格部分湿翅片。",
         "凝水焓按4180*T、凝水温度取有效表面温度；低温结霜、局部压降与支路分配未实现。",
     ]
+    recommended=recommended_iteration_budget(c)
+    if max_iter<recommended:
+        warnings.append(f"迭代预算{max_iter}低于{n}分段的建议值{recommended}；保留显式上限，细网格可能未收敛。")
     if bound_count:
         warnings.append(f"{bound_count}个分段触及温差容量界限，接触因子受到物理容量截断。")
     if not converged:
@@ -114,6 +117,9 @@ def simulate_refrigerant(case: dict) -> dict:
         "sensible_heat_w": abs(m_da * ain["cp_j_kg_da_k"] * (ain["t_db_c"] - aout["t_db_c"])),
         "energy_balance_relative_error": balance, "iterations": iteration,
         "converged": converged, "warnings": warnings, "segments": cells,
+        "iteration_budget": {"configured_max_iterations": max_iter,
+                             "recommended_max_iterations": recommended,
+                             "segments": n, "explicit_limit_not_overridden": True},
     }
     vapor_sat = saturation(f["name"], f["pressure_pa"], 1.0)
     liquid_sat = saturation(f["name"], f["pressure_pa"], 0.0)

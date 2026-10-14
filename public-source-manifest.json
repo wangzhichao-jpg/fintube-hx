@@ -1,9 +1,9 @@
 {
-  "version": "0.1.0.dev5",
+  "version": "0.1.0.dev6",
   "edition": "community",
   "publication_status": "reviewed_public_source_candidate",
   "original_license_status": "MIT_owner_approved",
-  "review": "docs/EXTERNAL_REVIEW_2026-10-13.md",
+  "review": "docs/EXTERNAL_REVIEW_V3.md",
   "files": [
     {
       "path": ".gitattributes",
@@ -35,11 +35,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "ff283921618fffb6e58e6b4d5f6631ed905f5ea326b5e07f693099bdc2fe1c7d"
+      "sha256": "d55ffbda1dec028f737c90fd7671b3c37c9b1297a1eb0e9068b7397d2150de68"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "5657c81bfe08fb0ad837830ee9b20847445699b50e847f74c5c054580131a6f7"
+      "sha256": "d48a7fd8d9aebc1c1aec6c1dae3f5a325032ce24cabc68b965ef3302722ce408"
     },
     {
       "path": "RELEASE_CHECKLIST.md",
@@ -52,6 +52,10 @@
     {
       "path": "docs/EXTERNAL_REVIEW_2026-10-13.md",
       "sha256": "a4a8747ac7584bb683e75826aceb100d99fc59190649246535783f868c9a1df7"
+    },
+    {
+      "path": "docs/EXTERNAL_REVIEW_V3.md",
+      "sha256": "03209c5ae5ad21e3dda4da1b53ff8dda945efffb5ff00d2b6bbd8f83018da58c"
     },
     {
       "path": "docs/external-review-results.json",
@@ -99,7 +103,7 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256": "5d051c9f2d531dbb530ea08fe32b7078a13260d15870ea3df3bf4c36b06c2400"
+      "sha256": "890994d6faf1d1c658573b204f7e92a8ef3498a04cee1ebe8c50b2b54359e31a"
     },
     {
       "path": "references/python-hvac/README.md",
@@ -143,7 +147,7 @@
     },
     {
       "path": "src/fintube_hx/__init__.py",
-      "sha256": "a8e25e6ccbc53bef4b3e04e784d13527b60b82ce47a366c70fcaed39b2182e62"
+      "sha256": "4e8c297dec20e6bd4c3b295b7926ca63d581deaccedd78b2aafc2d8492ea396d"
     },
     {
       "path": "src/fintube_hx/__main__.py",
@@ -163,7 +167,7 @@
     },
     {
       "path": "src/fintube_hx/geometry_performance.py",
-      "sha256": "6d0ed1efd6b12ba4a18acad938a1e9d94e153e1be2f86dfa21deaa753a4dfa25"
+      "sha256": "e5a4b67ed5ef46a6840b3e9f7ab4994c5a13c55798bc925b1374a1a5ae5fb320"
     },
     {
       "path": "src/fintube_hx/inverse.py",
@@ -175,7 +179,7 @@
     },
     {
       "path": "src/fintube_hx/refrigerant.py",
-      "sha256": "d812d4049cc799174a217f963915efe96ef714304e23fe17ee94d1041a7e257b"
+      "sha256": "dbce651252fce6f3c681d27b1c552251f1805acb8f2bbc15e6677320e172e83d"
     },
     {
       "path": "src/fintube_hx/reporting.py",
@@ -187,7 +191,7 @@
     },
     {
       "path": "src/fintube_hx/schema.py",
-      "sha256": "bb5583db9ab36a74023581da0e8fac7a97e8490bcc535d5749cbcf0232595a46"
+      "sha256": "44c52b333b16f024aa86248c7f48049061aab9aa4ba444d9f8351466716491f4"
     },
     {
       "path": "src/fintube_hx/spreadsheet.py",
@@ -224,6 +228,10 @@
     {
       "path": "tests/test_external_review.py",
       "sha256": "8bce188cd5462cbd40d2c7e2d6f00d905488836ea3ae426a5f8bf112be2895a5"
+    },
+    {
+      "path": "tests/test_iteration_budget.py",
+      "sha256": "d1d155062aa4dc36ff3518333c7c5a6a53ac5832ea1456d14fe046f772e418dd"
     },
     {
       "path": "tests/test_reference_evidence.py",
