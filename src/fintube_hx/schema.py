@@ -53,9 +53,21 @@ def normalize_boundaries(case,*,extra_case_fields=(),extra_air_fields=()):
     return c
 
 
+def recommended_iteration_budget(c):
+    """Budget for axial counterflow information propagation, not a guarantee.
+
+    Only the lumped refrigerant model uses model.segments. Actual tube
+    networks keep their independent convergence policy.
+    """
+    model=c['model']
+    if c['kind']!='water' and model.get('refrigerant_model','lumped')=='lumped':
+        return max(200,2*model.get('segments',80)+20)
+    return 200
+
+
 def normalize_solver(c):
     solver=c.setdefault('solver',{});check_keys(solver,{'max_iterations','tolerance_k'},'solver')
-    n=solver.setdefault('max_iterations',200)
+    n=solver.setdefault('max_iterations',recommended_iteration_budget(c))
     if isinstance(n,bool) or not isinstance(n,int) or not 1<=n<=5000:raise ValueError('solver.max_iterations must be an integer in 1..5000')
     solver['tolerance_k']=number(solver.get('tolerance_k',1e-5),'solver.tolerance_k',1e-9,1)
 
