@@ -81,7 +81,9 @@ def water_geometry_performance(case: dict, water_temperature_c: float) -> dict:
     air_dp=factors['fanning_friction_factor']*4*metrics['air_depth_m']/metrics['air_hydraulic_diameter_m']*G**2/(2*rho_air)
     warnings.extend(['几何水盘管仍采用整体等效逆流；不是逐管/排间交叉流网络。',
                      '理想芯体边界：总高=每排管数×横向管距、空气深度=排数×纵向管距；实际边界尚未自由定义。',
-                     '套管直径采用等厚套管口径Dc=Do+2tf；等效片数=管长/片距；实际成形套管尺寸和加工片数未独立输入。',
+                     ('套管直径采用等厚套管口径Dc=Do+2tf；翅片面积按输入实际片数fin_count计算；实际成形套管尺寸未独立输入。'
+                      if 'fin_count' in g else
+                      '套管直径采用等厚套管口径Dc=Do+2tf；等效片数=管长/片距（可用fin_count输入实际片数）；实际成形套管尺寸未独立输入。'),
                      '连续平翅片效率采用等面积环形翅片近似；无接触热阻、污垢和严格部分湿翅片。',
                      '空气物性取入口，水物性取迭代平均温度；不含壁温修正。',
                      '压降仅预测空气芯体摩擦和水侧直管摩擦，不含U弯/集管/局部损失；未耦合沿程压力状态。',

@@ -1,9 +1,9 @@
 {
-  "version": "0.1.0.dev6",
+  "version": "0.1.0.dev7",
   "edition": "community",
   "publication_status": "reviewed_public_source_candidate",
   "original_license_status": "MIT_owner_approved",
-  "review": "docs/EXTERNAL_REVIEW_V3.md",
+  "review": "docs/EXTERNAL_REVIEW_STATUS.md",
   "files": [
     {
       "path": ".gitattributes",
@@ -23,7 +23,7 @@
     },
     {
       "path": "CORE_API.md",
-      "sha256": "4d47c198ce511fc82e5afbdd100bf4b30d9c1c163c59bc2cb94d063c4e61bcae"
+      "sha256": "9fed696e539fa7551e30a07384ff0f10fc2971a6f8113f6dca978e3c35c005f3"
     },
     {
       "path": "LICENSE",
@@ -35,11 +35,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "fd20902a48f4efecf44838af13b08bcef9edd7ffc063b2bdae8ec05bb247ea90"
+      "sha256": "ec527f1152bbee6c3daeabfea934c2b8f94e7e048e458bba6785f422c55565a0"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "c0bfb7c01e97d50883bd7345660a16f58b00872d3c13ce0cac7bffbf02a6cda4"
+      "sha256": "4cb4323816325f62fbbbc13d26d732344c2e0443e27d1392ddfc6fea984d460e"
     },
     {
       "path": "RELEASE_CHECKLIST.md",
@@ -52,6 +52,10 @@
     {
       "path": "docs/EXTERNAL_REVIEW_2026-10-13.md",
       "sha256": "a4a8747ac7584bb683e75826aceb100d99fc59190649246535783f868c9a1df7"
+    },
+    {
+      "path": "docs/EXTERNAL_REVIEW_STATUS.md",
+      "sha256": "7f422ead2e97997caa2eaea16c979bf3736ba3ac86f404b119573f0844daa330"
     },
     {
       "path": "docs/EXTERNAL_REVIEW_V3.md",
@@ -107,7 +111,7 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256": "ba2922487c4a0412e00b8375d3271ed3d087290598fab4693b56edfd2460cb00"
+      "sha256": "9c80aa3eaca3a8acbee058eb2881372045b8f1628a9be23ca541b36cbd17e89b"
     },
     {
       "path": "references/python-hvac/README.md",
@@ -151,7 +155,7 @@
     },
     {
       "path": "src/fintube_hx/__init__.py",
-      "sha256": "4e8c297dec20e6bd4c3b295b7926ca63d581deaccedd78b2aafc2d8492ea396d"
+      "sha256": "b2d158dbe4c045be8ac36bf68ef340d2eda91898f0c4e9ea9a11251495b7e32f"
     },
     {
       "path": "src/fintube_hx/__main__.py",
@@ -163,15 +167,19 @@
     },
     {
       "path": "src/fintube_hx/engine.py",
-      "sha256": "39d3c570dc3b5fac37073567fd28ab47576f548b16e74476b57c1d8c5e902e5b"
+      "sha256": "7c71c669149d7c1697e93ec322430893c16f91a21ac82476cec831b0ed7d671e"
+    },
+    {
+      "path": "src/fintube_hx/exposed_tubes.py",
+      "sha256": "d19c1e1ad798f2a7509f7ef08bb70dee3e9aee06a74a14cc27d4ae679559eb6c"
     },
     {
       "path": "src/fintube_hx/geometry.py",
-      "sha256": "c7b1abe0d1a29b0dccc113f709875dced31b9037358b1db523d307eb49b17e21"
+      "sha256": "8b82aaba3663d1f1345cd07e93d8811fe8f437112ab4fd502cc1f5d29eb23f45"
     },
     {
       "path": "src/fintube_hx/geometry_performance.py",
-      "sha256": "e5a4b67ed5ef46a6840b3e9f7ab4994c5a13c55798bc925b1374a1a5ae5fb320"
+      "sha256": "f30595d93e65d049af4edfe9d286f7928e1540dce800d9ce9b804967c7c5520f"
     },
     {
       "path": "src/fintube_hx/inverse.py",
@@ -195,7 +203,7 @@
     },
     {
       "path": "src/fintube_hx/schema.py",
-      "sha256": "44c52b333b16f024aa86248c7f48049061aab9aa4ba444d9f8351466716491f4"
+      "sha256": "6243851b4cd0c917f71c261e2f0ddd104eb24acf6df2e6c4c3fd0486896e35af"
     },
     {
       "path": "src/fintube_hx/spreadsheet.py",
@@ -219,7 +227,7 @@
     },
     {
       "path": "src/fintube_hx/water.py",
-      "sha256": "43d0589bbbc20189513726f4b050cb176e34bc3efbfd05e8f9f1f64837e131cc"
+      "sha256": "b8a34e8a5784cdf0ffc787a0e1023822cf6d3aaf323596df59b2c248aa36058b"
     },
     {
       "path": "tests/baseline-reference.json",
@@ -234,8 +242,16 @@
       "sha256": "8bce188cd5462cbd40d2c7e2d6f00d905488836ea3ae426a5f8bf112be2895a5"
     },
     {
+      "path": "tests/test_fin_count_exposed.py",
+      "sha256": "d82bec5b65a02005bc3fe99bc62c33e4ddef22f873557a93ce81f7f46a6eafe8"
+    },
+    {
       "path": "tests/test_iteration_budget.py",
       "sha256": "d1d155062aa4dc36ff3518333c7c5a6a53ac5832ea1456d14fe046f772e418dd"
+    },
+    {
+      "path": "tests/test_measured_validation.py",
+      "sha256": "368b45c0d2e934343f9d5829321e27b0f0283848466ab023cb62b67ea8cb9045"
     },
     {
       "path": "tests/test_reference_evidence.py",
@@ -348,6 +364,39 @@
     {
       "path": "tools/reproduce_external_review.py",
       "sha256": "98d385dcfb32b537af78fe8d2d240d5ceacb8acad3417bd921e332e2f8506531"
+    },
+    {
+      "path": "tools/run_measured_validation.py",
+      "sha256": "57bc8195d8d58e90efaff4d080a22ba8608cc0427f66e6e16698e11e4cde6f90"
+    },
+    {
+      "path": "validation/measured/README.md",
+      "sha256": "64bce8f380c90c00401ba332360c45b774afc99c33028070d5c4cc523e166550"
+    },
+    {
+      "path": "validation/measured/README.zh-CN.md",
+      "sha256": "d0cd9d95d0c53e26576e76dceebabe1b3ed5cbee65f32b48325d47ba8088d40a"
+    },
+    {
+      "path": "validation/measured/cases.json",
+      "sha256": "27ad704c2d8f959fcfd62f4b3de3118822751286e6a53d06f0a891d6a185a58d"
+    },
+    {
+      "path": "validation/measured/inputs/W1_v4_mapping.json",
+      "sha256": "23fd380b1a09666487ce3e54de4ce0c35619902af34e3910cc076afb5b9453fe"
+    },
+    {
+      "path": "validation/measured/inputs/W1_v5_documented.json",
+      "sha256": "5fb1e54db2e113eefc4140d55e4df80aed207c30c73542d230ff125a1350ce56"
+    },
+    {
+      "path": "validation/measured/inputs/W2_v4_mapping.json",
+      "sha256": "b5a6f60d2599475f92910670d938395263f018f4d33c5643bb8f1f3a45590cc2"
+    },
+    {
+      "path": "validation/measured/inputs/W2_v5_documented.json",
+      "sha256": "1a9ab2e34e3f6d8ded538501ed6630001305f9e5de7039810d9294f2e4af889b"
     }
-  ]
+  ],
+  "measured_validation": "validation/measured/README.md"
 }

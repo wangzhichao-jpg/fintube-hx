@@ -16,7 +16,7 @@ Repositories: [GitHub](https://github.com/wangzhichao-jpg/fintube-hx) · [Gitee 
 
 ## Ecosystem & Scope Overview
 
-Fintube HX follows a three-tier architecture where Community and Pro share the same verified thermophysical and baseline solver core:
+Fintube HX follows a three-tier architecture where Community and Pro share the same thermophysical and baseline solver core (regression-tested and reviewed in three external rounds):
 
 | Edition | Target Audience | Key Capabilities & Scope |
 |---|---|---|
@@ -33,6 +33,8 @@ Fintube HX follows a three-tier architecture where Community and Pro share the s
 | Condenser | Same input-UA P-h model, with finite enthalpy/temperature coupling in single-phase cells | **Input UA only**; no refrigerant pressure loss |
 
 Water geometry uses Wang-Chi plain-fin j/f, Hausen/Gnielinski tube-side convection, Churchill friction and an equal-area annular-fin efficiency approximation. Wet geometry recomputes a **wet-fin efficiency proxy** from the enhanced air-side coefficient. It is not a resolved partially wet coil model.
+
+Version 0.1.0.dev7 adds two optional geometry items: `geometry.fin_count` (actual counted fins; changes area only, the Wang hydraulic diameter stays periodic) and `model.exposed_tubes` (unfinned straight tube ends and U-bends standing in the air stream; Churchill–Bernstein single-cylinder crossflow at a declared approach velocity, dry only, heat reported separately to a bypass stream).
 
 Features: JSON input validation, isolated input/result snapshots, CLI single-case and batch execution, parameter scans, CSV/XLSX export, and bounded mass-flow targets for **water outlet temperature, refrigerant superheat or subcooling**. An outlet-air-temperature target is not implemented.
 
@@ -72,17 +74,34 @@ print(result["heat_transfer_w"], result["fluid_out"]["temperature_c"])
 
 ## Current engineering scope
 
-The water wet/dry policy uses inlet water temperature and a contact approximation, not local wall temperature or partially wet area. Air properties are inlet-based; water properties use an iterated mean temperature. Wang uses the fin-collar diameter, not the bare-tube OD. For the equal-thickness collar convention this is Dc = OD + 2×fin thickness; actual formed collar dimensions are not independently specified in this baseline. Equivalent fin count is L/fin pitch. The outer-edge geometry is idealized.
+The water wet/dry policy uses inlet water temperature and a contact approximation, not local wall temperature or partially wet area. Air properties are inlet-based; water properties use an iterated mean temperature. Wang uses the fin-collar diameter, not the bare-tube OD. For the equal-thickness collar convention this is Dc = OD + 2×fin thickness; actual formed collar dimensions are not independently specified in this baseline. The default fin count is L/fin pitch; `fin_count` supplies the actual count. The outer-edge geometry is idealized.
 
 There are no actual tube-route networks, row-by-row crossflow, intermediate split/merge junctions, brine properties, louver/wavy fins, enhanced tubes, fouling/contact resistances, or frost model. Evaporation at/below 0°C is rejected. Correlation range checks reject extrapolation rather than silently clipping geometry.
+
+## Measured validation (six published points)
+
+[`validation/measured/`](validation/measured/README.md) lists every published measurement used so far: two plain-fin water-coil points from Altwieb et al. (Energies 2022, doi:10.3390/en15020400) and four R410A evaporation/condensation points from CETIAT (IEA HPT Annex 54 2021 report, Ch. 4; ICR 2019, doi:10.18462/iir.icr.2019.1439) — two specimens in total. It gives page/table/figure locators, SHA-256 of the retrieved PDFs, mapping assumptions, all results and an acceptance assessment. Nothing is fitted to the measurements.
+
+| Case | Measured | This repo (lumped) | Pro tube network | Verdict |
+|---|---:|---:|---:|---|
+| W1 water coil | 333.5 W | −7.3 % | −7.6 % | consistent (boundary-incomplete reference) |
+| W2 water coil | 523.1 W | −15.8 % | −15.8 % | not met, open |
+| E1 evaporator | 12.20 kW | — | −0.3 %, SH −1.4 K | consistent (capacity fixed by boundary data) |
+| E2 evaporator | 14.30 kW | — | −1.5 %, SH −4.3 K | superheat not met |
+| C1 condenser | 13.31 kW | — | −6.1 %, SC −6.0 K | subcooling not met |
+| C2 condenser | 15.29 kW | — | −7.2 %, SC −6.6 K | subcooling not met |
+
+The refrigerant points need a tube-circuit model that is not in this repository; Pro results are recorded for scrutiny. `python tools/run_measured_validation.py` re-runs the water points.
 
 ## Reproducible comparisons
 
 [`references/python-hvac/`](references/python-hvac/README.md) contains a pinned source reproduction and a mapped water case. The mapped case produces **4363.49 W**, versus **4084.46 W** in the reproduced reference (+6.83%); this is a **software comparison with differing geometry/model definitions**, not a measured accuracy result or a fitted calibration.
 
+Version **0.1.0.dev7** adds `fin_count`, `exposed_tubes` and the measured-validation set; without these fields all existing results are bit-for-bit unchanged.
+
 For lumped refrigerant models, an omitted `solver.max_iterations` defaults to `max(200, 2*segments + 20)`. An explicit limit is never increased; a low budget is disclosed and an unconverged run still exits with code 2. Version **0.1.0.dev6** adds this budget correction; it does not change heat-transfer equations.
 
-The [v3 follow-up](docs/EXTERNAL_REVIEW_V3.md) records the controlled wet-branch diagnostic and corrected current-version status. The [external review response](docs/EXTERNAL_REVIEW_2026-10-13.md) records confirmed issues, corrections and reasons for disputed claims. Version **0.1.0.dev5** corrects fin blockage in the diagonal minimum-flow gap and the misleading inverse-bracket error message; existing transverse-gap reference capacities are unchanged.
+The status of every review item (fixed / clarified / open) is tracked in [docs/EXTERNAL_REVIEW_STATUS.md](docs/EXTERNAL_REVIEW_STATUS.md). The [v3 follow-up](docs/EXTERNAL_REVIEW_V3.md) records the controlled wet-branch diagnostic and corrected current-version status. The [external review response](docs/EXTERNAL_REVIEW_2026-10-13.md) records confirmed issues, corrections and reasons for disputed claims. Version **0.1.0.dev5** corrects fin blockage in the diagonal minimum-flow gap and the misleading inverse-bracket error message; existing transverse-gap reference capacities are unchanged.
 
 ## License
 

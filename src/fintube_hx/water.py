@@ -27,6 +27,10 @@ def simulate_water(case: dict) -> dict:
     geometry_detail = None
     tin = fin["temperature_c"]
     wet = tin < ain["dew_point_c"] and tin < ain["t_db_c"]
+    exposed_spec = c["model"].get("exposed_tubes") if geometry_mode else None
+    if exposed_spec is not None and tin < ain["dew_point_c"]:
+        raise ValueError("model.exposed_tubes is dry-only; water inlet is below the air dew point")
+    exposed_detail = None; q_exposed = 0.0
     cp_water = fin["cp_j_kg_k"]
     old_t = tin; converged = False; mean_water_temperature = tin
     max_iter, tol = c["solver"]["max_iterations"], c["solver"]["tolerance_k"]
@@ -59,7 +63,10 @@ def simulate_water(case: dict) -> dict:
             aout, q_to_water, condensate = dict(ain), 0.0, 0.0
         else:
             aout, q_to_water, condensate = contact_air(ain, tin, fraction, m_da)
-        fout = fluid_ph(f["name"], f["pressure_pa"], fin["enthalpy_j_kg"] + q_to_water / mf)
+        if exposed_spec is not None:
+            exposed_detail = _lumped_exposed(exposed_spec, geometry_detail, ain, mean_water_temperature)
+            q_exposed = exposed_detail["heat_to_water_w"]
+        fout = fluid_ph(f["name"], f["pressure_pa"], fin["enthalpy_j_kg"] + (q_to_water + q_exposed) / mf)
         if fout["cp_j_kg_k"] is None:
             raise ValueError("Computed water outlet is not single phase")
         mean = fluid_pt(f["name"], f["pressure_pa"], (tin + fout["temperature_c"]) / 2)
@@ -92,7 +99,7 @@ def simulate_water(case: dict) -> dict:
         "air_in": ain, "air_out": aout, "fluid_in": fin, "fluid_out": fout,
         "dry_air_mass_flow_kg_s": m_da, "condensate_kg_s": condensate,
         "sensible_heat_w": abs(m_da * ain["cp_j_kg_da_k"] * (ain["t_db_c"] - aout["t_db_c"])),
-        "energy_balance_relative_error": abs(fluid_heat - air_net) / max(abs(fluid_heat), 1.0),
+        "energy_balance_relative_error": abs(fluid_heat - air_net - q_exposed) / max(abs(fluid_heat), 1.0),
         "iterations": iteration, "converged": converged, "warnings": warnings,
         "segments": [], "air_surface_condition": "wet_approximation" if wet else "dry",
         "numerical_controls": {"segments_requested": c["model"]["segments"],
@@ -100,7 +107,28 @@ def simulate_water(case: dict) -> dict:
     }
     if geometry_detail:
         result["geometry_model"] = geometry_detail
+    if exposed_detail is not None:
+        result["exposed_tubes"] = exposed_detail
+        result["finned_core_heat_w"] = abs(fluid_heat - q_exposed)
+        result["warnings"].append("外露光管/U弯按Churchill-Bernstein单管横掠、给定迎面风速和进风状态计算，"
+                                  "整体模型按平均水温线性计入；其换热进入旁通气流，不并入芯体出风状态。")
     return result
+
+
+def _lumped_exposed(spec, detail, air_in, water_t_c):
+    from .exposed_tubes import exposed_lengths, outside_coefficient, element_conductance, MODEL_NOTE
+    g, m = detail["geometry"], detail["metrics"]
+    straight, bends = exposed_lengths(spec, m["tube_count"])
+    length = straight + bends
+    outside = outside_coefficient(spec, g["tube_outer_diameter_m"], air_in, water_t_c)
+    # Every circuit carries its own bare elements; tube_count already includes all of them.
+    ua = element_conductance(length, g["tube_outer_diameter_m"], g["tube_inner_diameter_m"],
+                             g["tube_conductivity_w_m_k"], outside["h_w_m2_k"], detail["water_h_w_m2_k"])
+    return {"specification": dict(spec), "straight_length_m": straight, "return_bend_length_m": bends,
+            "outer_area_m2": 3.141592653589793 * g["tube_outer_diameter_m"] * length,
+            "outside": outside, "ua_w_k": ua,
+            "heat_to_water_w": ua * (air_in["t_db_c"] - water_t_c),
+            "lumped_policy": "linear_at_mean_water_temperature", "model": MODEL_NOTE}
 
 
 def solve_water_target(case: dict) -> dict:

@@ -17,10 +17,11 @@ def _assert_finite(value,path='result'):
 
 
 def capabilities():
-    return {'edition':'community','input_schema':'0.1','water':['input_ua_lumped','plain_smooth_geometry_lumped'],
+    return {'edition':'community','input_schema':'0.1','water':['input_ua_lumped','plain_smooth_geometry_lumped','counted_fins','exposed_bare_tubes_dry'],
             'evaporator':['input_ua_lumped'],'condenser':['input_ua_lumped'],
             'targets':['water_outlet_temperature','evaporator_superheat','condenser_subcooling'],
-            'requires_professional_package':False,'measured_precision_verified':False}
+            'requires_professional_package':False,'measured_precision_verified':False,
+            'measured_comparisons':'validation/measured (6 published points, 2 specimens; not a precision certification)'}
 
 
 def run_case(case):

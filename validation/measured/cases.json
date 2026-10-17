@@ -1,0 +1,791 @@
+{
+ "schema": "fintube-hx measured validation set v5",
+ "generated_with": {
+  "professional": "0.6.6.dev1",
+  "community_core": "0.1.0.dev7"
+ },
+ "statement": "Comparison with six published measured operating points on two specimens. Nothing is fitted to these data. Professional tube-network results are recorded for transparency; that model is not part of this repository.",
+ "sources": {
+  "altwieb2022": {
+   "citation": "Altwieb M., Mishra R., Aliyu A.M., Kubiak K.J. Heat Transfer Enhancement by Perforated and Louvred Fin Heat Exchangers. Energies 2022, 15(2), 400.",
+   "doi": "10.3390/en15020400",
+   "license": "CC BY 4.0 (open access)",
+   "url": "https://mdpi-res.com/d_attachment/energies/energies-15-00400/article_deploy/energies-15-00400.pdf",
+   "sha256_of_retrieved_pdf": "1b13f4b1b00cd38507c358160cff52c68cc8e60a2fe894fb12c9ef4156e83ff1",
+   "locators": {
+    "geometry": "Section 2.1.2 (PDF p6) and Figure 2b (p5)",
+    "test matrix": "Table 1 (p7-8)",
+    "measured Qavg": "Figure 5(a) and 5(e) (p10); text p10: plain fin 400 W to 523 W at Va = 4 m/s",
+    "uncertainty": "p9: +-5 % combined; p8: repeatability within +-3 %"
+   }
+  },
+  "altwieb2018": {
+   "citation": "Altwieb M.O. Modelling and Optimisation of Heat Exchanger Integrated in Fan Coil Unit. Doctoral thesis, University of Huddersfield, 2018.",
+   "url": "https://eprints.hud.ac.uk/id/eprint/34544/",
+   "sha256_of_retrieved_pdf": "f1d09cd90dfec05a4b909daeb9965161e35a08ec205cc80ff8657e03d356a03d",
+   "locators": {
+    "test section 650x165x175 mm": "Section 3.2.5 (printed p39)",
+    "tubes joined with 25 mm bends; 21 fins 4.23 mm apart": "printed p41; Figure 3.9 (p42)",
+    "Va is the arithmetic mean over the gross duct cross-section": "Section 4.1.1 (printed p60)",
+    "effectiveness vs Va (Cmin from duct flow)": "Figure 4.4 (printed p66)",
+    "water-side pressure drop 5240-5400 Pa at 3 L/min": "Figure 4.11 (printed p73)",
+    "air-side pressure drop 1.0-5.4 Pa": "Figure 4.12 (printed p74)"
+   },
+   "use": "Supporting geometry and diagnostics only; the six capacities are not taken from the thesis."
+  },
+  "iea_annex54_cetiat": {
+   "citation": "IEA HPT Annex 54, Heat Pump Systems with Low-GWP Refrigerants, 2021 Progress Annual Report (Jan 2022), Chapter 4 (CETIAT); study first presented as Pardo P., Gaillard N., Mondot M., ICR 2019, DOI 10.18462/iir.icr.2019.1439.",
+   "url": "https://heatpumpingtechnologies.org/content/uploads/sites/63/2022/05/iea-annext-54-2021-annual-report-v3-040422.pdf",
+   "sha256_of_retrieved_pdf": "2b63f13f894dbcd5809f8b05c55a76f4e1a98d54e8f233d2b9c37d1f059204a9",
+   "locators": {
+    "coil geometry (3 rows x 32 tubes, 8 circuits, louvre fins 2.5 mm)": "Figure 2 (PDF p87)",
+    "instrumentation, P4 and Outlet P positions": "Figure 4 (p88)",
+    "test conditions": "Table 2 (evaporation), Table 3 (condensation) (p89)",
+    "measured results": "Table 4 (p90), Table 5 (p91)",
+    "air/refrigerant heat balance": "p89-90: 0.4-2.5 % dry evaporation, 0.5-2.1 % condensation",
+    "instrument accuracy": "p87: Coriolis +-1 %, Pt100 +-0.1 K, air flow +-3.5 %"
+   }
+  }
+ },
+ "cases": {
+  "W1": {
+   "source": "altwieb2022",
+   "specimen": "Altwieb plain-fin coil (2 rows x 5 tubes)",
+   "point": "Test case 1.3",
+   "boundary": {
+    "water_m3_h": 0.12,
+    "water_inlet_c": 60.0,
+    "air_inlet_c": 24.0,
+    "va_duct_mean_m_s": 2.183
+   },
+   "measured": {
+    "q_avg_w": 333.5136133063424,
+    "basis": "(Q_water + Q_air)/2, read from Figure 5(a); +-1 W reading margin",
+    "stated_uncertainty_percent": 5.0
+   },
+   "assumptions": [
+    "Air RH 0.5 and 101325 Pa (not reported; dry heating).",
+    "Core face velocity = published duct-mean Va; the coil face (84.3 x 125 mm) is 37 % of the 165 x 175 mm duct and the core/bypass split is not reported.",
+    "Fin pitch 4.23 mm (= 6 fins per inch) with 21 counted fins; finned length 84.3 mm.",
+    "Exposed bare tube 99.3 - 84.3 = 15 mm per tube and 9 diagonal return bends of 25 mm centre-line diameter in the duct stream at Va (v5).",
+    "Water return bends: Crane TP-410 close-pattern return bend, equivalent length 50 x inner diameter (v5; pressure drop only).",
+    "Fin/tube conductivity 202.4/387.6 W/(m K) from the thesis CFD set-up; no contact resistance."
+   ],
+   "professional_tube_network": {
+    "v4_reproduce": {
+     "q_w": 273.4480246039831,
+     "water_dp_pa": 393.94692146766465,
+     "air_core_dp_pa": 11.740788019422325,
+     "air_out_t_c": 33.91482530932518,
+     "water_out_t_c": 58.006125245786734,
+     "converged": true,
+     "energy_balance_relative_error": 2.386491568841731e-07,
+     "measured_q_w": 333.5136133063424,
+     "q_error_percent": -18.00993611831588
+    },
+    "v5_documented": {
+     "q_w": 308.27339138472826,
+     "exposed_w": 26.30419861669267,
+     "finned_core_w": 281.9691927680356,
+     "water_dp_pa": 2287.3966801848437,
+     "air_core_dp_pa": 11.744918326032348,
+     "air_out_t_c": 34.22373239076882,
+     "water_out_t_c": 57.75253628822611,
+     "converged": true,
+     "energy_balance_relative_error": 2.2001014661800008e-07,
+     "measured_q_w": 333.5136133063424,
+     "q_error_percent": -7.567973514301567
+    },
+    "sensitivity": {
+     "exposed_velocity_x0.7": {
+      "q_w": 304.120185264026,
+      "exposed_w": 22.027374177008333,
+      "finned_core_w": 282.0928110870177,
+      "water_dp_pa": 2287.2800507139473,
+      "air_core_dp_pa": 11.744980358038447,
+      "air_out_t_c": 34.22821374033856,
+      "water_out_t_c": 57.782824686778895,
+      "converged": true,
+      "energy_balance_relative_error": 2.2312789947933125e-07,
+      "measured_q_w": 333.5136133063424,
+      "q_error_percent": -8.813261848870203
+     },
+     "exposed_velocity_x1.3": {
+      "q_w": 311.85782748115906,
+      "exposed_w": 29.995351411670317,
+      "finned_core_w": 281.86247606948876,
+      "water_dp_pa": 2287.497405207512,
+      "air_core_dp_pa": 11.744864776759641,
+      "air_out_t_c": 34.21986374967429,
+      "water_out_t_c": 57.72639573100332,
+      "converged": true,
+      "energy_balance_relative_error": 2.1738389283550265e-07,
+      "measured_q_w": 333.5136133063424,
+      "q_error_percent": -6.49322395283812
+     },
+     "bend_radius_8mm": {
+      "q_w": 301.8307490892588,
+      "exposed_w": 19.663916168919567,
+      "finned_core_w": 282.16683292033923,
+      "water_dp_pa": 2287.2102387283812,
+      "air_core_dp_pa": 11.745017503330018,
+      "air_out_t_c": 34.23089714245606,
+      "water_out_t_c": 57.7995209917367,
+      "converged": true,
+      "energy_balance_relative_error": 2.2489150629465283e-07,
+      "measured_q_w": 333.5136133063424,
+      "q_error_percent": -9.499721436552552
+     },
+     "core_velocity_x0.8": {
+      "q_w": 280.1302582755324,
+      "exposed_w": 26.38596839528944,
+      "finned_core_w": 253.74428988024297,
+      "water_dp_pa": 2286.5171098078717,
+      "air_core_dp_pa": 7.90811117827252,
+      "air_out_t_c": 35.50016546851492,
+      "water_out_t_c": 57.95777607406558,
+      "converged": true,
+      "energy_balance_relative_error": 2.209114032273545e-07,
+      "measured_q_w": 333.5136133063424,
+      "q_error_percent": -16.00634963640172
+     },
+     "core_velocity_x1.2": {
+      "q_w": 332.49985832637645,
+      "exposed_w": 26.23364523317902,
+      "finned_core_w": 306.26621309319745,
+      "water_dp_pa": 2288.1575004252954,
+      "air_core_dp_pa": 16.28574522116105,
+      "air_out_t_c": 33.254071660204374,
+      "water_out_t_c": 57.57585636400211,
+      "converged": true,
+      "energy_balance_relative_error": 2.1919742685745565e-07,
+      "measured_q_w": 333.5136133063424,
+      "q_error_percent": -0.3039620991526884
+     }
+    }
+   },
+   "community_lumped": {
+    "v4_mapping": {
+     "input": "inputs/W1_v4_mapping.json",
+     "q_w": 273.5608771712443,
+     "q_error_percent": -17.9760986487918
+    },
+    "v5_documented": {
+     "input": "inputs/W1_v5_documented.json",
+     "q_w": 309.19401274657207,
+     "q_error_percent": -7.291936397640246
+    }
+   }
+  },
+  "W2": {
+   "source": "altwieb2022",
+   "specimen": "Altwieb plain-fin coil (2 rows x 5 tubes)",
+   "point": "Test case 5.5",
+   "boundary": {
+    "water_m3_h": 0.36,
+    "water_inlet_c": 60.0,
+    "air_inlet_c": 24.0,
+    "va_duct_mean_m_s": 3.991
+   },
+   "measured": {
+    "q_avg_w": 523.1,
+    "basis": "(Q_water + Q_air)/2; Figure 5(e) and text p10 (523 W)",
+    "stated_uncertainty_percent": 5.0
+   },
+   "assumptions": [
+    "Air RH 0.5 and 101325 Pa (not reported; dry heating).",
+    "Core face velocity = published duct-mean Va; the coil face (84.3 x 125 mm) is 37 % of the 165 x 175 mm duct and the core/bypass split is not reported.",
+    "Fin pitch 4.23 mm (= 6 fins per inch) with 21 counted fins; finned length 84.3 mm.",
+    "Exposed bare tube 99.3 - 84.3 = 15 mm per tube and 9 diagonal return bends of 25 mm centre-line diameter in the duct stream at Va (v5).",
+    "Water return bends: Crane TP-410 close-pattern return bend, equivalent length 50 x inner diameter (v5; pressure drop only).",
+    "Fin/tube conductivity 202.4/387.6 W/(m K) from the thesis CFD set-up; no contact resistance."
+   ],
+   "professional_tube_network": {
+    "v4_reproduce": {
+     "q_w": 389.4435116971394,
+     "water_dp_pa": 2668.7858966987988,
+     "air_core_dp_pa": 35.0591078553407,
+     "air_out_t_c": 31.723974091196226,
+     "water_out_t_c": 59.053993362779124,
+     "converged": true,
+     "energy_balance_relative_error": 2.2404970741805146e-07,
+     "measured_q_w": 523.1,
+     "q_error_percent": -25.550848461644165
+    },
+    "v5_documented": {
+     "q_w": 440.3662211802071,
+     "exposed_w": 36.67477439251675,
+     "finned_core_w": 403.6914467876903,
+     "water_dp_pa": 15492.590498057922,
+     "air_core_dp_pa": 35.06958460241731,
+     "air_out_t_c": 32.00652094974947,
+     "water_out_t_c": 58.93279998636331,
+     "converged": true,
+     "energy_balance_relative_error": 2.0625275549053242e-07,
+     "measured_q_w": 523.1,
+     "q_error_percent": -15.81605406610455
+    },
+    "sensitivity": {
+     "exposed_velocity_x0.7": {
+      "q_w": 434.35136051163073,
+      "exposed_w": 30.577826096346307,
+      "finned_core_w": 403.7735344152844,
+      "water_dp_pa": 15492.274726483767,
+      "air_core_dp_pa": 35.06964822074224,
+      "air_out_t_c": 32.00814879788334,
+      "water_out_t_c": 58.9474198142492,
+      "converged": true,
+      "energy_balance_relative_error": 2.0915768773855516e-07,
+      "measured_q_w": 523.1,
+      "q_error_percent": -16.965903171165987
+     },
+     "exposed_velocity_x1.3": {
+      "q_w": 445.592291107162,
+      "exposed_w": 41.972175495702075,
+      "finned_core_w": 403.62011561145994,
+      "water_dp_pa": 15492.864944224159,
+      "air_core_dp_pa": 35.069529321059235,
+      "air_out_t_c": 32.00510640858397,
+      "water_out_t_c": 58.9200973893353,
+      "converged": true,
+      "energy_balance_relative_error": 2.037917899045041e-07,
+      "measured_q_w": 523.1,
+      "q_error_percent": -14.816996538489393
+     },
+     "bend_radius_8mm": {
+      "q_w": 431.2305431048694,
+      "exposed_w": 27.410590666214475,
+      "finned_core_w": 403.8199524386549,
+      "water_dp_pa": 15492.096195442107,
+      "air_core_dp_pa": 35.069684195230366,
+      "air_out_t_c": 32.00906929580225,
+      "water_out_t_c": 58.955005316844336,
+      "converged": true,
+      "energy_balance_relative_error": 2.106971809071532e-07,
+      "measured_q_w": 523.1,
+      "q_error_percent": -17.56250370772904
+     },
+     "core_velocity_x0.8": {
+      "q_w": 401.19454124553226,
+      "exposed_w": 36.72591882528502,
+      "finned_core_w": 364.46862242024724,
+      "water_dp_pa": 15490.300847726437,
+      "air_core_dp_pa": 23.321156910373247,
+      "air_out_t_c": 33.03562344750088,
+      "water_out_t_c": 59.028010938044304,
+      "converged": true,
+      "energy_balance_relative_error": 2.0633381596396843e-07,
+      "measured_q_w": 523.1,
+      "q_error_percent": -23.304427213624116
+     },
+     "core_velocity_x1.2": {
+      "q_w": 474.25041433861213,
+      "exposed_w": 36.63048901113396,
+      "finned_core_w": 437.6199253274782,
+      "water_dp_pa": 15494.57531133751,
+      "air_core_dp_pa": 49.08834880043287,
+      "air_out_t_c": 31.232921384162125,
+      "water_out_t_c": 58.85044010005328,
+      "converged": true,
+      "energy_balance_relative_error": 2.0614150142314675e-07,
+      "measured_q_w": 523.1,
+      "q_error_percent": -9.338479384704241
+     }
+    }
+   },
+   "community_lumped": {
+    "v4_mapping": {
+     "input": "inputs/W2_v4_mapping.json",
+     "q_w": 389.05734460288056,
+     "q_error_percent": -25.62467126689342
+    },
+    "v5_documented": {
+     "input": "inputs/W2_v5_documented.json",
+     "q_w": 440.4578810638477,
+     "q_error_percent": -15.798531626104436
+    }
+   }
+  },
+  "E1": {
+   "source": "iea_annex54_cetiat",
+   "specimen": "CETIAT reversible coil (3 rows x 32 tubes, 8 circuits)",
+   "point": "R410A evaporation Run 1 (dry)",
+   "boundary": {
+    "air_db_c": 20.0,
+    "air_wb_c": 10.0,
+    "face_velocity_m_s": 2.25,
+    "refrigerant_kg_h": 230,
+    "liquid_c": 30.0,
+    "bubble_point_c": 2.2,
+    "flow": "counter-current"
+   },
+   "measured": {
+    "q_kw": 12.2,
+    "sh_k": 16.6,
+    "dp_kpa_P4_to_outlet": 22.0
+   },
+   "assumptions": [
+    "Louvre fins (Figure 2) modelled with the Wang-Chi plain-fin correlation: no louvre geometry is published.",
+    "Evaporator inlet enthalpy from 30 C liquid at an assumed 2.8 MPa high side (isenthalpic expansion).",
+    "Inlet pressure from the published inlet bubble point (evaporator) / dew point (condenser).",
+    "Condenser RH 0.40 (not reported); 101325 Pa; Al/Cu conductivity 205/385 W/(m K).",
+    "Return bends: Crane TP-410 L/D = 50 (v5). Distributor, capillaries, collector and gravity are not modelled."
+   ],
+   "professional_tube_network": {
+    "v4_reproduce": {
+     "q_w": 12154.624149460236,
+     "dp_pa": 10692.089430154418,
+     "outlet_quality": -1.0,
+     "fluid_out_t_c": 16.876691509625005,
+     "air_out_t_c": 13.262218734735939,
+     "converged": true,
+     "energy_balance_relative_error": 2.2014100775959863e-05,
+     "measured_q_w": 12200.0,
+     "q_error_percent": -0.3719332011456035,
+     "sh_k": 14.972131099924411,
+     "measured_sh_k": 16.6,
+     "sh_difference_k": -1.6278689000755904,
+     "measured_dp_pa": 22000.0,
+     "dp_error_percent": -51.3995934992981,
+     "capacity_window": {
+      "phase_change_complete_w": 11126.603833976138,
+      "outlet_at_air_inlet_temperature_w": 12357.453338555051
+     }
+    },
+    "v5_documented": {
+     "q_w": 12163.09660480361,
+     "dp_pa": 15084.856835351558,
+     "outlet_quality": -1.0,
+     "fluid_out_t_c": 16.90628035242929,
+     "air_out_t_c": 13.25751221900498,
+     "converged": true,
+     "energy_balance_relative_error": 2.0603052038612757e-05,
+     "measured_q_w": 12200.0,
+     "q_error_percent": -0.30248684587205077,
+     "sh_k": 15.166993655108627,
+     "measured_sh_k": 16.6,
+     "sh_difference_k": -1.4330063448913748,
+     "measured_dp_pa": 22000.0,
+     "dp_error_percent": -31.432468930220185,
+     "capacity_window": {
+      "phase_change_complete_w": 11123.53730084287,
+      "outlet_at_air_inlet_temperature_w": 12363.65488825078
+     }
+    }
+   },
+   "what_if_not_a_result": {
+    "uniform_cell_ua_x1.3": {
+     "q_w": 12338.604611570201,
+     "dp_pa": 15425.188156519202,
+     "outlet_quality": -1.0,
+     "fluid_out_t_c": 19.603945807155696,
+     "air_out_t_c": 13.160148722219219,
+     "converged": true,
+     "energy_balance_relative_error": 1.1226633587113026e-05,
+     "measured_q_w": 12200.0,
+     "q_error_percent": 1.1361033735262382,
+     "sh_k": 17.877490840470045,
+     "measured_sh_k": 16.6,
+     "sh_difference_k": 1.277490840470044,
+     "measured_dp_pa": 22000.0,
+     "dp_error_percent": -29.885508379458177,
+     "capacity_window": {
+      "phase_change_complete_w": 11123.298698976752,
+      "outlet_at_air_inlet_temperature_w": 12364.134888522
+     }
+    }
+   }
+  },
+  "E2": {
+   "source": "iea_annex54_cetiat",
+   "specimen": "CETIAT reversible coil (3 rows x 32 tubes, 8 circuits)",
+   "point": "R410A evaporation Run 2 (dry)",
+   "boundary": {
+    "air_db_c": 20.0,
+    "air_wb_c": 10.0,
+    "face_velocity_m_s": 2.25,
+    "refrigerant_kg_h": 270,
+    "liquid_c": 30.0,
+    "bubble_point_c": 1.1,
+    "flow": "counter-current"
+   },
+   "measured": {
+    "q_kw": 14.3,
+    "sh_k": 17.6,
+    "dp_kpa_P4_to_outlet": 36.0
+   },
+   "assumptions": [
+    "Louvre fins (Figure 2) modelled with the Wang-Chi plain-fin correlation: no louvre geometry is published.",
+    "Evaporator inlet enthalpy from 30 C liquid at an assumed 2.8 MPa high side (isenthalpic expansion).",
+    "Inlet pressure from the published inlet bubble point (evaporator) / dew point (condenser).",
+    "Condenser RH 0.40 (not reported); 101325 Pa; Al/Cu conductivity 205/385 W/(m K).",
+    "Return bends: Crane TP-410 L/D = 50 (v5). Distributor, capillaries, collector and gravity are not modelled."
+   ],
+   "professional_tube_network": {
+    "v4_reproduce": {
+     "q_w": 14074.70386566985,
+     "dp_pa": 14698.285905328463,
+     "outlet_quality": -1.0,
+     "fluid_out_t_c": 13.581886914240556,
+     "air_out_t_c": 12.19776298106882,
+     "converged": true,
+     "energy_balance_relative_error": 2.469166157998864e-05,
+     "measured_q_w": 14300.0,
+     "q_error_percent": -1.5754974428681845,
+     "sh_k": 12.943337689316593,
+     "measured_sh_k": 17.6,
+     "sh_difference_k": -4.656662310683409,
+     "measured_dp_pa": 36000.0,
+     "dp_error_percent": -59.17142804075427,
+     "capacity_window": {
+      "phase_change_complete_w": 13033.72226065989,
+      "outlet_at_air_inlet_temperature_w": 14561.296227707924
+     }
+    },
+    "v5_documented": {
+     "q_w": 14092.787547999666,
+     "dp_pa": 20773.253801491577,
+     "outlet_quality": -1.0,
+     "fluid_out_t_c": 13.673090371902617,
+     "air_out_t_c": 12.187683731405855,
+     "converged": true,
+     "energy_balance_relative_error": 1.7819111838438446e-05,
+     "measured_q_w": 14300.0,
+     "q_error_percent": -1.4490381258764646,
+     "sh_k": 13.2703087938375,
+     "measured_sh_k": 17.6,
+     "sh_difference_k": -4.329691206162501,
+     "measured_dp_pa": 36000.0,
+     "dp_error_percent": -42.296517218078954,
+     "capacity_window": {
+      "phase_change_complete_w": 13028.425917054652,
+      "outlet_at_air_inlet_temperature_w": 14571.226143770906
+     }
+    }
+   },
+   "what_if_not_a_result": {
+    "uniform_cell_ua_x1.3": {
+     "q_w": 14500.55859779694,
+     "dp_pa": 21306.28354070545,
+     "outlet_quality": -1.0,
+     "fluid_out_t_c": 19.04360502394769,
+     "air_out_t_c": 11.961563708241442,
+     "converged": true,
+     "energy_balance_relative_error": 1.1560259347552783e-05,
+     "measured_q_w": 14300.0,
+     "q_error_percent": 1.4025076769016809,
+     "sh_k": 18.661573922111245,
+     "measured_sh_k": 17.6,
+     "sh_difference_k": 1.0615739221112435,
+     "measured_dp_pa": 36000.0,
+     "dp_error_percent": -40.815879053595964,
+     "capacity_window": {
+      "phase_change_complete_w": 13027.958398397228,
+      "outlet_at_air_inlet_temperature_w": 14572.096265192109
+     }
+    }
+   }
+  },
+  "C1": {
+   "source": "iea_annex54_cetiat",
+   "specimen": "CETIAT reversible coil (3 rows x 32 tubes, 8 circuits)",
+   "point": "R410A condensation Run 1",
+   "boundary": {
+    "air_db_c": 30.0,
+    "face_velocity_m_s": 2.15,
+    "refrigerant_kg_h": 230,
+    "inlet_c": 80.0,
+    "dew_point_c": 46.6,
+    "flow": "co-current"
+   },
+   "measured": {
+    "q_kw": 13.31,
+    "sc_k": 6.2,
+    "dp_kpa_outlet_to_P4": 18.0
+   },
+   "assumptions": [
+    "Louvre fins (Figure 2) modelled with the Wang-Chi plain-fin correlation: no louvre geometry is published.",
+    "Evaporator inlet enthalpy from 30 C liquid at an assumed 2.8 MPa high side (isenthalpic expansion).",
+    "Inlet pressure from the published inlet bubble point (evaporator) / dew point (condenser).",
+    "Condenser RH 0.40 (not reported); 101325 Pa; Al/Cu conductivity 205/385 W/(m K).",
+    "Return bends: Crane TP-410 L/D = 50 (v5). Distributor, capillaries, collector and gravity are not modelled."
+   ],
+   "professional_tube_network": {
+    "v4_reproduce": {
+     "q_w": 12507.459199802317,
+     "dp_pa": 2019.521366193425,
+     "outlet_quality": -1.0,
+     "fluid_out_t_c": 46.20232641653445,
+     "air_out_t_c": 37.4854637182782,
+     "converged": true,
+     "energy_balance_relative_error": 1.1370422017083578e-05,
+     "measured_q_w": 13310.0,
+     "q_error_percent": -6.02960781515915,
+     "sc_k": 0.2496233755775279,
+     "measured_sc_k": 6.2,
+     "sc_difference_k": -5.950376624422472,
+     "measured_dp_pa": 18000.0,
+     "dp_error_percent": -88.78043685448097,
+     "capacity_window": {
+      "phase_change_complete_w": 12473.734560624816,
+      "outlet_at_air_inlet_temperature_w": 14449.31450017853
+     }
+    },
+    "v5_documented": {
+     "q_w": 12503.155321118125,
+     "dp_pa": 3051.8906739475206,
+     "outlet_quality": -1.0,
+     "fluid_out_t_c": 46.23325328350745,
+     "air_out_t_c": 37.48288830121811,
+     "converged": true,
+     "energy_balance_relative_error": 1.1371399139284548e-05,
+     "measured_q_w": 13310.0,
+     "q_error_percent": -6.061943492726331,
+     "sc_k": 0.2030961168334784,
+     "measured_sc_k": 6.2,
+     "sc_difference_k": -5.996903883166522,
+     "measured_dp_pa": 18000.0,
+     "dp_error_percent": -83.04505181140266,
+     "capacity_window": {
+      "phase_change_complete_w": 12475.709284919127,
+      "outlet_at_air_inlet_temperature_w": 14449.27651053913
+     }
+    }
+   },
+   "what_if_not_a_result": {
+    "uniform_cell_ua_x1.3": {
+     "q_w": 13408.017824456594,
+     "dp_pa": 2445.601326271426,
+     "outlet_quality": -1.0,
+     "fluid_out_t_c": 39.08456583361976,
+     "air_out_t_c": 38.0243962390486,
+     "converged": true,
+     "energy_balance_relative_error": 4.995226466214983e-06,
+     "measured_q_w": 13310.0,
+     "q_error_percent": 0.736422422664118,
+     "sc_k": 7.360945888516085,
+     "measured_sc_k": 6.2,
+     "sc_difference_k": 1.1609458885160846,
+     "measured_dp_pa": 18000.0,
+     "dp_error_percent": -86.41332596515875,
+     "capacity_window": {
+      "phase_change_complete_w": 12474.54954389421,
+      "outlet_at_air_inlet_temperature_w": 14449.298822106244
+     }
+    }
+   }
+  },
+  "C2": {
+   "source": "iea_annex54_cetiat",
+   "specimen": "CETIAT reversible coil (3 rows x 32 tubes, 8 circuits)",
+   "point": "R410A condensation Run 2",
+   "boundary": {
+    "air_db_c": 30.0,
+    "face_velocity_m_s": 2.15,
+    "refrigerant_kg_h": 270,
+    "inlet_c": 80.0,
+    "dew_point_c": 48.3,
+    "flow": "co-current"
+   },
+   "measured": {
+    "q_kw": 15.29,
+    "sc_k": 6.6,
+    "dp_kpa_outlet_to_P4": 18.0
+   },
+   "assumptions": [
+    "Louvre fins (Figure 2) modelled with the Wang-Chi plain-fin correlation: no louvre geometry is published.",
+    "Evaporator inlet enthalpy from 30 C liquid at an assumed 2.8 MPa high side (isenthalpic expansion).",
+    "Inlet pressure from the published inlet bubble point (evaporator) / dew point (condenser).",
+    "Condenser RH 0.40 (not reported); 101325 Pa; Al/Cu conductivity 205/385 W/(m K).",
+    "Return bends: Crane TP-410 L/D = 50 (v5). Distributor, capillaries, collector and gravity are not modelled."
+   ],
+   "professional_tube_network": {
+    "v4_reproduce": {
+     "q_w": 14196.009411528381,
+     "dp_pa": 2593.690970094409,
+     "outlet_quality": 0.005967855871519249,
+     "fluid_out_t_c": 48.14639358086862,
+     "air_out_t_c": 38.49585919603976,
+     "converged": true,
+     "energy_balance_relative_error": 1.1205363473319832e-05,
+     "measured_q_w": 15290.0,
+     "q_error_percent": -7.154941716622753,
+     "sc_k": -0.0006942485296690393,
+     "measured_sc_k": 6.6,
+     "sc_difference_k": -6.600694248529669,
+     "measured_dp_pa": 18000.0,
+     "dp_error_percent": -85.59060572169773,
+     "capacity_window": {
+      "phase_change_complete_w": 14258.979143599508,
+      "outlet_at_air_inlet_temperature_w": 16837.14817064394
+     }
+    },
+    "v5_documented": {
+     "q_w": 14189.368851276473,
+     "dp_pa": 3922.5222475668415,
+     "outlet_quality": 0.006874593829743708,
+     "fluid_out_t_c": 48.127019941201695,
+     "air_out_t_c": 38.49188567870402,
+     "converged": true,
+     "energy_balance_relative_error": 1.1208605089607732e-05,
+     "measured_q_w": 15290.0,
+     "q_error_percent": -7.198372457315417,
+     "sc_k": -0.0007998420651915694,
+     "measured_sc_k": 6.6,
+     "sc_difference_k": -6.600799842065191,
+     "measured_dp_pa": 18000.0,
+     "dp_error_percent": -78.20820973573976,
+     "capacity_window": {
+      "phase_change_complete_w": 14261.930909167193,
+      "outlet_at_air_inlet_temperature_w": 16837.092160960114
+     }
+    }
+   },
+   "what_if_not_a_result": {
+    "uniform_cell_ua_x1.3": {
+     "q_w": 15379.877234615458,
+     "dp_pa": 3145.437065576203,
+     "outlet_quality": -1.0,
+     "fluid_out_t_c": 40.77509735765727,
+     "air_out_t_c": 39.2042935796178,
+     "converged": true,
+     "energy_balance_relative_error": 4.841092816066493e-06,
+     "measured_q_w": 15290.0,
+     "q_error_percent": 0.5878171001665029,
+     "sc_k": 7.3625147973505705,
+     "measured_sc_k": 6.6,
+     "sc_difference_k": 0.7625147973505708,
+     "measured_dp_pa": 18000.0,
+     "dp_error_percent": -82.52534963568776,
+     "capacity_window": {
+      "phase_change_complete_w": 14260.204710161863,
+      "outlet_at_air_inlet_temperature_w": 16837.12491672496
+     }
+    }
+   }
+  }
+ },
+ "water_diagnostics": {
+  "velocity_trend": [
+   {
+    "water_l_min": 2.0,
+    "va_m_s": 0.705,
+    "thesis_effectiveness": 0.218,
+    "q_from_thesis_effectiveness_w": 190.61311296257998,
+    "model_q_w": 172.22056710945697,
+    "model_exposed_w": 15.259912141249373,
+    "model_core_dp_pa": 1.6845280101842945,
+    "ratio_model_to_thesis": 0.9035084965181083
+   },
+   {
+    "water_l_min": 2.0,
+    "va_m_s": 1.546,
+    "thesis_effectiveness": 0.155,
+    "q_from_thesis_effectiveness_w": 297.19968936965995,
+    "model_q_w": 261.40652519089724,
+    "model_exposed_w": 22.25960451595599,
+    "model_core_dp_pa": 6.385955218007439,
+    "ratio_model_to_thesis": 0.8795652705604183
+   },
+   {
+    "water_l_min": 2.0,
+    "va_m_s": 2.183,
+    "thesis_effectiveness": 0.132,
+    "q_from_thesis_effectiveness_w": 357.3837736927919,
+    "model_q_w": 308.27339138472826,
+    "model_exposed_w": 26.30419861669267,
+    "model_core_dp_pa": 11.744918326032348,
+    "ratio_model_to_thesis": 0.8625836259978633
+   },
+   {
+    "water_l_min": 2.0,
+    "va_m_s": 3.177,
+    "thesis_effectiveness": 0.108,
+    "q_from_thesis_effectiveness_w": 425.54758843951197,
+    "model_q_w": 364.5248974621752,
+    "model_exposed_w": 31.565864102812938,
+    "model_core_dp_pa": 23.09232369705569,
+    "ratio_model_to_thesis": 0.8566019579593726
+   },
+   {
+    "water_l_min": 2.0,
+    "va_m_s": 3.991,
+    "thesis_effectiveness": 0.093,
+    "q_from_thesis_effectiveness_w": 460.332714207366,
+    "model_q_w": 401.34365573528856,
+    "model_exposed_w": 35.28163849698127,
+    "model_core_dp_pa": 35.041657912835944,
+    "ratio_model_to_thesis": 0.8718556021514807
+   },
+   {
+    "water_l_min": 6.0,
+    "va_m_s": 0.705,
+    "thesis_effectiveness": 0.251,
+    "q_from_thesis_effectiveness_w": 219.46739153030998,
+    "model_q_w": 178.735491756347,
+    "model_exposed_w": 15.512523323664565,
+    "model_core_dp_pa": 1.686240332084708,
+    "ratio_model_to_thesis": 0.8144056869225712
+   },
+   {
+    "water_l_min": 6.0,
+    "va_m_s": 1.546,
+    "thesis_effectiveness": 0.172,
+    "q_from_thesis_effectiveness_w": 329.7957843327839,
+    "model_q_w": 277.18403350385375,
+    "model_exposed_w": 22.818751100343537,
+    "model_core_dp_pa": 6.392036825141986,
+    "ratio_model_to_thesis": 0.8404717303001008
+   },
+   {
+    "water_l_min": 6.0,
+    "va_m_s": 2.183,
+    "thesis_effectiveness": 0.146,
+    "q_from_thesis_effectiveness_w": 395.2881133268759,
+    "model_q_w": 330.62100575235866,
+    "model_exposed_w": 27.08779772264375,
+    "model_core_dp_pa": 11.755530152629944,
+    "ratio_model_to_thesis": 0.8364051298424904
+   },
+   {
+    "water_l_min": 6.0,
+    "va_m_s": 3.177,
+    "thesis_effectiveness": 0.119,
+    "q_from_thesis_effectiveness_w": 468.8903983731659,
+    "model_q_w": 396.3630957801387,
+    "model_exposed_w": 32.68889928359632,
+    "model_core_dp_pa": 23.1117169403733,
+    "ratio_model_to_thesis": 0.8453214165940194
+   },
+   {
+    "water_l_min": 6.0,
+    "va_m_s": 3.991,
+    "thesis_effectiveness": 0.108,
+    "q_from_thesis_effectiveness_w": 534.5799261762959,
+    "model_q_w": 440.36622118061064,
+    "model_exposed_w": 36.67477439250177,
+    "model_core_dp_pa": 35.06958460241731,
+    "ratio_model_to_thesis": 0.8237612368470882
+   }
+  ],
+  "water_pressure_drop_3l_min": {
+   "measured_range_pa": [
+    5240.0,
+    5400.0
+   ],
+   "model_with_bends_pa": 4609.870165852219,
+   "model_straight_only_pa": 794.2779892819817,
+   "note": "Thesis Fig 4.11 graph-read; taps on the inlet/outlet tubes include stubs not modelled."
+  },
+  "air_pressure_drop": {
+   "measured_pa_by_va": {
+    "0.705": 1.0,
+    "1.546": 2.3,
+    "2.183": 3.7,
+    "3.177": 4.7,
+    "3.991": 5.4
+   },
+   "note": "Thesis Fig 4.12 graph-read; velocity assignment by ordering. Model value is finned-core friction at core velocity = Va."
+  }
+ }
+}

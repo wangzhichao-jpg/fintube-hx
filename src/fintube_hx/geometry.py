@@ -14,7 +14,7 @@ def validate_geometry(value: dict, equal_circuits: bool = True) -> dict:
     allowed={'fin_type','tube_type','arrangement','rows','tubes_per_row','circuits_count','tube_length_m',
              'tube_outer_diameter_m','tube_inner_diameter_m','transverse_pitch_m','longitudinal_pitch_m',
              'fin_pitch_m','fin_thickness_m','fin_conductivity_w_m_k','tube_conductivity_w_m_k','tube_roughness_m',
-             'notes','drawing_reference'}
+             'fin_count','notes','drawing_reference'}
     unknown=set(g)-allowed
     if unknown:
         raise ValueError('Unsupported active geometry fields: '+', '.join(sorted(unknown)))
@@ -46,6 +46,17 @@ def validate_geometry(value: dict, equal_circuits: bool = True) -> dict:
         raise ValueError('Fin thickness must be less than fin pitch')
     if g['fin_pitch_m']>g['tube_length_m']:
         raise ValueError('At least one equivalent fin pitch must fit the tube length')
+    if 'fin_count' in g:
+        # Actual counted fins on one tube length. A finite stack of n fins has
+        # n-1 pitches, so the count may differ from L/pitch by about one fin.
+        n=g['fin_count']
+        if isinstance(n,bool) or not isinstance(n,int) or n<1:
+            raise ValueError('geometry.fin_count must be a positive integer (actual fins per tube length)')
+        if abs(n-g['tube_length_m']/g['fin_pitch_m'])>1.5:
+            raise ValueError('geometry.fin_count must agree with tube_length_m/fin_pitch_m within 1.5 fins; '
+                             'correct the finned length or pitch instead of overriding the area')
+        if n*g['fin_thickness_m']>=g['tube_length_m']:
+            raise ValueError('geometry.fin_count leaves no open length between fins')
     collar=g['tube_outer_diameter_m']+2*g['fin_thickness_m']
     diagonal=math.hypot(g['transverse_pitch_m']/2,g['longitudinal_pitch_m'])
     if min(g['transverse_pitch_m'],diagonal)<=collar:
@@ -61,7 +72,9 @@ def geometry_metrics(value: dict, equal_circuits: bool = True) -> dict:
     nr,nt,nc=g['rows'],g['tubes_per_row'],g['circuits_count']
     L,pt,pl=g['tube_length_m'],g['transverse_pitch_m'],g['longitudinal_pitch_m']
     do,di,tf,pf=g['tube_outer_diameter_m'],g['tube_inner_diameter_m'],g['fin_thickness_m'],g['fin_pitch_m']
-    dc=do+2*tf;H=nt*pt;depth=nr*pl;total=nr*nt;nf=L/pf
+    dc=do+2*tf;H=nt*pt;depth=nr*pl;total=nr*nt
+    counted='fin_count' in g
+    nf=float(g['fin_count']) if counted else L/pf
     a_face=L*H
     # Staggered minimum-area expression adapted from MIT python-hvac geometry.py.
     # Includes the outermost transverse gap rather than treating every gap as periodic.
@@ -74,12 +87,20 @@ def geometry_metrics(value: dict, equal_circuits: bool = True) -> dict:
     a_fin_faces=2*(H*depth-total*math.pi*dc**2/4)*nf
     a_fin_edges=2*(H+depth)*tf*nf
     a_fin=a_fin_faces+a_fin_edges
-    a_bare=math.pi*dc*L*(1-tf/pf)*total
+    # Legacy expression kept byte-for-byte when no count is supplied.
+    a_bare=math.pi*dc*(L-nf*tf)*total if counted else math.pi*dc*L*(1-tf/pf)*total
     a_out=a_fin+a_bare
     if a_min<=0 or a_min>=a_face or a_fin<=0:
         raise ValueError('Geometry produces nonphysical minimum flow or fin area')
-    dh=4*a_min*depth/a_out
+    if counted:
+        # The correlation hydraulic diameter is a periodic channel property (one
+        # pitch per fin). Counting an end fin adds area but must not change j/f.
+        periodic_out=(2*(H*depth-total*math.pi*dc**2/4)+2*(H+depth)*tf)*L/pf+math.pi*dc*L*(1-tf/pf)*total
+        dh=4*a_min*depth/periodic_out
+    else:
+        dh=4*a_min*depth/a_out
     return {'tube_count':total,'tubes_per_circuit':total//nc if equal_circuits else total/nc,'equivalent_fin_count':nf,
+            'fin_count_basis':'input_actual_count' if counted else 'tube_length_over_pitch',
             'width_m':L,'height_m':H,'air_depth_m':depth,'frontal_area_m2':a_face,
             'minimum_air_area_m2':a_min,'free_area_ratio':a_min/a_face,
             'collar_diameter_m':dc,'air_hydraulic_diameter_m':dh,
