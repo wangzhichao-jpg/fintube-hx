@@ -13,7 +13,9 @@ The package is organized into decoupled layers:
 - **`fintube_hx.thermal`**  
   Fundamental heat and mass transfer building blocks, including sensible/latent heat exchange, wet coil contact factors, and condensate drain energy accounting.
 - **`fintube_hx.geometry` & `fintube_hx.wang_plain_fin`**  
-  Continuous plain-fin and staggered-tube geometry metrics (fin area, primary area, minimum free flow area, hydraulic diameter) and the Wang & Chi (2000) air-side Colburn $j$ and Fanning $f$ correlations.
+  Continuous plain-fin and staggered-tube geometry metrics (fin area, primary area, minimum free flow area, hydraulic diameter) and the Wang & Chi (2000) air-side Colburn $j$ and Fanning $f$ correlations. Optional `fin_count` gives the actual number of fins (area only; the correlation hydraulic diameter stays periodic).
+- **`fintube_hx.exposed_tubes`** (0.1.0.dev7)  
+  Dry Churchill–Bernstein convection of unfinned straight tube ends and return bends standing in the air stream (`model.exposed_tubes`), with exact constant-air-temperature element heat. Used by the lumped water model and available to extensions.
 - **`fintube_hx.water` & `fintube_hx.refrigerant`**  
   Coil rating implementations for liquid water coils, direct expansion evaporators, and air-cooled condensers.
 - **`fintube_hx.inverse`**  

@@ -93,7 +93,7 @@ def validate_case(case):
         raise EditionCapabilityError('Actual tube-network models are not in Community')
     if m.get('air_arrangement','counterflow')!='counterflow':
         raise EditionCapabilityError('Community supports only the lumped counterflow contract')
-    check_keys(m,{'water_model','refrigerant_model','ua_mode','ua_w_k','segments','air_arrangement'},'model')
+    check_keys(m,{'water_model','refrigerant_model','ua_mode','ua_w_k','segments','air_arrangement','exposed_tubes'},'model')
     if c['kind']=='water':
         if 'refrigerant_model' in m:raise ValueError('refrigerant_model is only applicable to evaporators/condensers')
         m.setdefault('water_model','lumped')
@@ -109,7 +109,11 @@ def validate_case(case):
         if 'ua_w_k' in m:raise ValueError('Do not supply UA when ua_mode=geometry; no hidden manual override')
         from .geometry import validate_geometry
         c['geometry']=validate_geometry(c.get('geometry'))
+        if 'exposed_tubes' in m:
+            from .exposed_tubes import normalize_exposed_tubes
+            m['exposed_tubes']=normalize_exposed_tubes(m['exposed_tubes'])
     else:
+        if 'exposed_tubes' in m:raise ValueError('model.exposed_tubes requires a geometry-derived water coil')
         m['ua_w_k']=number(m.get('ua_w_k'),'model.ua_w_k',0)
         if 'geometry' in c:raise ValueError('Input-UA Community models do not accept inactive geometry; move archival notes to metadata')
     n=m.setdefault('segments',80)
