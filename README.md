@@ -5,9 +5,24 @@
 [![CI](https://github.com/wangzhichao-jpg/fintube-hx/actions/workflows/ci.yml/badge.svg)](https://github.com/wangzhichao-jpg/fintube-hx/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python: 3.12](https://img.shields.io/badge/Python-3.12-brightgreen.svg)](pyproject.toml)
+[![YouTube](https://img.shields.io/badge/YouTube-Overview_Video-FF0000?logo=youtube&logoColor=white)](https://youtu.be/anapOEsmAU0)
+[![Bilibili](https://img.shields.io/badge/Bilibili-中文宣传片-00A1D6?logo=bilibili&logoColor=white)](https://www.bilibili.com/video/BV1Y1JC6FEs9/)
 
-A standalone Python core for baseline fin-tube heat-exchanger calculations.
-[GitHub](https://github.com/wangzhichao-jpg/fintube-hx) · [Gitee](https://gitee.com/bigtaurus/fintube-hx)
+**An open, reproducible Python core for baseline fin-tube heat-exchanger thermal-hydraulic calculations (MIT Licensed).**  
+Supports forward rating, bounded inverse mass-flow solving, parametric scans, and CSV/Excel exports for **water coils, evaporators, and condensers**.  
+Repositories: [GitHub](https://github.com/wangzhichao-jpg/fintube-hx) · [Gitee Mirror](https://gitee.com/bigtaurus/fintube-hx) | Video Overview: [YouTube (EN)](https://youtu.be/anapOEsmAU0) · [Bilibili (中文)](https://www.bilibili.com/video/BV1Y1JC6FEs9/)
+
+![Fintube HX 3D Staggered Coil & Thermal-Hydraulic Digital Twin](docs/coil-3d-showcase.png)
+
+## Ecosystem & Scope Overview
+
+Fintube HX follows a three-tier architecture where Community and Pro share the same verified thermophysical and baseline solver core:
+
+| Edition | Target Audience | Key Capabilities & Scope |
+|---|---|---|
+| **Community (This Repo, MIT)** | Academic research, algorithm benchmarking & scripted workflows | Lumped/segmented baseline solvers, Wang & Chi (2000) plain-fin water geometry, Hausen/Gnielinski tube-side HTC, bounded inverse flow targets, CLI & JSON/CSV/XLSX I/O |
+| **Pro Engineering Workbench** | HVAC&R coil design & rating engineers | Engineering unit forms, P-h/P-x state helpers, **interactive tube-by-tube circuit routing & parallel pressure balancing**, two-phase boiling/condensation correlations, multi-condition screening, Word/Excel reports |
+| **Enterprise & Lab Validation** | OEMs & coil manufacturers | Physical test-rig calibration, custom fin/tube correlations, and bespoke software by the **Jianke Huanneng Technology (National Air-Conditioning Equipment Quality Inspection Center)** team |
 
 ## Implemented models
 

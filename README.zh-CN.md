@@ -5,8 +5,24 @@
 [![CI](https://github.com/wangzhichao-jpg/fintube-hx/actions/workflows/ci.yml/badge.svg)](https://github.com/wangzhichao-jpg/fintube-hx/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python: 3.12](https://img.shields.io/badge/Python-3.12-brightgreen.svg)](pyproject.toml)
+[![Bilibili](https://img.shields.io/badge/Bilibili-项目宣传片-00A1D6?logo=bilibili&logoColor=white)](https://www.bilibili.com/video/BV1Y1JC6FEs9/)
+[![YouTube](https://img.shields.io/badge/YouTube-Overview_Video-FF0000?logo=youtube&logoColor=white)](https://youtu.be/anapOEsmAU0)
 
-独立的翅片管换热器基础计算核心。[GitHub](https://github.com/wangzhichao-jpg/fintube-hx) · [Gitee](https://gitee.com/bigtaurus/fintube-hx)
+**物理透明、可复现的翅片管换热器热工水力基础计算核心（MIT 开源）。**  
+覆盖**水盘管、风冷蒸发器、风冷冷凝器**的正向校核、有界流量反求、参数扫描与 CSV/Excel 报告导出。  
+代码仓库：[GitHub](https://github.com/wangzhichao-jpg/fintube-hx) · [Gitee 国内镜像](https://gitee.com/bigtaurus/fintube-hx) ｜ 视频介绍：[B站中文宣传片](https://www.bilibili.com/video/BV1Y1JC6FEs9/) · [YouTube (EN)](https://youtu.be/anapOEsmAU0)
+
+![Fintube HX 三大翅片管换热器三维错排结构与热工水力流路孪生](docs/coil-3d-showcase.png)
+
+## 版本生态与定位
+
+Fintube HX 采用“开源研究核心 → 专业工程工作台 → 实验驱动企业定制”三层架构，Community 与 Pro 共享同一套经过验证的基础物性与求解内核：
+
+| 层级 | 定位与适用场景 | 核心能力边界 |
+|---|---|---|
+| **Community（本仓库，MIT）** | 高校科研、教学、算法复现与脚本批处理 | 集总参数/轴向分段基础模型、Wang & Chi (2000) 水盘管平片几何、Hausen/Gnielinski 管内换热、有界流量反求、CLI 与 JSON/CSV/XLSX 接口 |
+| **Pro 专业工程工作台** | 换热器研发与选型工程师日常设计 | 工程单位表单、P-h/P-x 状态助手、**图形化逐管流路编辑与并联支路水力平衡**、管内两相沸腾/冷凝关联式、多工况批量评估、有限候选约束寻优、Word 计算书 |
+| **企业定制与试验验证** | 主机厂与换热器制造企业专属研发 | 依托**建科环能科技有限公司（国家空调设备质检中心）**国家级测试平台，开展物理台位标定、特殊片型/管型/新工质关联式开发与软件定制 |
 
 ## 当前实现
 
