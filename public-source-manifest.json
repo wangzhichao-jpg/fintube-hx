@@ -35,11 +35,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "d55ffbda1dec028f737c90fd7671b3c37c9b1297a1eb0e9068b7397d2150de68"
+      "sha256": "fd20902a48f4efecf44838af13b08bcef9edd7ffc063b2bdae8ec05bb247ea90"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "d48a7fd8d9aebc1c1aec6c1dae3f5a325032ce24cabc68b965ef3302722ce408"
+      "sha256": "c0bfb7c01e97d50883bd7345660a16f58b00872d3c13ce0cac7bffbf02a6cda4"
     },
     {
       "path": "RELEASE_CHECKLIST.md",
@@ -56,6 +56,10 @@
     {
       "path": "docs/EXTERNAL_REVIEW_V3.md",
       "sha256": "03209c5ae5ad21e3dda4da1b53ff8dda945efffb5ff00d2b6bbd8f83018da58c"
+    },
+    {
+      "path": "docs/coil-3d-showcase.png",
+      "sha256": "2580b6a17d863c8db0526f57eb6c76bf631cb24391a6c33c918fe64c89e183ae"
     },
     {
       "path": "docs/external-review-results.json",
@@ -103,7 +107,7 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256": "890994d6faf1d1c658573b204f7e92a8ef3498a04cee1ebe8c50b2b54359e31a"
+      "sha256": "ba2922487c4a0412e00b8375d3271ed3d087290598fab4693b56edfd2460cb00"
     },
     {
       "path": "references/python-hvac/README.md",
