@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0.dev9",
+  "version": "0.1.0.dev10",
   "edition": "community",
   "publication_status": "reviewed_public_source_candidate",
   "original_license_status": "MIT_owner_approved",
@@ -23,7 +23,7 @@
     },
     {
       "path": "CORE_API.md",
-      "sha256": "7c9e246a5a17687bfa2b7ace3228066dcc8fae0c8607f79c7b4b4552d3fc48b7"
+      "sha256": "5995ea00f426855f2a9caf7d006bed3be9b87f1cf629416de19328ef0556b2c7"
     },
     {
       "path": "LICENSE",
@@ -35,11 +35,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "2a136e30f2944968b23b3eeb164108aa64232283a2238dd757faf97dadc65733"
+      "sha256": "6040a1afb55544b7bc39748b1b29ea9a89ed34844deab80b8c879786157440f0"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "ca2252a5dd617d137dcbd87901bf00c028e50506f278fa48f64420909725118a"
+      "sha256": "f6a3191bc0d8f2155aa74c534a1f6a87b5f254f9491e0650fabb49591bb17a87"
     },
     {
       "path": "RELEASE_CHECKLIST.md",
@@ -55,7 +55,7 @@
     },
     {
       "path": "docs/EXTERNAL_REVIEW_STATUS.md",
-      "sha256": "bb1f20d039cb2fa082023c9051e2fb052829df36d7ef853e021da7c9cf1de871"
+      "sha256": "50377ce995e47d30594fe5bd8a7640bce2210fc5c365921523547ec2c235c3e0"
     },
     {
       "path": "docs/EXTERNAL_REVIEW_V3.md",
@@ -111,7 +111,7 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256": "7e6440a457a2d32517987de8b65dce89bc5d6c8639192e5d8af63b8d7894a6fc"
+      "sha256": "5f9cf7b0938e2f4e5cedee1e587a93c51710e6a74d5ba3e974d37674d6e4bf35"
     },
     {
       "path": "references/python-hvac/README.md",
@@ -155,7 +155,7 @@
     },
     {
       "path": "src/fintube_hx/__init__.py",
-      "sha256": "05dd962dc168ad20707781bf2cadc47ffa7b77740c8b190c43c75306e5472353"
+      "sha256": "7b9b48f37934e12e4c4f06a698647e19d9c57266fcdd45900aa50ab345c33d37"
     },
     {
       "path": "src/fintube_hx/__main__.py",
@@ -163,7 +163,7 @@
     },
     {
       "path": "src/fintube_hx/airside.py",
-      "sha256": "45dcdb301e051c413a22b88e667dc2640495f08af9fe22658b4433ac7685ddff"
+      "sha256": "00b5ca89709ed285306590948fce648ee3f57eb8743049025b168c6684455fa2"
     },
     {
       "path": "src/fintube_hx/cli.py",
@@ -179,11 +179,11 @@
     },
     {
       "path": "src/fintube_hx/geometry.py",
-      "sha256": "6adc26bf1c0e9bb3d5b23e2970a1692f7833791568a2fb0b5f600d9bdf824849"
+      "sha256": "feb047477e945fa5f2cf1cf5fd4b96a1793442fe08f7029427ff945216b0758f"
     },
     {
       "path": "src/fintube_hx/geometry_performance.py",
-      "sha256": "38b7bf7d2d106754aa4ede55437fda9e88fbf629f48f171294920d54822ee15e"
+      "sha256": "015a45262f230a72af2d8364c7269822fe583df236ad2081f3a895012a8bbfa6"
     },
     {
       "path": "src/fintube_hx/inverse.py",
@@ -243,7 +243,7 @@
     },
     {
       "path": "tests/test_airside_fin_types.py",
-      "sha256": "ce18a82965460c28c9a23482516cb9ed948ae7ff8570f52d030db8c67865508f"
+      "sha256": "1650d6f7efbbe12a98b5626b14c8ea28728c6ff197fb55ec2a43254bbf5d39e8"
     },
     {
       "path": "tests/test_community.py",
