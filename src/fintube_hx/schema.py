@@ -84,6 +84,16 @@ def normalize_mass_flow_target(c):
     t['mass_flow_bounds_kg_s']=[lo,hi];t['tolerance_k']=number(t.get('tolerance_k',.001),'target.tolerance_k',1e-8,1)
 
 
+WET_SURFACE_MODELS=('contact_factor','threlkeld_braun')
+
+
+def normalize_wet_surface_model(model):
+    """Optional; never defaulted into the case so legacy snapshots/hashes are unchanged."""
+    if 'wet_surface_model' in model and model['wet_surface_model'] not in WET_SURFACE_MODELS:
+        raise ValueError('model.wet_surface_model must be contact_factor or threlkeld_braun')
+    return model
+
+
 def validate_case(case):
     if isinstance(case,dict) and 'network' in case:raise EditionCapabilityError('Actual tube networks are not in Community; no silent fallback to lumped models')
     if isinstance(case,dict) and isinstance(case.get('air'),dict) and 'velocity_field' in case['air']:
@@ -93,7 +103,7 @@ def validate_case(case):
         raise EditionCapabilityError('Actual tube-network models are not in Community')
     if m.get('air_arrangement','counterflow')!='counterflow':
         raise EditionCapabilityError('Community supports only the lumped counterflow contract')
-    check_keys(m,{'water_model','refrigerant_model','ua_mode','ua_w_k','segments','air_arrangement','exposed_tubes'},'model')
+    check_keys(m,{'water_model','refrigerant_model','ua_mode','ua_w_k','segments','air_arrangement','exposed_tubes','wet_surface_model'},'model')
     if c['kind']=='water':
         if 'refrigerant_model' in m:raise ValueError('refrigerant_model is only applicable to evaporators/condensers')
         m.setdefault('water_model','lumped')
@@ -112,8 +122,10 @@ def validate_case(case):
         if 'exposed_tubes' in m:
             from .exposed_tubes import normalize_exposed_tubes
             m['exposed_tubes']=normalize_exposed_tubes(m['exposed_tubes'])
+        normalize_wet_surface_model(m)
     else:
         if 'exposed_tubes' in m:raise ValueError('model.exposed_tubes requires a geometry-derived water coil')
+        if 'wet_surface_model' in m:raise ValueError('model.wet_surface_model requires a geometry-derived water coil')
         m['ua_w_k']=number(m.get('ua_w_k'),'model.ua_w_k',0)
         if 'geometry' in c:raise ValueError('Input-UA Community models do not accept inactive geometry; move archival notes to metadata')
     n=m.setdefault('segments',80)
