@@ -1,4 +1,4 @@
-"""SI plain-continuous-fin / staggered smooth-tube geometry; no invented circuit route.
+"""SI continuous-fin (plain, louver, herringbone wavy) / staggered smooth-tube geometry; no invented circuit route.
 Minimum-area expression adapted from python-hvac, Copyright (c) 2023 Tom
 Christiaens (MIT); full notice: third_party_licenses/python-hvac/LICENSE.md.
 """
@@ -14,12 +14,28 @@ def validate_geometry(value: dict, equal_circuits: bool = True) -> dict:
     allowed={'fin_type','tube_type','arrangement','rows','tubes_per_row','circuits_count','tube_length_m',
              'tube_outer_diameter_m','tube_inner_diameter_m','transverse_pitch_m','longitudinal_pitch_m',
              'fin_pitch_m','fin_thickness_m','fin_conductivity_w_m_k','tube_conductivity_w_m_k','tube_roughness_m',
-             'fin_count','notes','drawing_reference'}
+             'fin_count','notes','drawing_reference',
+             'louver_pitch_m','louver_height_m','wave_height_m','wave_projected_length_m','fin_efficiency_method'}
     unknown=set(g)-allowed
     if unknown:
         raise ValueError('Unsupported active geometry fields: '+', '.join(sorted(unknown)))
-    if g.get('fin_type')!='plain' or g.get('tube_type')!='smooth' or g.get('arrangement')!='staggered':
-        raise NotImplementedError('Geometry baseline currently supports plain continuous fins and staggered smooth tubes only')
+    from .airside import FIN_TYPES, FIN_EFFICIENCY_METHODS
+    if g.get('fin_type') not in FIN_TYPES or g.get('tube_type')!='smooth' or g.get('arrangement')!='staggered':
+        raise NotImplementedError('Geometry baseline supports plain, louver or wavy_herringbone continuous fins '
+                                  'on staggered smooth tubes only')
+    shape={'plain':(),'louver':('louver_pitch_m','louver_height_m'),
+           'wavy_herringbone':('wave_height_m','wave_projected_length_m')}
+    for kind,keys in shape.items():
+        for key in keys:
+            if kind==g['fin_type']:
+                v=g.get(key)
+                if isinstance(v,bool) or not isinstance(v,(int,float)) or not math.isfinite(v) or v<=0:
+                    raise ValueError(f'geometry.{key} is required for fin_type={kind} as a finite positive SI number')
+                g[key]=float(v)
+            elif key in g:
+                raise ValueError(f'geometry.{key} applies only to fin_type={kind}; no silently ignored field')
+    if 'fin_efficiency_method' in g and g['fin_efficiency_method'] not in FIN_EFFICIENCY_METHODS:
+        raise ValueError('geometry.fin_efficiency_method must be equal_area_annular or schmidt')
     for key in ['rows','tubes_per_row','circuits_count']:
         v=g.get(key)
         if isinstance(v,bool) or not isinstance(v,int) or v<1:
@@ -84,7 +100,11 @@ def geometry_metrics(value: dict, equal_circuits: bool = True) -> dict:
     gap_diagonal=(math.hypot(pt/2,pl)-dc)*(1-tf/pf)
     gap=2*min(gap_transverse,gap_diagonal)
     a_min=((nt-1)*gap+(pt-dc)*(1-tf/pf))*L
-    a_fin_faces=2*(H*depth-total*math.pi*dc**2/4)*nf
+    # Herringbone wavy fins: developed face area along the corrugation, sec(theta) =
+    # sqrt(Xf^2+Pd^2)/Xf (geometric; collar holes are taken as projected).
+    sec=(math.hypot(g['wave_projected_length_m'],g['wave_height_m'])/g['wave_projected_length_m']
+         if g['fin_type']=='wavy_herringbone' else 1.)
+    a_fin_faces=2*(H*depth*sec-total*math.pi*dc**2/4)*nf if sec!=1. else 2*(H*depth-total*math.pi*dc**2/4)*nf
     a_fin_edges=2*(H+depth)*tf*nf
     a_fin=a_fin_faces+a_fin_edges
     # Legacy expression kept byte-for-byte when no count is supplied.
@@ -95,7 +115,7 @@ def geometry_metrics(value: dict, equal_circuits: bool = True) -> dict:
     if counted:
         # The correlation hydraulic diameter is a periodic channel property (one
         # pitch per fin). Counting an end fin adds area but must not change j/f.
-        periodic_out=(2*(H*depth-total*math.pi*dc**2/4)+2*(H+depth)*tf)*L/pf+math.pi*dc*L*(1-tf/pf)*total
+        periodic_out=(2*(H*depth*sec-total*math.pi*dc**2/4)+2*(H+depth)*tf)*L/pf+math.pi*dc*L*(1-tf/pf)*total
         dh=4*a_min*depth/periodic_out
     else:
         dh=4*a_min*depth/a_out
@@ -106,4 +126,7 @@ def geometry_metrics(value: dict, equal_circuits: bool = True) -> dict:
             'collar_diameter_m':dc,'air_hydraulic_diameter_m':dh,
             'fin_area_m2':a_fin,'bare_outer_area_m2':a_bare,'total_outer_area_m2':a_out,
             'inner_area_m2':math.pi*di*L*total,'tube_path_length_m':L*total/nc,
-            'equivalent_annular_fin_outer_diameter_m':2*math.sqrt(pt*pl/math.pi)}
+            'equivalent_annular_fin_outer_diameter_m':2*math.sqrt(pt*pl/math.pi),
+            **({'fin_area_enhancement_sec_theta':sec,
+                'corrugation_angle_deg':math.degrees(math.atan(g['wave_height_m']/g['wave_projected_length_m']))}
+               if g['fin_type']=='wavy_herringbone' else {})}
