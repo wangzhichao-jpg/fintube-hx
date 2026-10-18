@@ -32,7 +32,7 @@ Fintube HX follows a three-tier architecture where Community and Pro share the s
 | Evaporator | Constant-pressure P-h **counterflow axial segmentation**, uniform allocation of supplied UA | **Input UA only**; no refrigerant geometry-derived HTC or pressure loss |
 | Condenser | Same input-UA P-h model, with finite enthalpy/temperature coupling in single-phase cells | **Input UA only**; no refrigerant pressure loss |
 
-Water geometry uses Wang-Chi plain-fin j/f, Hausen/Gnielinski tube-side convection, Churchill friction and an equal-area annular-fin efficiency approximation. Wet geometry recomputes a **wet-fin efficiency proxy** from the enhanced air-side coefficient. It is not a resolved partially wet coil model.
+Water geometry uses Wang-Chi plain-fin j/f, Hausen/Gnielinski tube-side convection, Churchill friction and an equal-area annular-fin efficiency approximation. Wet geometry recomputes a **wet-fin efficiency proxy** from the enhanced air-side coefficient. It is not a resolved partially wet coil model. Version 0.1.0.dev8 adds an optional geometry-mode alternative, `model.wet_surface_model: "threlkeld_braun"`: Braun–Klein–Mitchell (1989) enthalpy-potential ε-NTU with the Threlkeld wet-fin efficiency (Lewis number 1, dry j applied to the wet surface, condensate-film resistance neglected); the coil is taken as the larger of the dry and fully wet heat rates. Omitting the field keeps the legacy contact approximation.
 
 Version 0.1.0.dev7 adds two optional geometry items: `geometry.fin_count` (actual counted fins; changes area only, the Wang hydraulic diameter stays periodic) and `model.exposed_tubes` (unfinned straight tube ends and U-bends standing in the air stream; Churchill–Bernstein single-cylinder crossflow at a declared approach velocity, dry only, heat reported separately to a bypass stream).
 
@@ -97,7 +97,7 @@ The refrigerant points need a tube-circuit model that is not in this repository;
 
 [`references/python-hvac/`](references/python-hvac/README.md) contains a pinned source reproduction and a mapped water case. The mapped case produces **4363.49 W**, versus **4084.46 W** in the reproduced reference (+6.83%); this is a **software comparison with differing geometry/model definitions**, not a measured accuracy result or a fitted calibration.
 
-Version **0.1.0.dev7** adds `fin_count`, `exposed_tubes` and the measured-validation set; without these fields all existing results are bit-for-bit unchanged.
+Version **0.1.0.dev8** adds the optional `wet_surface_model` (module `fintube_hx.wet_surface`); without it all existing results are bit-for-bit unchanged. Version **0.1.0.dev7** adds `fin_count`, `exposed_tubes` and the measured-validation set; without these fields all existing results are bit-for-bit unchanged.
 
 For lumped refrigerant models, an omitted `solver.max_iterations` defaults to `max(200, 2*segments + 20)`. An explicit limit is never increased; a low budget is disclosed and an unconverged run still exits with code 2. Version **0.1.0.dev6** adds this budget correction; it does not change heat-transfer equations.
 

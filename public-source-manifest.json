@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0.dev7",
+  "version": "0.1.0.dev8",
   "edition": "community",
   "publication_status": "reviewed_public_source_candidate",
   "original_license_status": "MIT_owner_approved",
@@ -23,7 +23,7 @@
     },
     {
       "path": "CORE_API.md",
-      "sha256": "9fed696e539fa7551e30a07384ff0f10fc2971a6f8113f6dca978e3c35c005f3"
+      "sha256": "42d98263448c2bdce02d6d680f5d0601b9a5a241c51edfa74c672cb02669db6a"
     },
     {
       "path": "LICENSE",
@@ -35,11 +35,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "ec527f1152bbee6c3daeabfea934c2b8f94e7e048e458bba6785f422c55565a0"
+      "sha256": "f7538b7b34954ca5fcbe15c919bae1aa0eec7769e4d6d8b0e49f1fc93ed59cc1"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "4cb4323816325f62fbbbc13d26d732344c2e0443e27d1392ddfc6fea984d460e"
+      "sha256": "c68fedf1efb367258f13d7479d936317855148e10766378ad2c0180df3f33f43"
     },
     {
       "path": "RELEASE_CHECKLIST.md",
@@ -55,7 +55,7 @@
     },
     {
       "path": "docs/EXTERNAL_REVIEW_STATUS.md",
-      "sha256": "7f422ead2e97997caa2eaea16c979bf3736ba3ac86f404b119573f0844daa330"
+      "sha256": "3bcbef9716d94375c45e5cd7249c32348bf7b7e74188918b04c165c6837ff357"
     },
     {
       "path": "docs/EXTERNAL_REVIEW_V3.md",
@@ -111,7 +111,7 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256": "9c80aa3eaca3a8acbee058eb2881372045b8f1628a9be23ca541b36cbd17e89b"
+      "sha256": "c41c9e514b742360b1b61f6304a1d2d1033658e17c8f3c72a69052807e7dc449"
     },
     {
       "path": "references/python-hvac/README.md",
@@ -155,7 +155,7 @@
     },
     {
       "path": "src/fintube_hx/__init__.py",
-      "sha256": "b2d158dbe4c045be8ac36bf68ef340d2eda91898f0c4e9ea9a11251495b7e32f"
+      "sha256": "6f7cd4928e1a7bf916cb564aa376f5dd4a89e448a740a5189309ba8f951def86"
     },
     {
       "path": "src/fintube_hx/__main__.py",
@@ -203,7 +203,7 @@
     },
     {
       "path": "src/fintube_hx/schema.py",
-      "sha256": "6243851b4cd0c917f71c261e2f0ddd104eb24acf6df2e6c4c3fd0486896e35af"
+      "sha256": "ef88f1c08d504e32593161bdc61bca970556d9cb942703df3882ee8e34fc5862"
     },
     {
       "path": "src/fintube_hx/spreadsheet.py",
@@ -227,7 +227,11 @@
     },
     {
       "path": "src/fintube_hx/water.py",
-      "sha256": "b8a34e8a5784cdf0ffc787a0e1023822cf6d3aaf323596df59b2c248aa36058b"
+      "sha256": "cf89f8e0ce98aeab05688e32e873994464ce942573b03eb59df2e28de5f02af0"
+    },
+    {
+      "path": "src/fintube_hx/wet_surface.py",
+      "sha256": "cb7ae571f5e254ac5a2104b14a47153fc1cdca44164d5f94532e89055a42db2d"
     },
     {
       "path": "tests/baseline-reference.json",
@@ -260,6 +264,10 @@
     {
       "path": "tests/test_units_inverse.py",
       "sha256": "bf5629c56ff4439812e64664b72618bccba443f827d06957b9a21a1a4b30dc83"
+    },
+    {
+      "path": "tests/test_wet_surface.py",
+      "sha256": "e83c3f407baba74022ecadbebd118b6ebc017f7c66210cf6babafd515c8f241b"
     },
     {
       "path": "third_party_licenses/CoolProp/licenses/LICENSE",

@@ -1,4 +1,4 @@
-# External review: status of every Community item (0.1.0.dev7)
+# External review: status of every Community item (0.1.0.dev8)
 
 Three independent review rounds were received on 2026-10-13 (round 1 on dev4, round 2 on dev5, round 3 on the developer replies). Detailed replies: [round 1](EXTERNAL_REVIEW_2026-10-13.md), [round 3 follow-up](EXTERNAL_REVIEW_V3.md). This table records the state of each item raised against the public core; items that concern only the Professional application are not listed.
 
@@ -17,7 +17,7 @@ Status: **fixed** = code changed and covered by tests; **clarified** = the claim
 | 9 | "12.5→16.5 °C jump", "wet fin efficiency not corrected", "Cr = 0 always overestimates", "segments required", `tolerance_k` unit | clarified / withdrawn by the reviewer | review replies |
 | 10 | Water-side 3× pressure-drop "failure" vs python-hvac | clarified: the reference under-counts by 4 (Darcy/Fanning); this core's straight-tube value agrees with hand calculation | `references/python-hvac/` |
 | 11 | Air-side +19 % vs python-hvac | clarified: reference uses bare-tube OD and a different free-flow area | review replies |
-| 12 | Whole-coil wet/dry decision from inlet water temperature; no partially wet model (+12 % … +16 % in the mapped case) | **open** | README "Current engineering scope" |
+| 12 | Whole-coil wet/dry decision from inlet water temperature; no partially wet model (+12 % … +16 % in the mapped case) | **partly addressed (dev8)**: optional `model.wet_surface_model: threlkeld_braun` (enthalpy-potential ε-NTU, Threlkeld wet fin, larger-of-dry-and-wet). Default unchanged; still no resolved dry/wet boundary inside the coil, no wet-surface j, and no measured wet validation yet | `wet_surface.py`, `tests/test_wet_surface.py` |
 | 13 | Wet contact-factor / equivalent-cp approximation, not a rigorous enthalpy-potential model | **open** | README |
 | 14 | Evaporation at or below 0 °C rejected (no frost model) | **open** | README |
 | 15 | Water pressure drop: straight tubes only (no bends, headers, inlet/outlet) | **open** in this core (the Professional tube network now accepts a return-bend equivalent length) | README |

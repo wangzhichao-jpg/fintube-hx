@@ -31,6 +31,8 @@ def simulate_water(case: dict) -> dict:
     if exposed_spec is not None and tin < ain["dew_point_c"]:
         raise ValueError("model.exposed_tubes is dry-only; water inlet is below the air dew point")
     exposed_detail = None; q_exposed = 0.0
+    wet_model = c["model"].get("wet_surface_model", "contact_factor")
+    wet_detail_strict = None; surface_condition = "wet_approximation" if wet else "dry"; drain_t = tin
     cp_water = fin["cp_j_kg_k"]
     old_t = tin; converged = False; mean_water_temperature = tin
     max_iter, tol = c["solver"]["max_iterations"], c["solver"]["tolerance_k"]
@@ -41,7 +43,7 @@ def simulate_water(case: dict) -> dict:
             ua = geometry_detail["ua_w_k"]
         ca = m_da * ain["cp_j_kg_da_k"]
         ua_effective = ua
-        if wet:
+        if wet and wet_model == "contact_factor":
             sat = air_state(tin, 1.0, a["pressure_pa"])
             cp_air_effective = (ain["enthalpy_j_kg_da"] - sat["enthalpy_j_kg_da"]) / (ain["t_db_c"] - tin)
             ca = m_da * cp_air_effective
@@ -59,7 +61,12 @@ def simulate_water(case: dict) -> dict:
         cmin, cmax = min(ca, cw), max(ca, cw)
         epsilon = effectiveness_from_NTU(ua_effective / cmin, cmin / cmax, "counterflow") if ua else 0.0
         fraction = epsilon * cmin / ca
-        if fraction == 0:
+        if wet and wet_model == "threlkeld_braun":
+            aout, q_to_water, condensate, wet_detail_strict, surface_condition, drain_t = _strict_wet_coil(
+                ain, m_da, tin, mf * cp_water, ua, geometry_detail)
+            ua_effective = wet_detail_strict["overall_mass_conductance_kg_s"] * wet_detail_strict["saturation_slope_inner_j_kg_k"] \
+                if wet_detail_strict and surface_condition == "wet" else ua
+        elif fraction == 0:
             aout, q_to_water, condensate = dict(ain), 0.0, 0.0
         else:
             aout, q_to_water, condensate = contact_air(ain, tin, fraction, m_da)
@@ -76,7 +83,7 @@ def simulate_water(case: dict) -> dict:
             converged = True; break
         old_t = fout["temperature_c"]
     fout["mass_flow_kg_s"] = mf
-    air_net = m_da * (ain["enthalpy_j_kg_da"] - aout["enthalpy_j_kg_da"]) - condensate * LIQUID_WATER_CP * tin
+    air_net = m_da * (ain["enthalpy_j_kg_da"] - aout["enthalpy_j_kg_da"]) - condensate * LIQUID_WATER_CP * drain_t
     fluid_heat = mf * (fout["enthalpy_j_kg"] - fin["enthalpy_j_kg"])
     warnings = [
         "水盘管采用整体逆流ε-NTU基线，恒定水压；segments参数不生成虚假的逐管结果。",
@@ -84,7 +91,13 @@ def simulate_water(case: dict) -> dict:
          "当前未实现水侧/空气侧压降、实际几何UA、流量分配和溶液物性。"),
         "凝水焓采用0℃参考的4180*T近似，凝水排出温度取进水温度。",
     ]
-    if wet:
+    if wet and wet_model == "threlkeld_braun":
+        from .wet_surface import MODEL_NOTE as _WET_NOTE
+        warnings[2] = "凝水焓采用0℃参考的4180*T近似，凝水按有效表面温度排出。"
+        warnings.append(_WET_NOTE + ("本工况判定为湿表面。" if surface_condition == "wet" else
+                                     "本工况干工况换热量不低于全湿计算，按干表面计算。"))
+        warnings.append("整盘按逆流集总：饱和焓曲线以割线斜率线性化，未逐管分段；空气压降仍为干表面摩擦。")
+    elif wet:
         warnings.append("湿工况采用入口水温作为有效露点及热质传递类比的接触因子近似，不是严格部分湿翅片模型。")
         if geometry_mode:
             warnings.append("几何湿段只修改空气侧热阻/等效翅片效率；压降仍为干表面摩擦基线，未考虑水膜阻力。")
@@ -101,18 +114,45 @@ def simulate_water(case: dict) -> dict:
         "sensible_heat_w": abs(m_da * ain["cp_j_kg_da_k"] * (ain["t_db_c"] - aout["t_db_c"])),
         "energy_balance_relative_error": abs(fluid_heat - air_net - q_exposed) / max(abs(fluid_heat), 1.0),
         "iterations": iteration, "converged": converged, "warnings": warnings,
-        "segments": [], "air_surface_condition": "wet_approximation" if wet else "dry",
+        "segments": [], "air_surface_condition": surface_condition,
         "numerical_controls": {"segments_requested": c["model"]["segments"],
                                "segments_applied": False, "water_model": "lumped"},
     }
     if geometry_detail:
         result["geometry_model"] = geometry_detail
+    if wet_detail_strict is not None:
+        result["wet_surface"] = {k: v for k, v in wet_detail_strict.items() if k != "air_out"}
+    if wet_model != "contact_factor":
+        result["wet_surface_model"] = wet_model
     if exposed_detail is not None:
         result["exposed_tubes"] = exposed_detail
         result["finned_core_heat_w"] = abs(fluid_heat - q_exposed)
         result["warnings"].append("外露光管/U弯按Churchill-Bernstein单管横掠、给定迎面风速和进风状态计算，"
                                   "整体模型按平均水温线性计入；其换热进入旁通气流，不并入芯体出风状态。")
     return result
+
+
+def _strict_wet_coil(ain, m_da, tin, c_water, ua_dry, detail):
+    """Whole-coil counterflow: larger of dry and fully wet (Braun et al. 1989)."""
+    from ht import fin_efficiency_Kern_Kraus
+    from .wet_surface import wet_element, dry_or_wet
+    g, m = detail["geometry"], detail["metrics"]
+    fe = lambda h: fin_efficiency_Kern_Kraus(m["collar_diameter_m"], m["equivalent_annular_fin_outer_diameter_m"],
+                                             g["fin_thickness_m"], g["fin_conductivity_w_m_k"], h)
+    wet = wet_element(ain, m_da, detail["air_h_w_m2_k"], m["total_outer_area_m2"], m["fin_area_m2"], fe, tin,
+                      c_water, detail["resistance_water_k_w"] + detail["resistance_wall_k_w"], "counterflow")
+    ca = m_da * ain["cp_j_kg_da_k"]; cmin, cmax = min(ca, c_water), max(ca, c_water)
+    eps = effectiveness_from_NTU(ua_dry / cmin, cmin / cmax, "counterflow")
+    try:
+        dry = contact_air(ain, tin, eps * cmin / ca, m_da, wet=False)
+    except ValueError:
+        dry = None   # dry analysis would supersaturate the outlet: not admissible
+    choice = dry_or_wet(dry[1] if dry else None, wet)
+    if choice == "wet":
+        return wet["air_out"], wet["heat_to_fluid_w"], wet["condensate_kg_s"], wet, "wet", wet["effective_surface_t_c"]
+    if dry is None:
+        raise ValueError("Neither dry nor fully wet analysis is admissible for this coil state")
+    return dry[0], dry[1], 0.0, wet, "dry", tin
 
 
 def _lumped_exposed(spec, detail, air_in, water_t_c):
