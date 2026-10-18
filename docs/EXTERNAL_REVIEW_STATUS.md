@@ -1,4 +1,4 @@
-# External review: status of every Community item (0.1.0.dev8)
+# External review: status of every Community item (0.1.0.dev9)
 
 Three independent review rounds were received on 2026-10-13 (round 1 on dev4, round 2 on dev5, round 3 on the developer replies). Detailed replies: [round 1](EXTERNAL_REVIEW_2026-10-13.md), [round 3 follow-up](EXTERNAL_REVIEW_V3.md). This table records the state of each item raised against the public core; items that concern only the Professional application are not listed.
 
@@ -18,14 +18,14 @@ Status: **fixed** = code changed and covered by tests; **clarified** = the claim
 | 10 | Water-side 3× pressure-drop "failure" vs python-hvac | clarified: the reference under-counts by 4 (Darcy/Fanning); this core's straight-tube value agrees with hand calculation | `references/python-hvac/` |
 | 11 | Air-side +19 % vs python-hvac | clarified: reference uses bare-tube OD and a different free-flow area | review replies |
 | 12 | Whole-coil wet/dry decision from inlet water temperature; no partially wet model (+12 % … +16 % in the mapped case) | **partly addressed (dev8)**: optional `model.wet_surface_model: threlkeld_braun` (enthalpy-potential ε-NTU, Threlkeld wet fin, larger-of-dry-and-wet). Default unchanged; still no resolved dry/wet boundary inside the coil, no wet-surface j, and no measured wet validation yet | `wet_surface.py`, `tests/test_wet_surface.py` |
-| 13 | Wet contact-factor / equivalent-cp approximation, not a rigorous enthalpy-potential model | **open** | README |
+| 13 | Wet contact-factor / equivalent-cp approximation, not a rigorous enthalpy-potential model | **addressed as an option (dev8)**: `model.wet_surface_model: threlkeld_braun`; default unchanged | `wet_surface.py`, `tests/test_wet_surface.py` |
 | 14 | Evaporation at or below 0 °C rejected (no frost model) | **open** | README |
 | 15 | Water pressure drop: straight tubes only (no bends, headers, inlet/outlet) | **open** in this core (the Professional tube network now accepts a return-bend equivalent length) | README |
 | 16 | Air pressure drop: core friction only (no Kc/Ke, acceleration, wet film) | **open** | README |
-| 17 | Annular-fin efficiency proxy; no contact or fouling resistance | **open** | README |
+| 17 | Annular-fin efficiency proxy; no contact or fouling resistance | **partly addressed (dev9)**: optional Schmidt plate-fin efficiency (`geometry.fin_efficiency_method`); contact/fouling resistance still **open** | `airside.py`, `tests/test_airside_fin_types.py` |
 | 18 | Inlet air properties, no wall-temperature correction | **open** | README |
 | 19 | Lumped refrigerant models use an input UA, constant pressure | **open** by design of this core | README |
-| 20 | Pure water only, counterflow lumped only, no louvre/wavy fins or enhanced tubes | **open**; the CETIAT comparison shows the plain-for-louvre substitution matters (validation/measured) | README |
+| 20 | Pure water only, counterflow lumped only, no louvre/wavy fins or enhanced tubes | **partly addressed (dev9)**: louver (Wang 1999) and herringbone wavy (Wang 2002) fins within published ranges; slit fins, enhanced tubes, solutions and crossflow lumped models still **open** | `airside.py`, `tests/test_airside_fin_types.py` |
 | 21 | Wang range checks reject extrapolation; transition-region interpolation; Hausen over whole path | by design, disclosed | README / warnings |
 | 22 | Dense single-line code style | partly: new modules use one statement per line; no bulk reformatting mixed with physics changes | — |
 

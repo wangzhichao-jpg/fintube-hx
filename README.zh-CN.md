@@ -34,6 +34,8 @@ Fintube HX 采用“开源研究核心 → 专业工程工作台 → 实验驱�
 
 水几何采用Wang-Chi平片j/f、Hausen/Gnielinski管内传热、Churchill摩擦与等面积环形翅片效率近似。湿几何会按增强空气侧系数重新计算**湿翅片效率代理值**，但不等同于严格部分湿模型。0.1.0.dev8新增可选的几何模式湿表面模型`model.wet_surface_model: "threlkeld_braun"`：Braun-Klein-Mitchell（1989）焓势ε-NTU加Threlkeld湿翅片效率（Le=1，湿表面沿用干表面j，忽略凝水膜热阻），整盘取干工况与全湿计算中换热量较大者；不填该字段时仍为原接触近似。
 
+0.1.0.dev9为水盘管几何新增两种翅片：`geometry.fin_type: "louver"`（Wang、Lee、Chang、Lin 1999，IJHMT 42:1945；需`louver_pitch_m`、`louver_height_m`）和`"wavy_herringbone"`（Wang、Hwang、Lin 2002，IJR 25:673；需`wave_height_m`、`wave_projected_length_m`；翅片面积按展开面积secθ计）。两者只允许在文献样本范围内使用，翅片效率默认采用文献数据整理所用的Schmidt法（`geometry.fin_efficiency_method`，平片也可选）。两篇文献的j关联式都在Re_Dc=1000分段，多排盘管在分段点两侧可相差数十个百分点（数据低Re“平台”现象），按原文使用、不作平滑。湿表面沿用干表面j/f。
+
 0.1.0.dev7新增两个可选几何项：`geometry.fin_count`输入实际片数（只改变换热面积，Wang关联式的水力直径仍按周期通道计算）；`model.exposed_tubes`计入位于气流中的外露光管直段和U形回弯（Churchill–Bernstein单管横掠、给定迎面风速、仅干工况，换热进入旁通气流，单独列出）。
 
 工具支持JSON输入检查、输入/结果副本、单例/批量运行、参数扫描、CSV/XLSX，以及**出水温度、制冷剂过热度/过冷度**的流量反求。未实现指定出风温度反求。
@@ -97,7 +99,7 @@ print(result["heat_transfer_w"], result["fluid_out"]["temperature_c"])
 
 [`references/python-hvac/`](references/python-hvac/README.md)提供固定版本上游复现与水例映射。映射水例为**4363.49W**，参考复现为**4084.46W**，差异+6.83%。这是几何/模型定义不同的软件交叉比较，不是实测精度或拟合结果。
 
-**0.1.0.dev8**新增可选`wet_surface_model`（模块`fintube_hx.wet_surface`），不填时所有既有结果逐位不变。**0.1.0.dev7**新增`fin_count`、`exposed_tubes`及实测验证数据集；未提供这两个字段时，所有既有结果逐位不变。
+**0.1.0.dev9**新增百叶片、人字波纹片与Schmidt翅片效率（模块`fintube_hx.airside`），未设`fin_efficiency_method`的平片算例逐位不变。**0.1.0.dev8**新增可选`wet_surface_model`（模块`fintube_hx.wet_surface`），不填时所有既有结果逐位不变。**0.1.0.dev7**新增`fin_count`、`exposed_tubes`及实测验证数据集；未提供这两个字段时，所有既有结果逐位不变。
 
 制冷剂整体分段模型未提供`solver.max_iterations`时，默认采用`max(200, 2*segments+20)`；用户显式上限不增加，预算偏低会提示，未收敛仍退出2。**0.1.0.dev6**纳入此修复，不改变传热方程。
 

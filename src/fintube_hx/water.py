@@ -134,11 +134,10 @@ def simulate_water(case: dict) -> dict:
 
 def _strict_wet_coil(ain, m_da, tin, c_water, ua_dry, detail):
     """Whole-coil counterflow: larger of dry and fully wet (Braun et al. 1989)."""
-    from ht import fin_efficiency_Kern_Kraus
+    from .airside import fin_efficiency
     from .wet_surface import wet_element, dry_or_wet
     g, m = detail["geometry"], detail["metrics"]
-    fe = lambda h: fin_efficiency_Kern_Kraus(m["collar_diameter_m"], m["equivalent_annular_fin_outer_diameter_m"],
-                                             g["fin_thickness_m"], g["fin_conductivity_w_m_k"], h)
+    fe = lambda h: fin_efficiency(g, m, h)
     wet = wet_element(ain, m_da, detail["air_h_w_m2_k"], m["total_outer_area_m2"], m["fin_area_m2"], fe, tin,
                       c_water, detail["resistance_water_k_w"] + detail["resistance_wall_k_w"], "counterflow")
     ca = m_da * ain["cp_j_kg_da_k"]; cmin, cmax = min(ca, c_water), max(ca, c_water)

@@ -7,12 +7,11 @@ from __future__ import annotations
 import math
 from CoolProp.CoolProp import PropsSI,PhaseSI
 from CoolProp.HumidAirProp import HAPropsSI
-from ht import fin_efficiency_Kern_Kraus
 from ht.conv_internal import laminar_entry_thermal_Hausen,turbulent_Gnielinski
 from fluids.friction import friction_factor
 from .geometry import validate_geometry,geometry_metrics
 from .properties import air_state,air_mass_flow
-from .wang_plain_fin import wang_plain_fin
+from .airside import air_side_factors, fin_efficiency, fin_efficiency_method
 
 
 def wet_geometry_conductance(detail: dict, heat_capacity_ratio: float) -> dict:
@@ -21,8 +20,7 @@ def wet_geometry_conductance(detail: dict, heat_capacity_ratio: float) -> dict:
         raise ValueError('Invalid wet equivalent-air heat-capacity ratio')
     g,m=detail['geometry'],detail['metrics']
     h=detail['air_h_w_m2_k']*heat_capacity_ratio
-    eta=fin_efficiency_Kern_Kraus(m['collar_diameter_m'],m['equivalent_annular_fin_outer_diameter_m'],
-                                g['fin_thickness_m'],g['fin_conductivity_w_m_k'],h)
+    eta=fin_efficiency(g,m,h)
     eta_surface=1-m['fin_area_m2']/m['total_outer_area_m2']*(1-eta)
     ra=1/(h*eta_surface*m['total_outer_area_m2'])
     ua=1/(ra+detail['resistance_water_k_w']+detail['resistance_wall_k_w'])
@@ -68,11 +66,9 @@ def water_geometry_performance(case: dict, water_temperature_c: float) -> dict:
     args=('T',a['t_db_c']+273.15,'P',a['pressure_pa'],'R',a['relative_humidity'])
     mu_air=HAPropsSI('M',*args);k_air=HAPropsSI('K',*args);Pr_air=cp_air*mu_air/k_air
     G=m_air/metrics['minimum_air_area_m2'];Re_air=G*metrics['collar_diameter_m']/mu_air
-    factors=wang_plain_fin(Re_air,metrics['collar_diameter_m'],metrics['air_hydraulic_diameter_m'],
-                           g['transverse_pitch_m'],g['longitudinal_pitch_m'],g['fin_pitch_m'],g['rows'])
+    factors=air_side_factors(g,metrics,Re_air)
     h_air=factors['colburn_j']*G*cp_air/Pr_air**(2/3)
-    eta_fin=fin_efficiency_Kern_Kraus(metrics['collar_diameter_m'],metrics['equivalent_annular_fin_outer_diameter_m'],
-                                    g['fin_thickness_m'],g['fin_conductivity_w_m_k'],h_air)
+    eta_fin=fin_efficiency(g,metrics,h_air)
     eta_surface=1-metrics['fin_area_m2']/metrics['total_outer_area_m2']*(1-eta_fin)
     R_air=1/(h_air*eta_surface*metrics['total_outer_area_m2'])
     R_water=1/(h_water*metrics['inner_area_m2'])
@@ -84,11 +80,15 @@ def water_geometry_performance(case: dict, water_temperature_c: float) -> dict:
                      ('套管直径采用等厚套管口径Dc=Do+2tf；翅片面积按输入实际片数fin_count计算；实际成形套管尺寸未独立输入。'
                       if 'fin_count' in g else
                       '套管直径采用等厚套管口径Dc=Do+2tf；等效片数=管长/片距（可用fin_count输入实际片数）；实际成形套管尺寸未独立输入。'),
-                     '连续平翅片效率采用等面积环形翅片近似；无接触热阻、污垢和严格部分湿翅片。',
+                     ('连续平翅片效率采用等面积环形翅片近似；无接触热阻、污垢和严格部分湿翅片。'
+                      if fin_efficiency_method(g)=='equal_area_annular' else
+                      '翅片效率采用Schmidt当量圆翅片法（Wang, Webb & Chi 2000）；无接触热阻、污垢。'),
                      '空气物性取入口，水物性取迭代平均温度；不含壁温修正。',
                      '压降仅预测空气芯体摩擦和水侧直管摩擦，不含U弯/集管/局部损失；未耦合沿程压力状态。',
                      'circuits_count只定义等长等流量并联假设，未输入或求解真实连管与分配。'])
-    return {'model_version':'plain-smooth-water-geometry-0.2','geometry':g,'metrics':metrics,
+    if g['fin_type']!='plain':
+        warnings.append(f"空气侧{factors['source']}，仅在文献样本范围内使用；湿表面沿用干表面j/f。")
+    return {'model_version':'plain-smooth-water-geometry-0.2' if g['fin_type']=='plain' else f"{g['fin_type']}-smooth-water-geometry-0.1",'geometry':g,'metrics':metrics,
             'ua_w_k':ua,'air_h_w_m2_k':h_air,'water_h_w_m2_k':h_water,
             'fin_efficiency':eta_fin,'surface_efficiency':eta_surface,
             'resistance_air_k_w':R_air,'resistance_water_k_w':R_water,'resistance_wall_k_w':R_wall,

@@ -16,6 +16,8 @@ The package is organized into decoupled layers:
   Continuous plain-fin and staggered-tube geometry metrics (fin area, primary area, minimum free flow area, hydraulic diameter) and the Wang & Chi (2000) air-side Colburn $j$ and Fanning $f$ correlations. Optional `fin_count` gives the actual number of fins (area only; the correlation hydraulic diameter stays periodic).
 - **`fintube_hx.exposed_tubes`** (0.1.0.dev7)  
   Dry Churchill–Bernstein convection of unfinned straight tube ends and return bends standing in the air stream (`model.exposed_tubes`), with exact constant-air-temperature element heat. Used by the lumped water model and available to extensions.
+- **`fintube_hx.airside`** (0.1.0.dev9)  
+  Air-side j/f dispatch by `geometry.fin_type` (plain: Wang & Chi 2000; louver: Wang et al. 1999; wavy_herringbone: Wang et al. 2002) with published sample-range checks, and fin efficiency by `geometry.fin_efficiency_method` (equal-area annular, legacy default for plain fins; Schmidt, default for the enhanced fins).
 - **`fintube_hx.wet_surface`** (0.1.0.dev8)  
   Optional wet-surface element: Braun–Klein–Mitchell (1989) enthalpy-potential ε-NTU, Threlkeld wet-fin efficiency, effective-surface outlet humidity and the larger-of-dry-and-wet rule (`model.wet_surface_model: threlkeld_braun`). Used by the lumped geometry water model and available to extensions.
 - **`fintube_hx.water` & `fintube_hx.refrigerant`**  
