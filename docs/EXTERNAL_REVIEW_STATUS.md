@@ -1,4 +1,4 @@
-# External review: status of every Community item (0.1.0.dev9)
+# External review: status of every Community item (0.1.0.dev10)
 
 Three independent review rounds were received on 2026-10-13 (round 1 on dev4, round 2 on dev5, round 3 on the developer replies). Detailed replies: [round 1](EXTERNAL_REVIEW_2026-10-13.md), [round 3 follow-up](EXTERNAL_REVIEW_V3.md). This table records the state of each item raised against the public core; items that concern only the Professional application are not listed.
 

@@ -88,6 +88,9 @@ def water_geometry_performance(case: dict, water_temperature_c: float) -> dict:
                      'circuits_count只定义等长等流量并联假设，未输入或求解真实连管与分配。'])
     if g['fin_type']!='plain':
         warnings.append(f"空气侧{factors['source']}，仅在文献样本范围内使用；湿表面沿用干表面j/f。")
+        from .airside import extrapolation_warning
+        note=extrapolation_warning(factors)
+        if note:warnings.append(note)
     return {'model_version':'plain-smooth-water-geometry-0.2' if g['fin_type']=='plain' else f"{g['fin_type']}-smooth-water-geometry-0.1",'geometry':g,'metrics':metrics,
             'ua_w_k':ua,'air_h_w_m2_k':h_air,'water_h_w_m2_k':h_water,
             'fin_efficiency':eta_fin,'surface_efficiency':eta_surface,

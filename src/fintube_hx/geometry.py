@@ -15,7 +15,8 @@ def validate_geometry(value: dict, equal_circuits: bool = True) -> dict:
              'tube_outer_diameter_m','tube_inner_diameter_m','transverse_pitch_m','longitudinal_pitch_m',
              'fin_pitch_m','fin_thickness_m','fin_conductivity_w_m_k','tube_conductivity_w_m_k','tube_roughness_m',
              'fin_count','notes','drawing_reference',
-             'louver_pitch_m','louver_height_m','wave_height_m','wave_projected_length_m','fin_efficiency_method'}
+             'louver_pitch_m','louver_height_m','wave_height_m','wave_projected_length_m','fin_efficiency_method',
+             'correlation_range_tolerance'}
     unknown=set(g)-allowed
     if unknown:
         raise ValueError('Unsupported active geometry fields: '+', '.join(sorted(unknown)))
@@ -34,6 +35,14 @@ def validate_geometry(value: dict, equal_circuits: bool = True) -> dict:
                 g[key]=float(v)
             elif key in g:
                 raise ValueError(f'geometry.{key} applies only to fin_type={kind}; no silently ignored field')
+    if 'correlation_range_tolerance' in g:
+        from .airside import MAX_RANGE_TOLERANCE
+        v=g['correlation_range_tolerance']
+        if g['fin_type']=='plain':
+            raise ValueError('geometry.correlation_range_tolerance applies only to louver/wavy_herringbone fins')
+        if isinstance(v,bool) or not isinstance(v,(int,float)) or not 0<v<=MAX_RANGE_TOLERANCE:
+            raise ValueError('geometry.correlation_range_tolerance must be in (0, 0.01]: declared geometric boundary extrapolation only')
+        g['correlation_range_tolerance']=float(v)
     if 'fin_efficiency_method' in g and g['fin_efficiency_method'] not in FIN_EFFICIENCY_METHODS:
         raise ValueError('geometry.fin_efficiency_method must be equal_area_annular or schmidt')
     for key in ['rows','tubes_per_row','circuits_count']:

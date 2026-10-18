@@ -35,18 +35,36 @@ HERRINGBONE_RANGE = {'Re': (300., 10000.), 'collar diameter': (.00766, .01685), 
                      'wave height': (.0003, .0018)}
 
 
-def _check(name, values, limits):
+MAX_RANGE_TOLERANCE = 0.01
+NOT_EXTENDABLE = ('Re', 'rows')
+
+
+def _check(name, values, limits, tolerance=0.0):
+    """Raise outside the published sample range.  An explicit ``tolerance`` (relative,
+    at most 1 %) extends only geometric bounds, never Re or rows; every extended
+    parameter is returned so that results can disclose the boundary extrapolation."""
+    if not 0.0 <= tolerance <= MAX_RANGE_TOLERANCE:
+        raise ValueError('correlation_range_tolerance must be within 0..0.01')
+    extended = {}
     for key, value in values.items():
         lo, hi = limits[key]
         # 1e-9 relative: floating-point unit conversion only, not a range extension.
-        if not math.isfinite(value) or not lo * (1 - 1e-9) <= value <= hi * (1 + 1e-9):
-            raise ValueError(f'{name} {key}={value:g} outside published sample range [{lo:g},{hi:g}]')
+        if math.isfinite(value) and lo * (1 - 1e-9) <= value <= hi * (1 + 1e-9):
+            continue
+        tol = 0.0 if key in NOT_EXTENDABLE else tolerance
+        if math.isfinite(value) and lo * (1 - tol) <= value <= hi * (1 + tol):
+            extended[key] = {'value': value, 'published_range': [lo, hi],
+                             'relative_excess': (value - hi) / hi if value > hi else (value - lo) / lo}
+            continue
+        raise ValueError(f'{name} {key}={value:g} outside published sample range [{lo:g},{hi:g}]'
+                         + (f' (+{tol:.1%} declared tolerance)' if tol else ''))
+    return extended
 
 
-def wang_louver_1999(Re, dc, dh, pt, pl, pf, rows, lp, lh, ao_at):
-    _check('Wang 1999 louver', {'Re': Re, 'collar diameter': dc, 'transverse pitch': pt, 'longitudinal pitch': pl,
+def wang_louver_1999(Re, dc, dh, pt, pl, pf, rows, lp, lh, ao_at, range_tolerance=0.0):
+    extended = _check('Wang 1999 louver', {'Re': Re, 'collar diameter': dc, 'transverse pitch': pt, 'longitudinal pitch': pl,
                                 'fin pitch': pf, 'rows': rows, 'louver height': lh, 'louver pitch': lp,
-                                'louver height/pitch': lh / lp}, LOUVER_RANGE)
+                                'louver height/pitch': lh / lp}, LOUVER_RANGE, range_tolerance)
     N = rows; ln = math.log; lnRe = ln(Re)
     if Re < 1000:
         J1 = -0.991 - 0.1055 * (pl / pt) ** 3.1 * ln(lh / lp)                       # (19)
@@ -80,12 +98,13 @@ def wang_louver_1999(Re, dc, dh, pt, pl, pf, rows, lp, lh, ao_at):
     return {'colburn_j': j, 'fanning_friction_factor': f, 'branches': [branch_j, branch_f],
             'source': 'Wang, Lee, Chang & Lin 1999, IJHMT 42:1945-1956, Eqs. (18)-(39)',
             'friction_definition': 'Fanning, entrance/exit losses included (paper Eq. 14)',
+            **({'range_extrapolation': extended} if extended else {}),
             'correlation_range_checked': True}
 
 
-def wang_herringbone_2002(Re, dc, dh, pt, pl, pf, tf, rows, pd, xf):
+def wang_herringbone_2002(Re, dc, dh, pt, pl, pf, tf, rows, pd, xf, range_tolerance=0.0):
     tan = pd / xf; theta = math.degrees(math.atan(tan))
-    _check('Wang 2002 herringbone', {'Re': Re, 'collar diameter': dc, 'transverse pitch': pt, 'longitudinal pitch': pl,
+    extended = _check('Wang 2002 herringbone', {'Re': Re, 'collar diameter': dc, 'transverse pitch': pt, 'longitudinal pitch': pl,
                                      'fin pitch': pf, 'rows': rows, 'corrugation angle deg': theta,
                                      'projected wave length': xf, 'wave height': pd}, HERRINGBONE_RANGE)
     N = rows; fs = pf - tf; ln = math.log; lnRe = ln(Re)
@@ -116,6 +135,7 @@ def wang_herringbone_2002(Re, dc, dh, pt, pl, pf, tf, rows, pd, xf):
     return {'colburn_j': j, 'fanning_friction_factor': f, 'branches': branches, 'corrugation_angle_deg': theta,
             'source': 'Wang, Hwang & Lin 2002, Int. J. Refrig. 25:673-680, Eqs. (31)-(47)',
             'friction_definition': 'Fanning, entrance/exit losses included (paper Table 2 note 2)',
+            **({'range_extrapolation': extended} if extended else {}),
             'correlation_range_checked': True}
 
 
@@ -127,10 +147,12 @@ def air_side_factors(g: dict, metrics: dict, Re: float) -> dict:
         return wang_plain_fin(Re, dc, dh, pt, pl, pf, n)
     if t == 'louver':
         return wang_louver_1999(Re, dc, dh, pt, pl, pf, n, g['louver_pitch_m'], g['louver_height_m'],
-                                metrics['total_outer_area_m2'] / metrics['bare_outer_area_m2'])
+                                metrics['total_outer_area_m2'] / metrics['bare_outer_area_m2'],
+                                g.get('correlation_range_tolerance', 0.0))
     if t == 'wavy_herringbone':
         return wang_herringbone_2002(Re, dc, dh, pt, pl, pf, g['fin_thickness_m'], n,
-                                     g['wave_height_m'], g['wave_projected_length_m'])
+                                     g['wave_height_m'], g['wave_projected_length_m'],
+                                     g.get('correlation_range_tolerance', 0.0))
     raise NotImplementedError(f'Unsupported fin_type {t}')
 
 
@@ -163,3 +185,21 @@ def fin_efficiency(g: dict, metrics: dict, h: float) -> float:
     from ht import fin_efficiency_Kern_Kraus
     return fin_efficiency_Kern_Kraus(metrics['collar_diameter_m'], metrics['equivalent_annular_fin_outer_diameter_m'],
                                      g['fin_thickness_m'], g['fin_conductivity_w_m_k'], h)
+
+
+def extrapolation_warning(factors: dict) -> str | None:
+    """Disclosure text for a declared boundary extrapolation (None when within range)."""
+    ext = factors.get('range_extrapolation')
+    if not ext:
+        return None
+    items = '、'.join(f"{k} {v['value']:.6g}（文献样本{v['published_range'][0]:g}–{v['published_range'][1]:g}，"
+                     f"超出{abs(v['relative_excess']):.2%}）" for k, v in ext.items())
+    return '边界外推：按声明的correlation_range_tolerance在文献样本范围外使用关联式——' + items + '。结果不属于关联式已验证范围。'
+
+
+def geometry_extrapolation_warning(g: dict, metrics: dict) -> str | None:
+    """Same disclosure from the geometry alone (only geometric bounds can be extended;
+    Re = 1000 lies inside both published Re ranges and does not affect this check)."""
+    if g['fin_type'] == 'plain' or 'correlation_range_tolerance' not in g:
+        return None
+    return extrapolation_warning(air_side_factors(g, metrics, 1000.0))

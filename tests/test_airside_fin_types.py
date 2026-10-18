@@ -90,3 +90,22 @@ def test_lumped_coil_runs_dry_and_wet(upd):
     plain = run_case(case()); louver = run_case(case(**LOUVER))
     assert louver['geometry_model']['air_h_w_m2_k'] > plain['geometry_model']['air_h_w_m2_k']
     assert louver['geometry_model']['air_core_friction_pressure_drop_pa'] > plain['geometry_model']['air_core_friction_pressure_drop_pa']
+
+
+def test_declared_boundary_extrapolation_is_limited_and_disclosed():
+    # CETIAT-like: Pt 25.5 mm and Fp 2.5 mm exceed the louver sample maxima 25.4 / 2.49 mm by 0.4 %.
+    upd = dict(LOUVER, transverse_pitch_m=0.0255, fin_pitch_m=0.0025)
+    with pytest.raises(ValueError, match='outside published sample range'):
+        run_case(case(**upd))
+    r = run_case(case(**upd, correlation_range_tolerance=0.005))
+    ext = r['geometry_model']['air_correlation']['range_extrapolation']
+    assert set(ext) == {'transverse pitch', 'fin pitch'}
+    assert ext['fin pitch']['relative_excess'] == pytest.approx(0.0025 / 0.00249 - 1)
+    assert any(w.startswith('边界外推') for w in r['warnings'])
+    for bad in (0.02, 0.0, -0.001):
+        with pytest.raises(ValueError, match='correlation_range_tolerance'):
+            geometry_metrics(case(**upd, correlation_range_tolerance=bad)['geometry'])
+    with pytest.raises(ValueError, match='only to louver'):
+        geometry_metrics(case(correlation_range_tolerance=0.005)['geometry'])
+    with pytest.raises(ValueError, match='Re'):        # Re is never extended
+        wang_louver_1999(8010., .00974, .00229, .0254, .022, .0018, 3, .0024, .0012, 18., range_tolerance=0.01)
