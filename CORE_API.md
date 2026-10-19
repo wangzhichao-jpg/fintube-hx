@@ -18,6 +18,8 @@ The package is organized into decoupled layers:
   Dry Churchill–Bernstein convection of unfinned straight tube ends and return bends standing in the air stream (`model.exposed_tubes`), with exact constant-air-temperature element heat. Used by the lumped water model and available to extensions.
 - **`fintube_hx.airside`** (0.1.0.dev9)  
   Air-side j/f dispatch by `geometry.fin_type` (plain: Wang & Chi 2000; louver: Wang et al. 1999; wavy_herringbone: Wang et al. 2002) with published sample-range checks (optionally extended for geometric bounds only by a declared `geometry.correlation_range_tolerance` ≤ 1 %, disclosed in results, 0.1.0.dev10), and fin efficiency by `geometry.fin_efficiency_method` (equal-area annular, legacy default for plain fins; Schmidt, default for the enhanced fins).
+- **`fintube_hx.thermal.check_subzero_surface`** (0.1.0.dev12)  
+  Optional dry sub-zero evaporating surfaces (`model.subzero_evaporation: dry_only`): accepted only at or above the local air frost point; frost deposition is rejected.
 - **`fintube_hx.microfin`** (0.1.0.dev11)  
   Micro-fin tube geometry (NIST TN 2224 Eqs. 1, 4, 5, left-hand forms), Kedzierski & Lin (2023) convective-boiling Nusselt number with the mixture glide factor and the HEOS-based glide of R410A/R407C/R404A, and the NISTIR 6333 two-phase pressure drop. Geometry outside TN 2224 Table 4 raises; operating parameters outside it are flagged.
 - **`fintube_hx.wet_surface`** (0.1.0.dev8)  

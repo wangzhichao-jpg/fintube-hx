@@ -94,6 +94,16 @@ def normalize_wet_surface_model(model):
     return model
 
 
+def normalize_subzero(c):
+    """Optional model.subzero_evaporation (evaporators only); never defaulted into the case."""
+    m=c['model']
+    if 'subzero_evaporation' in m:
+        from .thermal import SUBZERO_MODES
+        if c['kind']!='evaporator':raise ValueError('model.subzero_evaporation applies only to evaporators')
+        if m['subzero_evaporation'] not in SUBZERO_MODES:raise ValueError('model.subzero_evaporation must be reject or dry_only')
+    return c
+
+
 def validate_case(case):
     if isinstance(case,dict) and 'network' in case:raise EditionCapabilityError('Actual tube networks are not in Community; no silent fallback to lumped models')
     if isinstance(case,dict) and isinstance(case.get('air'),dict) and 'velocity_field' in case['air']:
@@ -103,7 +113,7 @@ def validate_case(case):
         raise EditionCapabilityError('Actual tube-network models are not in Community')
     if m.get('air_arrangement','counterflow')!='counterflow':
         raise EditionCapabilityError('Community supports only the lumped counterflow contract')
-    check_keys(m,{'water_model','refrigerant_model','ua_mode','ua_w_k','segments','air_arrangement','exposed_tubes','wet_surface_model'},'model')
+    check_keys(m,{'water_model','refrigerant_model','ua_mode','ua_w_k','segments','air_arrangement','exposed_tubes','wet_surface_model','subzero_evaporation'},'model')
     if c['kind']=='water':
         if 'refrigerant_model' in m:raise ValueError('refrigerant_model is only applicable to evaporators/condensers')
         m.setdefault('water_model','lumped')
@@ -128,6 +138,7 @@ def validate_case(case):
         if 'wet_surface_model' in m:raise ValueError('model.wet_surface_model requires a geometry-derived water coil')
         m['ua_w_k']=number(m.get('ua_w_k'),'model.ua_w_k',0)
         if 'geometry' in c:raise ValueError('Input-UA Community models do not accept inactive geometry; move archival notes to metadata')
+    normalize_subzero(c)
     n=m.setdefault('segments',80)
     if isinstance(n,bool) or not isinstance(n,int) or not 1<=n<=400:raise ValueError('model.segments must be an integer from 1 to 400')
     m.setdefault('air_arrangement','counterflow');normalize_solver(c)

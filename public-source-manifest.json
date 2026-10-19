@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0.dev11",
+  "version": "0.1.0.dev12",
   "edition": "community",
   "publication_status": "reviewed_public_source_candidate",
   "original_license_status": "MIT_owner_approved",
@@ -23,7 +23,7 @@
     },
     {
       "path": "CORE_API.md",
-      "sha256": "09f6e0f08d64caf4a510a6ea5b94ae44251def4381cffff8dfa672d0d74e8877"
+      "sha256": "73db532e1de2033f448c4b9b5ce7afceecd887aa85872734274d98ea5278fc79"
     },
     {
       "path": "LICENSE",
@@ -35,11 +35,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "96b8c104dcedb562e4656fe67a2972315660dca09ddf536a2ada771744c46d47"
+      "sha256": "c1f6ddf505cc3a1dae5027aff6b565d3aa391c139d090f9999cacd9227cb9593"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "dd93b89eec9a560f16cef361bdb4ff6c8aabb033cd4514675090376ca1913f80"
+      "sha256": "aff3e37d6a67ea3a2f9c7cf2a05b7fb0a3998395ad9771173a40c9821dffea7d"
     },
     {
       "path": "RELEASE_CHECKLIST.md",
@@ -55,7 +55,7 @@
     },
     {
       "path": "docs/EXTERNAL_REVIEW_STATUS.md",
-      "sha256": "9148639d9ff73e89496cf7298809b6a12106c9d34b5cc8726858aeef792ec44b"
+      "sha256": "b2331da5bb951774a19f0cfd13549ecc51fdd92bc6d78dd7faa756e1135b1975"
     },
     {
       "path": "docs/EXTERNAL_REVIEW_V3.md",
@@ -111,7 +111,7 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256": "bfd998a3932a08d01d2f0a2479d83162686a9ff6def952966169348307b5dec6"
+      "sha256": "d5608f15b3374b1336531b621fef083a9b025b6d151b42f654b32ec162d49881"
     },
     {
       "path": "references/python-hvac/README.md",
@@ -155,7 +155,7 @@
     },
     {
       "path": "src/fintube_hx/__init__.py",
-      "sha256": "ccece508393b82857ced49fb775314060a28634258998c87d31669e2fba4dfb9"
+      "sha256": "453ce69e533cd8eaa11d9b7b572dc2eba37421ffe9320e558f39321104200c86"
     },
     {
       "path": "src/fintube_hx/__main__.py",
@@ -199,7 +199,7 @@
     },
     {
       "path": "src/fintube_hx/refrigerant.py",
-      "sha256": "dbce651252fce6f3c681d27b1c552251f1805acb8f2bbc15e6677320e172e83d"
+      "sha256": "e27503364e3d0c0f495c61603b9344ada2ebef7151b9525d1439a97dd374e4bb"
     },
     {
       "path": "src/fintube_hx/reporting.py",
@@ -211,7 +211,7 @@
     },
     {
       "path": "src/fintube_hx/schema.py",
-      "sha256": "ef88f1c08d504e32593161bdc61bca970556d9cb942703df3882ee8e34fc5862"
+      "sha256": "b9f6d64c7c81d3f54fd1097f0cd3e691d498e817204c07249cb8861d87c2a676"
     },
     {
       "path": "src/fintube_hx/spreadsheet.py",
@@ -223,7 +223,7 @@
     },
     {
       "path": "src/fintube_hx/thermal.py",
-      "sha256": "d33284c490b2bc6523e3b39fc67d5ea4ceebfbe546e166881b378c018041f82a"
+      "sha256": "42303424f54150f56e24697dbab468aeffd60878fff4b69b08aa5f4d23a111f4"
     },
     {
       "path": "src/fintube_hx/units.py",
@@ -276,6 +276,10 @@
     {
       "path": "tests/test_reference_evidence.py",
       "sha256": "1b944b81b702f49aa7b81c762fb24567d9625995d125f3f1959119b457f31101"
+    },
+    {
+      "path": "tests/test_subzero_dry.py",
+      "sha256": "5ee4515ea812e22f2d46db9dcf242021fe4e5a4bb6eb7bf98853140474c321a8"
     },
     {
       "path": "tests/test_units_inverse.py",
