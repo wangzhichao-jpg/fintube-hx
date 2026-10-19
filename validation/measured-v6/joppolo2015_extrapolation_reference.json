@@ -1,0 +1,485 @@
+{
+ "declaration": {
+  "id": "joppolo2015-plainfin-condenser",
+  "declared_at": "2026-10-19, before the first model run",
+  "status": "extrapolation_reference_not_acceptance",
+  "status_reason": "Fig. 5 shows 11 rows x 6 tubes (single circuit, 66 tubes). Wang-Chi 2000 plain-fin sample range is 1-6 rows; rows are not an extendable parameter. Results are reported as an out-of-range reference with the range check removed in the research script only; the product keeps refusing this geometry.",
+  "source": {
+   "citation": "C.M. Joppolo, L. Molinaroli, A. Pasini, Numerical analysis of the influence of circuit arrangement on a fin-and-tube condenser performance, Case Studies in Thermal Engineering 6 (2015) 136-146",
+   "doi": "10.1016/j.csite.2015.09.002",
+   "license": "CC BY-NC-ND 4.0 (open access)",
+   "data_origin": "manufacturer data, uniform air test rig, each test repeated twice (Sec. 3)",
+   "locators": {
+    "geometry": "Table 1",
+    "circuit": "Fig. 5",
+    "conditions": "Table 2",
+    "measured": "Fig. 7(a) capacity, Fig. 7(b) refrigerant pressure drop (x axis = experimental)"
+   }
+  },
+  "inputs_derivation": {
+   "tube": {
+    "level": "D0",
+    "value": "aluminium smooth tube, Do 8 mm, Di 6.6 mm, length 178 mm"
+   },
+   "fins": {
+    "level": "D0",
+    "value": "aluminium plain, 0.15 mm, pitch A 3.24 mm, B 2.54 mm"
+   },
+   "pitches": {
+    "level": "D0",
+    "value": "Pt 25.33 mm, Pl 19 mm, staggered (Fig. 5)"
+   },
+   "rows_tubes_circuit": {
+    "level": "D3",
+    "value": "11 rows (air direction) x 6 tubes per row; one circuit: inlet at the top tube of the last (air-outlet) row, serpentine across all 11 rows at each of the 6 levels, alternating direction, outlet at the bottom tube of the last row",
+    "evidence": "Fig. 5 vector drawing rendered at 300 dpi"
+   },
+   "face_area": {
+    "level": "D1",
+    "value": "6 x 25.33 mm x 178 mm = 0.027052 m2"
+   },
+   "refrigerant": {
+    "level": "D2",
+    "value": "R134a",
+    "basis": "2116 kPa / 82 C inlet and measured Q/m 139-146 kJ/kg; R134a condensing enthalpy to saturated liquid 141.8 kJ/kg. Uses the compared quantity -> partial circularity, see sensitivity with R1234yf",
+    "sensitivity": "R1234yf"
+   },
+   "pairing": {
+    "level": "D2",
+    "value": "mass flow and air velocity paired in ascending order (28.8/31.6 kg/h with 1.9 m/s, ...). Sec. 3 states 43.4 kg/h with 2.9 m/s is the maximum-capacity condition."
+   },
+   "measured_points_to_conditions": {
+    "level": "D2",
+    "value": "capacity points assigned to mass flows by ascending Q (two repeats per condition); pressure-drop points grouped by the authors' calculated value (y), which is driven by mass flow"
+   },
+   "air": {
+    "level": "D0/D4",
+    "value": "45 C inlet (D0), 101325 Pa and RH 0.3 (D4, dry coil, no effect)"
+   },
+   "return_bends": {
+    "level": "D4",
+    "value": "equivalent length 50 Di per bend, as for CETIAT"
+   },
+   "conductivities": {
+    "level": "D4",
+    "value": "Al tube and fin 205 W/m K"
+   }
+  },
+  "model": {
+   "software": "Pro tube network, row-mixed air, 10 cells per tube, default condensation correlation (Shah 1979)",
+   "air_side": "Wang-Chi 2000 plain fin, range check removed (rows 11 > 6)",
+   "no_multipliers": true
+  },
+  "comparison": {
+   "quantities": [
+    "capacity Q (each repeat)",
+    "refrigerant pressure drop (each repeat)"
+   ],
+   "tolerance": {
+    "Q_relative": 0.05,
+    "dp_relative": 0.3
+   },
+   "discrimination_note": "Measured Q/m lies at the saturated-liquid end of the thermodynamic window (141.8-182.3 kJ/kg for R134a). Q therefore tests mainly whether the model condenses the refrigerant completely; it is weakly sensitive to the air-side coefficient. The pressure drop is the more discriminating quantity, but repeats differ by up to 25 %.",
+   "digitisation_uncertainty": "+-1.5 px: +-2 W, +-0.1 kPa"
+  }
+ },
+ "digitised_fig7_d3": {
+  "a_capacity_w": [
+   {
+    "condenser": "A",
+    "exp": 1152.4903503640114,
+    "calc_authors": 1163.2155045141326,
+    "method": "manual split"
+   },
+   {
+    "condenser": "A",
+    "exp": 1164.0761607139257,
+    "calc_authors": 1158.8723000513496,
+    "method": "manual split"
+   },
+   {
+    "condenser": "A",
+    "exp": 1363.207276103078,
+    "calc_authors": 1368.7938490858635,
+    "method": "manual split"
+   },
+   {
+    "condenser": "A",
+    "exp": 1381.3101047748191,
+    "calc_authors": 1366.622246854472,
+    "method": "manual split"
+   },
+   {
+    "condenser": "A",
+    "exp": 1554.7390145719246,
+    "calc_authors": 1599.3037112053594,
+    "method": "auto centroid"
+   },
+   {
+    "condenser": "A",
+    "exp": 1583.0530710668593,
+    "calc_authors": 1575.9243670601313,
+    "method": "auto centroid"
+   },
+   {
+    "condenser": "B",
+    "exp": 1237.2115885477597,
+    "calc_authors": 1260.2137375162874,
+    "method": "auto centroid"
+   },
+   {
+    "condenser": "B",
+    "exp": 1275.589585331851,
+    "calc_authors": 1236.4301418203886,
+    "method": "auto centroid"
+   },
+   {
+    "condenser": "B",
+    "exp": 1468.3077465639958,
+    "calc_authors": 1507.052524484457,
+    "method": "auto centroid"
+   },
+   {
+    "condenser": "B",
+    "exp": 1525.4086210018781,
+    "calc_authors": 1480.269430297295,
+    "method": "auto centroid"
+   },
+   {
+    "condenser": "B",
+    "exp": 1676.7761192032826,
+    "calc_authors": 1748.7059150988234,
+    "method": "auto centroid"
+   },
+   {
+    "condenser": "B",
+    "exp": 1754.9524885595556,
+    "calc_authors": 1727.8320846759289,
+    "method": "auto centroid"
+   }
+  ],
+  "b_dp_kpa": [
+   {
+    "condenser": "A",
+    "exp": 14.749580110908685,
+    "calc_authors": 16.45373278537083,
+    "method": "manual split"
+   },
+   {
+    "condenser": "A",
+    "exp": 14.96695164826647,
+    "calc_authors": 16.671021077958695,
+    "method": "manual split"
+   },
+   {
+    "condenser": "A",
+    "exp": 18.33168190361718,
+    "calc_authors": 22.1832025558995,
+    "method": "auto centroid"
+   },
+   {
+    "condenser": "A",
+    "exp": 21.531929889701793,
+    "calc_authors": 22.983558944312783,
+    "method": "auto centroid"
+   },
+   {
+    "condenser": "A",
+    "exp": 24.166737254660255,
+    "calc_authors": 28.461660235529784,
+    "method": "auto centroid"
+   },
+   {
+    "condenser": "A",
+    "exp": 28.441983540141685,
+    "calc_authors": 28.8029507474479,
+    "method": "auto centroid"
+   },
+   {
+    "condenser": "B",
+    "exp": 17.493895770050717,
+    "calc_authors": 19.333625723874405,
+    "method": "auto centroid"
+   },
+   {
+    "condenser": "B",
+    "exp": 18.987253237623367,
+    "calc_authors": 20.87642812138757,
+    "method": "auto centroid"
+   },
+   {
+    "condenser": "B",
+    "exp": 21.995298022834845,
+    "calc_authors": 26.562842900708716,
+    "method": "auto centroid"
+   },
+   {
+    "condenser": "B",
+    "exp": 27.6094677124039,
+    "calc_authors": 28.92871130153275,
+    "method": "auto centroid"
+   },
+   {
+    "condenser": "B",
+    "exp": 32.02766849216749,
+    "calc_authors": 32.90700442876834,
+    "method": "auto centroid"
+   },
+   {
+    "condenser": "B",
+    "exp": 37.92811415988105,
+    "calc_authors": 37.54843498619695,
+    "method": "auto centroid"
+   }
+  ]
+ },
+ "generated_with": {
+  "professional": "0.6.6.dev7",
+  "core": "0.1.0.dev15",
+  "note": "Professional tube network; circuit described in declaration (Fig. 5), network input not published."
+ },
+ "rows": [
+  {
+   "condenser": "A",
+   "kg_h": 28.8,
+   "v_m_s": 1.9,
+   "measured_d3": {
+    "q_w": [
+     1152.4903503640114,
+     1164.0761607139257
+    ],
+    "dp_kpa": [
+     14.749580110908685,
+     14.96695164826647
+    ]
+   },
+   "dq_rel_each_repeat": [
+    0.045421084247394994,
+    0.03501622344304378
+   ],
+   "ddp_rel_each_repeat": [
+    0.13401617284908474,
+    0.1175463635870666
+   ],
+   "verdict_reference_only": {
+    "Q": "within",
+    "dp": "within"
+   },
+   "model_r134a": {
+    "q_w": 1204.837711662205,
+    "dp_kpa": 16.726262388503645,
+    "sc_k": 4.710803232476508,
+    "converged": true
+   },
+   "model_r1234yf": {
+    "q_w": 1091.405043594087,
+    "dp_kpa": 10.371503685489296,
+    "sc_k": 15.378762099642472
+   }
+  },
+  {
+   "condenser": "A",
+   "kg_h": 34.2,
+   "v_m_s": 2.4,
+   "measured_d3": {
+    "q_w": [
+     1363.207276103078,
+     1381.3101047748191
+    ],
+    "dp_kpa": [
+     18.33168190361718,
+     21.531929889701793
+    ]
+   },
+   "dq_rel_each_repeat": [
+    0.06383538481655937,
+    0.049893236967427645
+   ],
+   "ddp_rel_each_repeat": [
+    0.2178805117675997,
+    0.03686934950573262
+   ],
+   "verdict_reference_only": {
+    "Q": "outside",
+    "dp": "within"
+   },
+   "model_r134a": {
+    "q_w": 1450.2281371578515,
+    "dp_kpa": 22.32579813833814,
+    "sc_k": 5.803570947057381,
+    "converged": true
+   },
+   "model_r1234yf": {
+    "q_w": 1303.5294679367041,
+    "dp_kpa": 13.967003490149509,
+    "sc_k": 15.801548397097804
+   }
+  },
+  {
+   "condenser": "A",
+   "kg_h": 39.3,
+   "v_m_s": 2.9,
+   "measured_d3": {
+    "q_w": [
+     1554.7390145719246,
+     1583.0530710668593
+    ],
+    "dp_kpa": [
+     24.166737254660255,
+     28.441983540141685
+    ]
+   },
+   "dq_rel_each_repeat": [
+    0.08094635824023277,
+    0.061612845792301085
+   ],
+   "ddp_rel_each_repeat": [
+    0.17228783817038762,
+    -0.003924176669560353
+   ],
+   "verdict_reference_only": {
+    "Q": "outside",
+    "dp": "within"
+   },
+   "model_r134a": {
+    "q_w": 1680.5894758155302,
+    "dp_kpa": 28.33037217189744,
+    "sc_k": 6.446590084205468,
+    "converged": true
+   },
+   "model_r1234yf": {
+    "q_w": 1503.6171040957195,
+    "dp_kpa": 17.83935420450475,
+    "sc_k": 16.04991833356678
+   }
+  },
+  {
+   "condenser": "B",
+   "kg_h": 31.6,
+   "v_m_s": 1.9,
+   "measured_d3": {
+    "q_w": [
+     1237.2115885477597,
+     1275.589585331851
+    ],
+    "dp_kpa": [
+     17.493895770050717,
+     18.987253237623367
+    ]
+   },
+   "dq_rel_each_repeat": [
+    0.04900691561719395,
+    0.017445993125362325
+   ],
+   "ddp_rel_each_repeat": [
+    0.15566385681791806,
+    0.06477028580033006
+   ],
+   "verdict_reference_only": {
+    "Q": "within",
+    "dp": "within"
+   },
+   "model_r134a": {
+    "q_w": 1297.8435124683342,
+    "dp_kpa": 20.217063056387474,
+    "sc_k": 3.040221465269269,
+    "converged": true
+   },
+   "model_r1234yf": {
+    "q_w": 1189.0738751638225,
+    "dp_kpa": 12.124002941010055,
+    "sc_k": 14.730872967778623
+   }
+  },
+  {
+   "condenser": "B",
+   "kg_h": 37.8,
+   "v_m_s": 2.4,
+   "measured_d3": {
+    "q_w": [
+     1468.3077465639958,
+     1525.4086210018781
+    ],
+    "dp_kpa": [
+     21.995298022834845,
+     27.6094677124039
+    ]
+   },
+   "dq_rel_each_repeat": [
+    0.07257332969892305,
+    0.03242351398309595
+   ],
+   "ddp_rel_each_repeat": [
+    0.23990386440345945,
+    -0.01222090547705923
+   ],
+   "verdict_reference_only": {
+    "Q": "outside",
+    "dp": "within"
+   },
+   "model_r134a": {
+    "q_w": 1574.8677287548676,
+    "dp_kpa": 27.272055017218694,
+    "sc_k": 4.131648394794752,
+    "converged": true
+   },
+   "model_r1234yf": {
+    "q_w": 1430.4140108749214,
+    "dp_kpa": 16.57323986365646,
+    "sc_k": 15.118729944017787
+   }
+  },
+  {
+   "condenser": "B",
+   "kg_h": 43.4,
+   "v_m_s": 2.9,
+   "measured_d3": {
+    "q_w": [
+     1676.7761192032826,
+     1754.9524885595556
+    ],
+    "dp_kpa": [
+     32.02766849216749,
+     37.92811415988105
+    ]
+   },
+   "dq_rel_each_repeat": [
+    0.09201198533545529,
+    0.04336706026564219
+   ],
+   "ddp_rel_each_repeat": [
+    0.0693590887906228,
+    -0.09700022915719408
+   ],
+   "verdict_reference_only": {
+    "Q": "outside",
+    "dp": "within"
+   },
+   "model_r134a": {
+    "q_w": 1831.0596188942566,
+    "dp_kpa": 34.24907839487237,
+    "sc_k": 5.100508794906432,
+    "converged": true
+   },
+   "model_r1234yf": {
+    "q_w": 1651.207756289484,
+    "dp_kpa": 21.047391537262126,
+    "sc_k": 15.488826641102548
+   }
+  }
+ ],
+ "cells15_sensitivity": [
+  {
+   "cond": "B",
+   "i": 2,
+   "q_w": 1831.0667745074977,
+   "dp_kpa": 34.238424058358184
+  },
+  {
+   "cond": "A",
+   "i": 0,
+   "q_w": 1204.8404819578454,
+   "dp_kpa": 16.721050481246785
+  }
+ ]
+}

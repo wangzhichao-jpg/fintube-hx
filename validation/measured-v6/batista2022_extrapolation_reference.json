@@ -1,0 +1,167 @@
+{
+ "status": "extrapolation_reference_not_acceptance",
+ "source": {
+  "citation": "J. Batista, A. Trp, K. Lenic, Experimentally validated numerical modeling of heat transfer in crossflow air-to-water fin-and-tube heat exchanger, Applied Thermal Engineering 212 (2022) 118528",
+  "doi": "10.1016/j.applthermaleng.2022.118528",
+  "locators": "Sec. 2 geometry, Sec. 5.2, Tables 4-5"
+ },
+ "range_audit": "No published plain-fin correlation covers Pt 60 mm / Pt/Pl 2.0 / Dc 16.3 mm (largest Pt in the plain-fin database summarised in Wang & Chi 2000 Part I Table 1 is 40 mm). The software refuses this geometry; the results below use the same Wang-Chi 2000 expressions with the range check removed, to quantify extrapolation.",
+ "inputs_derivation": "Inputs (D-level):\n  geometry Sec. 2 (D0): 38 tubes (13/12/13), L 0.730 m, core 730x90x780 mm, Do 15.9, Di 14.8, Pt 60, Pl 30,\n    Fp 2.81, tf 0.2 mm, 7 circuits (5 x 6 passes + 2 x 4 passes).\n  equal-circuit equivalent (D2): 3 x 14 = 42 tubes, 7 circuits x 6 passes (water velocity and pass count of\n    5 of the 7 real circuits); reference 'area': L = 38*0.730/42 = 0.6605 m keeps total tube length/area\n    (face area -2.6 %); bound 'face': L = 0.5694/0.84 = 0.6779 m keeps face area (area +2.6 %)\n  air mass flow: Sec. 5.2 gives 670 kg/h at 0.25 m/s and 2770 kg/h at 1.03 m/s -> 2685 kg/h per m/s (D2),\n    applied to the Table 4 frontal velocities; RH not given (dry heating, D4 0.5)\n  water: 3260 kg/h (cases 1-6, D0); cases 7-9 from Table 4 velocity x 7 circuits x pi/4 Di^2 x rho (D1;\n    check 0.21 -> 895 kg/h, 0.56 -> 2405 kg/h published)\n  compared: Q_avg (Table 5), air-side dp (Table 5), and U*Ao, where U is the authors' Table 5 value\n    (U = Q_avg/(Ao F LMTD), derived by the authors from measured temperatures) and Ao is the published\n    geometry total outside area, D1: 260 fins x 2 x (0.78 x 0.09 - 38 pi Dc^2/4) + 38 pi Dc (0.73 - 260 tf).\n  Discrimination: dlnQ/dlnUA from a +-5 % UA perturbation of the model (high effectiveness hides UA error).",
+ "core_version": "0.1.0.dev15",
+ "ao_paper_m2": 33.6999545124381,
+ "rows": [
+  {
+   "case": 1,
+   "measured": {
+    "q_avg_w": 3013.5,
+    "q_air_w": 3010.2,
+    "q_water_w": 3016.8,
+    "dp_air_pa": 1.52,
+    "u_table5_w_m2k": 11.4,
+    "ua_w_k": 384.17948144179434
+   },
+   "dq_rel_counterflow": 0.09796235415572263,
+   "dq_rel_crossflow_esdu": 0.089864400624728,
+   "dua_rel": 0.7178651346370462,
+   "dp_air_rel": 0.8994797611620617,
+   "dlnq_dlnua": 0.12166108098927199,
+   "face_area_bound_dq_rel": 0.10061411551606136
+  },
+  {
+   "case": 2,
+   "measured": {
+    "q_avg_w": 4231.5,
+    "q_air_w": 4241.9,
+    "q_water_w": 4221.1,
+    "dp_air_pa": 2.01,
+    "u_table5_w_m2k": 16.0,
+    "ua_w_k": 539.1992721990096
+   },
+   "dq_rel_counterflow": 0.06924656523577388,
+   "dq_rel_crossflow_esdu": 0.057009198028549646,
+   "dua_rel": 0.32076068097751387,
+   "dp_air_rel": 1.0086786278474684,
+   "dlnq_dlnua": 0.2229057618058031,
+   "face_area_bound_dq_rel": 0.07408222209568716
+  },
+  {
+   "case": 3,
+   "measured": {
+    "q_avg_w": 5181.2,
+    "q_air_w": 5189.7,
+    "q_water_w": 5172.8,
+    "dp_air_pa": 2.49,
+    "u_table5_w_m2k": 17.3,
+    "ua_w_k": 583.0092130651791
+   },
+   "dq_rel_counterflow": 0.056667503528057495,
+   "dq_rel_crossflow_esdu": 0.041997463469340524,
+   "dua_rel": 0.28328745684366363,
+   "dp_air_rel": 1.1155390725570569,
+   "dlnq_dlnua": 0.30058127572282894,
+   "face_area_bound_dq_rel": 0.06319152476191103
+  },
+  {
+   "case": 4,
+   "measured": {
+    "q_avg_w": 6462.1,
+    "q_air_w": 6510.9,
+    "q_water_w": 6413.3,
+    "dp_air_pa": 3.79,
+    "u_table5_w_m2k": 18.6,
+    "ua_w_k": 626.8191539313486
+   },
+   "dq_rel_counterflow": 0.07578188042526524,
+   "dq_rel_crossflow_esdu": 0.058237640955374426,
+   "dua_rel": 0.27661016854586573,
+   "dp_air_rel": 1.1219534829993818,
+   "dlnq_dlnua": 0.4109065123438977,
+   "face_area_bound_dq_rel": 0.08499875757537412
+  },
+  {
+   "case": 5,
+   "measured": {
+    "q_avg_w": 7735.8,
+    "q_air_w": 7711.7,
+    "q_water_w": 7759.9,
+    "dp_air_pa": 5.2,
+    "u_table5_w_m2k": 19.9,
+    "ua_w_k": 670.6290947975181
+   },
+   "dq_rel_counterflow": 0.06252950342240737,
+   "dq_rel_crossflow_esdu": 0.044238966000761604,
+   "dua_rel": 0.2575609615466956,
+   "dp_air_rel": 1.2589101940374006,
+   "dlnq_dlnua": 0.4933642703409557,
+   "face_area_bound_dq_rel": 0.07357450314918146
+  },
+  {
+   "case": 6,
+   "measured": {
+    "q_avg_w": 8288.7,
+    "q_air_w": 8431.7,
+    "q_water_w": 8145.6,
+    "dp_air_pa": 6.47,
+    "u_table5_w_m2k": 20.8,
+    "ua_w_k": 700.9590538587124
+   },
+   "dq_rel_counterflow": 0.09186682069244712,
+   "dq_rel_crossflow_esdu": 0.07296325542221438,
+   "dua_rel": 0.24347293834462103,
+   "dp_air_rel": 1.3532319935483308,
+   "dlnq_dlnua": 0.5411748188395462,
+   "face_area_bound_dq_rel": 0.10439278249604778
+  },
+  {
+   "case": 7,
+   "measured": {
+    "q_avg_w": 14439.3,
+    "q_air_w": 14367.0,
+    "q_water_w": 14511.6,
+    "dp_air_pa": 6.48,
+    "u_table5_w_m2k": 20.6,
+    "ua_w_k": 694.2190629562249
+   },
+   "dq_rel_counterflow": 0.06710605432271155,
+   "dq_rel_crossflow_esdu": 0.043667428936886354,
+   "dua_rel": 0.20750889961911678,
+   "dp_air_rel": 1.2643910319367353,
+   "dlnq_dlnua": 0.5460619137793548,
+   "face_area_bound_dq_rel": 0.07951958691219874
+  },
+  {
+   "case": 8,
+   "measured": {
+    "q_avg_w": 12733.9,
+    "q_air_w": 12709.3,
+    "q_water_w": 12758.5,
+    "dp_air_pa": 6.5,
+    "u_table5_w_m2k": 18.2,
+    "ua_w_k": 613.3391721263733
+   },
+   "dq_rel_counterflow": 0.09007387840659864,
+   "dq_rel_crossflow_esdu": 0.05757182130816041,
+   "dua_rel": 0.2282137613515256,
+   "dp_air_rel": 1.2574236749153918,
+   "dlnq_dlnua": 0.563300067577771,
+   "face_area_bound_dq_rel": 0.10339864562902501
+  },
+  {
+   "case": 9,
+   "measured": {
+    "q_avg_w": 11549.8,
+    "q_air_w": 11557.2,
+    "q_water_w": 11542.4,
+    "dp_air_pa": 6.49,
+    "u_table5_w_m2k": 16.0,
+    "ua_w_k": 539.1992721990096
+   },
+   "dq_rel_counterflow": 0.0425311760025362,
+   "dq_rel_crossflow_esdu": 0.006134567792862811,
+   "dua_rel": 0.21309801013526264,
+   "dp_air_rel": 1.260901985662565,
+   "dlnq_dlnua": 0.5729217970277333,
+   "face_area_bound_dq_rel": 0.055709952200515334
+  }
+ ]
+}
