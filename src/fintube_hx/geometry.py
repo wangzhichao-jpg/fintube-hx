@@ -16,14 +16,28 @@ def validate_geometry(value: dict, equal_circuits: bool = True) -> dict:
              'fin_pitch_m','fin_thickness_m','fin_conductivity_w_m_k','tube_conductivity_w_m_k','tube_roughness_m',
              'fin_count','notes','drawing_reference',
              'louver_pitch_m','louver_height_m','wave_height_m','wave_projected_length_m','fin_efficiency_method',
-             'correlation_range_tolerance'}
+             'correlation_range_tolerance','microfin_count','microfin_height_m','microfin_apex_angle_deg',
+             'microfin_helix_angle_deg','microfin_tip_thickness_m'}
     unknown=set(g)-allowed
     if unknown:
         raise ValueError('Unsupported active geometry fields: '+', '.join(sorted(unknown)))
     from .airside import FIN_TYPES, FIN_EFFICIENCY_METHODS
-    if g.get('fin_type') not in FIN_TYPES or g.get('tube_type')!='smooth' or g.get('arrangement')!='staggered':
+    if g.get('fin_type') not in FIN_TYPES or g.get('tube_type') not in ('smooth','microfin') or g.get('arrangement')!='staggered':
         raise NotImplementedError('Geometry baseline supports plain, louver or wavy_herringbone continuous fins '
-                                  'on staggered smooth tubes only')
+                                  'on staggered smooth or micro-fin tubes only')
+    mf_keys=('microfin_count','microfin_height_m','microfin_apex_angle_deg','microfin_helix_angle_deg','microfin_tip_thickness_m')
+    if g['tube_type']=='microfin':
+        for key in mf_keys:
+            v=g.get(key)
+            ok=(isinstance(v,int) and not isinstance(v,bool) and v>0) if key=='microfin_count' else \
+               (not isinstance(v,bool) and isinstance(v,(int,float)) and math.isfinite(v) and (v>=0 if key=='microfin_tip_thickness_m' else v>0))
+            if not ok:
+                raise ValueError(f'geometry.{key} is required for tube_type=microfin (fin parameters perpendicular to the tube axis; '
+                                 'tube_inner_diameter_m is the fin-root diameter)')
+            if key!='microfin_count':g[key]=float(v)
+    else:
+        for key in mf_keys:
+            if key in g:raise ValueError(f'geometry.{key} applies only to tube_type=microfin; no silently ignored field')
     shape={'plain':(),'louver':('louver_pitch_m','louver_height_m'),
            'wavy_herringbone':('wave_height_m','wave_projected_length_m')}
     for kind,keys in shape.items():
@@ -128,13 +142,20 @@ def geometry_metrics(value: dict, equal_circuits: bool = True) -> dict:
         dh=4*a_min*depth/periodic_out
     else:
         dh=4*a_min*depth/a_out
+    inner={'inner_area_m2':math.pi*di*L*total}
+    if g['tube_type']=='microfin':
+        from .microfin import microfin_geometry
+        mf=microfin_geometry(di,g['microfin_count'],g['microfin_height_m'],g['microfin_apex_angle_deg'],
+                             g['microfin_helix_angle_deg'],g['microfin_tip_thickness_m'])
+        inner={'inner_area_m2':mf['area_per_length_m']*L*total,'inner_flow_area_m2':mf['flow_area_m2'],
+               'inner_hydraulic_diameter_m':mf['hydraulic_diameter_m'],'microfin':mf}
     return {'tube_count':total,'tubes_per_circuit':total//nc if equal_circuits else total/nc,'equivalent_fin_count':nf,
             'fin_count_basis':'input_actual_count' if counted else 'tube_length_over_pitch',
             'width_m':L,'height_m':H,'air_depth_m':depth,'frontal_area_m2':a_face,
             'minimum_air_area_m2':a_min,'free_area_ratio':a_min/a_face,
             'collar_diameter_m':dc,'air_hydraulic_diameter_m':dh,
             'fin_area_m2':a_fin,'bare_outer_area_m2':a_bare,'total_outer_area_m2':a_out,
-            'inner_area_m2':math.pi*di*L*total,'tube_path_length_m':L*total/nc,
+            **inner,'tube_path_length_m':L*total/nc,
             'equivalent_annular_fin_outer_diameter_m':2*math.sqrt(pt*pl/math.pi),
             **({'fin_area_enhancement_sec_theta':sec,
                 'corrugation_angle_deg':math.degrees(math.atan(g['wave_height_m']/g['wave_projected_length_m']))}

@@ -99,7 +99,7 @@ print(result["heat_transfer_w"], result["fluid_out"]["temperature_c"])
 
 [`references/python-hvac/`](references/python-hvac/README.md)提供固定版本上游复现与水例映射。映射水例为**4363.49W**，参考复现为**4084.46W**，差异+6.83%。这是几何/模型定义不同的软件交叉比较，不是实测精度或拟合结果。
 
-**0.1.0.dev10**新增显式声明的`correlation_range_tolerance`，不填时一切不变。**0.1.0.dev9**新增百叶片、人字波纹片与Schmidt翅片效率（模块`fintube_hx.airside`），未设`fin_efficiency_method`的平片算例逐位不变。**0.1.0.dev8**新增可选`wet_surface_model`（模块`fintube_hx.wet_surface`），不填时所有既有结果逐位不变。**0.1.0.dev7**新增`fin_count`、`exposed_tubes`及实测验证数据集；未提供这两个字段时，所有既有结果逐位不变。
+**0.1.0.dev11**新增`geometry.tube_type: "microfin"`及模块`fintube_hx.microfin`：NIST TN 2224（Kedzierski & Lin 2023）微肋管几何与沸腾Nu关联式（含混合物滑移修正）、NISTIR 6333（Choi、Kedzierski、Domanski 1999）两相压降；几何参数超出TN 2224数据库范围即报错。本核心的集总水盘管明确拒绝微肋管，关联式供扩展调用（专业版蒸发器网络使用）。目前仅完成对原文算例和几何的实现核对，尚无整盘实测验收。**0.1.0.dev10**新增显式声明的`correlation_range_tolerance`，不填时一切不变。**0.1.0.dev9**新增百叶片、人字波纹片与Schmidt翅片效率（模块`fintube_hx.airside`），未设`fin_efficiency_method`的平片算例逐位不变。**0.1.0.dev8**新增可选`wet_surface_model`（模块`fintube_hx.wet_surface`），不填时所有既有结果逐位不变。**0.1.0.dev7**新增`fin_count`、`exposed_tubes`及实测验证数据集；未提供这两个字段时，所有既有结果逐位不变。
 
 制冷剂整体分段模型未提供`solver.max_iterations`时，默认采用`max(200, 2*segments+20)`；用户显式上限不增加，预算偏低会提示，未收敛仍退出2。**0.1.0.dev6**纳入此修复，不改变传热方程。
 

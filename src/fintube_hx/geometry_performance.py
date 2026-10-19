@@ -31,6 +31,8 @@ def wet_geometry_conductance(detail: dict, heat_capacity_ratio: float) -> dict:
 
 def water_geometry_performance(case: dict, water_temperature_c: float) -> dict:
     g=validate_geometry(case['geometry']);metrics=geometry_metrics(g)
+    if g['tube_type']!='smooth':
+        raise NotImplementedError('Micro-fin tubes are implemented for refrigerant evaporator networks only, not water coils')
     a,f=case['air'],case['fluid']
     if f['name'].lower()!='water':
         raise NotImplementedError('Geometry-derived conductance currently supports liquid water only')
