@@ -14,6 +14,11 @@ from .properties import air_state,air_mass_flow
 from .airside import air_side_factors, fin_efficiency, fin_efficiency_method
 
 
+def inner_series_extra(detail: dict) -> float:
+    """Optional contact + inner fouling resistance (0.0 when not supplied)."""
+    return detail.get('resistance_contact_k_w',0.)+detail.get('resistance_inner_fouling_k_w',0.)
+
+
 def wet_geometry_conductance(detail: dict, heat_capacity_ratio: float) -> dict:
     """Wet heat/mass analogy modifies only the air resistance, not the water film."""
     if not math.isfinite(heat_capacity_ratio) or heat_capacity_ratio<=0:
@@ -23,7 +28,7 @@ def wet_geometry_conductance(detail: dict, heat_capacity_ratio: float) -> dict:
     eta=fin_efficiency(g,m,h)
     eta_surface=1-m['fin_area_m2']/m['total_outer_area_m2']*(1-eta)
     ra=1/(h*eta_surface*m['total_outer_area_m2'])
-    ua=1/(ra+detail['resistance_water_k_w']+detail['resistance_wall_k_w'])
+    ua=1/(ra+detail['resistance_water_k_w']+detail['resistance_wall_k_w']+inner_series_extra(detail))
     return {'effective_ua_w_k':ua,'effective_air_h_w_m2_k':h,'wet_fin_efficiency_proxy':eta,
             'wet_surface_efficiency_proxy':eta_surface,'wet_air_resistance_k_w':ra,
             'model':'air_resistance_only_heat_mass_analogy_not_rigorous_partial_wet'}
@@ -75,16 +80,21 @@ def water_geometry_performance(case: dict, water_temperature_c: float) -> dict:
     R_air=1/(h_air*eta_surface*metrics['total_outer_area_m2'])
     R_water=1/(h_water*metrics['inner_area_m2'])
     R_wall=math.log(g['tube_outer_diameter_m']/di)/(2*math.pi*g['tube_conductivity_w_m_k']*g['tube_length_m']*metrics['tube_count'])
-    ua=1/(R_air+R_water+R_wall)
+    R_extra=metrics.get('contact_resistance_k_w',0.)+metrics.get('inner_fouling_resistance_k_w',0.)
+    ua=1/(R_air+R_water+R_wall) if not R_extra else 1/(R_air+R_water+R_wall+R_extra)
     air_dp=factors['fanning_friction_factor']*4*metrics['air_depth_m']/metrics['air_hydraulic_diameter_m']*G**2/(2*rho_air)
     warnings.extend(['几何水盘管仍采用整体等效逆流；不是逐管/排间交叉流网络。',
                      '理想芯体边界：总高=每排管数×横向管距、空气深度=排数×纵向管距；实际边界尚未自由定义。',
                      ('套管直径采用等厚套管口径Dc=Do+2tf；翅片面积按输入实际片数fin_count计算；实际成形套管尺寸未独立输入。'
                       if 'fin_count' in g else
                       '套管直径采用等厚套管口径Dc=Do+2tf；等效片数=管长/片距（可用fin_count输入实际片数）；实际成形套管尺寸未独立输入。'),
-                     ('连续平翅片效率采用等面积环形翅片近似；无接触热阻、污垢和严格部分湿翅片。'
-                      if fin_efficiency_method(g)=='equal_area_annular' else
-                      '翅片效率采用Schmidt当量圆翅片法（Wang, Webb & Chi 2000）；无接触热阻、污垢。'),
+                     (('连续平翅片效率采用等面积环形翅片近似；无接触热阻、污垢和严格部分湿翅片。'
+                       if fin_efficiency_method(g)=='equal_area_annular' else
+                       '翅片效率采用Schmidt当量圆翅片法（Wang, Webb & Chi 2000）；无接触热阻、污垢。')
+                      if not R_extra else
+                      ('翅片效率：'+('等面积环形近似' if fin_efficiency_method(g)=='equal_area_annular' else 'Schmidt当量圆翅片法')+
+                       '；计入输入的'+'、'.join(n for k,n in (('contact_conductance_w_m2_k','接触热导（按πDoL）'),
+                       ('inner_fouling_resistance_m2_k_w','管内污垢热阻')) if k in g)+'，按常数串联，未随湿润/温度变化。')),
                      '空气物性取入口，水物性取迭代平均温度；不含壁温修正。',
                      '压降仅预测空气芯体摩擦和水侧直管摩擦，不含U弯/集管/局部损失；未耦合沿程压力状态。',
                      'circuits_count只定义等长等流量并联假设，未输入或求解真实连管与分配。'])
@@ -97,6 +107,8 @@ def water_geometry_performance(case: dict, water_temperature_c: float) -> dict:
             'ua_w_k':ua,'air_h_w_m2_k':h_air,'water_h_w_m2_k':h_water,
             'fin_efficiency':eta_fin,'surface_efficiency':eta_surface,
             'resistance_air_k_w':R_air,'resistance_water_k_w':R_water,'resistance_wall_k_w':R_wall,
+            **({'resistance_contact_k_w':metrics['contact_resistance_k_w']} if 'contact_resistance_k_w' in metrics else {}),
+            **({'resistance_inner_fouling_k_w':metrics['inner_fouling_resistance_k_w']} if 'inner_fouling_resistance_k_w' in metrics else {}),
             'air_reynolds_collar':Re_air,'air_prandtl':Pr_air,'water_reynolds':Re_water,'water_prandtl':Pr_water,
             'water_nusselt':Nu,'water_flow_regime':regime,'water_darcy_friction_factor':fd,
             'water_velocity_m_s':velocity,'air_frontal_velocity_m_s':a['volume_flow_m3_h']/3600/metrics['frontal_area_m2'],

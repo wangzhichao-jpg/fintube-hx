@@ -17,7 +17,8 @@ def validate_geometry(value: dict, equal_circuits: bool = True) -> dict:
              'fin_count','notes','drawing_reference',
              'louver_pitch_m','louver_height_m','wave_height_m','wave_projected_length_m','fin_efficiency_method',
              'correlation_range_tolerance','microfin_count','microfin_height_m','microfin_apex_angle_deg',
-             'microfin_helix_angle_deg','microfin_tip_thickness_m'}
+             'microfin_helix_angle_deg','microfin_tip_thickness_m','contact_conductance_w_m2_k',
+             'inner_fouling_resistance_m2_k_w'}
     unknown=set(g)-allowed
     if unknown:
         raise ValueError('Unsupported active geometry fields: '+', '.join(sorted(unknown)))
@@ -57,6 +58,12 @@ def validate_geometry(value: dict, equal_circuits: bool = True) -> dict:
         if isinstance(v,bool) or not isinstance(v,(int,float)) or not 0<v<=MAX_RANGE_TOLERANCE:
             raise ValueError('geometry.correlation_range_tolerance must be in (0, 0.01]: declared geometric boundary extrapolation only')
         g['correlation_range_tolerance']=float(v)
+    for key in ('contact_conductance_w_m2_k','inner_fouling_resistance_m2_k_w'):
+        if key in g:
+            v=g[key]
+            if isinstance(v,bool) or not isinstance(v,(int,float)) or not math.isfinite(v) or v<=0:
+                raise ValueError(f'geometry.{key} must be a finite positive SI number')
+            g[key]=float(v)
     if 'fin_efficiency_method' in g and g['fin_efficiency_method'] not in FIN_EFFICIENCY_METHODS:
         raise ValueError('geometry.fin_efficiency_method must be equal_area_annular or schmidt')
     for key in ['rows','tubes_per_row','circuits_count']:
@@ -149,7 +156,13 @@ def geometry_metrics(value: dict, equal_circuits: bool = True) -> dict:
                              g['microfin_helix_angle_deg'],g['microfin_tip_thickness_m'])
         inner={'inner_area_m2':mf['area_per_length_m']*L*total,'inner_flow_area_m2':mf['flow_area_m2'],
                'inner_hydraulic_diameter_m':mf['hydraulic_diameter_m'],'microfin':mf}
-    return {'tube_count':total,'tubes_per_circuit':total//nc if equal_circuits else total/nc,'equivalent_fin_count':nf,
+    extra_r={}
+    if 'contact_conductance_w_m2_k' in g:
+        # Fin-collar/tube contact, based on the tube outer area pi*Do*L of all tubes.
+        extra_r['contact_resistance_k_w']=1/(g['contact_conductance_w_m2_k']*math.pi*do*L*total)
+    if 'inner_fouling_resistance_m2_k_w' in g:
+        extra_r['inner_fouling_resistance_k_w']=g['inner_fouling_resistance_m2_k_w']/inner['inner_area_m2']
+    return {'tube_count':total,**extra_r,'tubes_per_circuit':total//nc if equal_circuits else total/nc,'equivalent_fin_count':nf,
             'fin_count_basis':'input_actual_count' if counted else 'tube_length_over_pitch',
             'width_m':L,'height_m':H,'air_depth_m':depth,'frontal_area_m2':a_face,
             'minimum_air_area_m2':a_min,'free_area_ratio':a_min/a_face,
