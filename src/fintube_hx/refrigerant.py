@@ -5,16 +5,18 @@ import math
 from scipy.optimize import brentq
 from .schema import validate_case, recommended_iteration_budget
 from .properties import air_state, air_mass_flow, fluid_pt, fluid_ph, saturation
-from .thermal import contact_air, LIQUID_WATER_CP
+from .thermal import contact_air, LIQUID_WATER_CP, check_subzero_surface
 
 
-def _cell(name, p, h_in, air_in, m_ref, m_da, ua, direction):
+def _cell(name, p, h_in, air_in, m_ref, m_da, ua, direction, subzero="reject"):
     fin = fluid_ph(name, p, h_in)
     t_ref = fin["temperature_c"]
     if direction * (air_in["t_db_c"] - t_ref) <= 1e-9 or ua == 0:
         return fin, dict(air_in), 0.0, 0.0, t_ref, False
     if direction == 1 and t_ref <= 0:
-        raise ValueError("Evaporating below/equal 0 C requires frost treatment, absent in this baseline")
+        if subzero == "reject":
+            raise ValueError("Evaporating below/equal 0 C requires frost treatment, absent in this baseline")
+        check_subzero_surface(t_ref, air_in, subzero)
     fraction = -math.expm1(-ua / (m_da * air_in["cp_j_kg_da_k"]))
     # Finite endpoint bounds prevent crossing the local inlet temperatures.
     eq_t = air_in["t_db_c"] - direction * 1e-5
@@ -27,6 +29,8 @@ def _cell(name, p, h_in, air_in, m_ref, m_da, ua, direction):
     def evaluate(q):
         out = fluid_ph(name, p, h_in + direction * q / m_ref)
         surface_t = (t_ref + out["temperature_c"]) / 2
+        if direction == 1 and surface_t <= 0 and subzero != "reject":
+            check_subzero_surface(surface_t, air_in, subzero)
         air_out, air_heat, cond = contact_air(air_in, surface_t, fraction, m_da)
         return out, air_out, direction * air_heat, cond, surface_t
     residual = lambda q: evaluate(q)[2] - q
@@ -65,7 +69,7 @@ def simulate_refrigerant(case: dict) -> dict:
             local_air = air_grid[i + 1]
             f_out, a_out, q, cond, ts, limited = _cell(
                 f["name"], f["pressure_pa"], h, local_air, m_ref, m_da,
-                model["ua_w_k"] / n, direction)
+                model["ua_w_k"] / n, direction, model.get("subzero_evaporation", "reject"))
             cells.append({
                 "index": i, "fluid_in_h_j_kg": h,
                 "fluid_out_h_j_kg": f_out["enthalpy_j_kg"],
@@ -105,6 +109,10 @@ def simulate_refrigerant(case: dict) -> dict:
         warnings.append(f"{bound_count}个分段触及温差容量界限，接触因子受到物理容量截断。")
     if not converged:
         warnings.append("空气-制冷剂逆流迭代未在给定次数内收敛。")
+    subzero_cells = sum(1 for cell in cells if cell["approximate_surface_t_c"] <= 0)
+    if subzero_cells:
+        warnings.append(f"{subzero_cells}个分段表面温度≤0 ℃但不低于进风霜点，按干表面计算（subzero_evaporation=dry_only）；"
+                        "未建模结霜，霜点判定以制冷剂温度代表表面温度（偏保守）。")
     if balance > 0.005:
         converged = False; warnings.append("整体能量残差超过0.5%，结果不得作为通过验算。")
     result = {

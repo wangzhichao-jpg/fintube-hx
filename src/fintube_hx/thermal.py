@@ -56,3 +56,27 @@ def contact_air(air_in: dict, surface_t_c: float, fraction: float, m_da: float,
         out = air_from_h_w(h_out, w_in, p)
         q, condensate = m_da * (h_in - out["enthalpy_j_kg_da"]), 0.0
     return out, q, condensate
+
+
+SUBZERO_MODES = ('reject', 'dry_only')
+
+
+def check_subzero_surface(surface_t_c: float, air_in: dict, mode: str = 'reject') -> bool:
+    """Evaporating surfaces at/below 0 C (model.subzero_evaporation).
+
+    'reject' (default, legacy): any surface at/below 0 C raises.
+    'dry_only': allowed only while the surface stays at/above the local air frost point
+    (CoolProp humid-air saturation is over ice below 0 C), i.e. no deposition; otherwise
+    a frost model would be required and the case is rejected.  Returns True for a dry
+    sub-zero surface.  The refrigerant-side temperature is used as the surface temperature,
+    which is conservative for this check (the actual fin surface is warmer).
+    """
+    if surface_t_c > 0:
+        return False
+    if mode != 'dry_only':
+        raise ValueError('Evaporating surface at/below 0 C requires a frost model, absent here '
+                         '(model.subzero_evaporation="dry_only" allows dry sub-zero surfaces only)')
+    if surface_t_c < air_in['dew_point_c']:
+        raise ValueError(f'Surface {surface_t_c:.2f} C is below the air frost point {air_in["dew_point_c"]:.2f} C: '
+                         'frost deposition requires a frost model, absent here')
+    return True
