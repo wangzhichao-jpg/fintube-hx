@@ -82,7 +82,7 @@ print(result["heat_transfer_w"], result["fluid_out"]["temperature_c"])
 
 ## 实测验证（6个公开工况）
 
-[`validation/measured/`](validation/measured/README.zh-CN.md)列出全部已对比的公开实测数据：Altwieb等（Energies 2022，DOI 10.3390/en15020400）平片水盘管2个工况，CETIAT（IEA HPT Annex 54 2021年报第4章，ICR 2019 DOI 10.18462/iir.icr.2019.1439）R410A可逆盘管蒸发/冷凝4个工况，共两台试件。目录内给出页码/表图定位、所下载PDF的SHA-256、映射假设、逐项结果及验收评估；未对实测数据做任何拟合。
+[`validation/measured-v6/`](validation/measured-v6/README.zh-CN.md)为当前实测验证集：CETIAT百叶片盘管20个工况（R410A/R32，冷凝与蒸发；换热量20/20在±5%内，蒸发过热度11/12在±3 K内，冷凝过冷度2/8在±2 K内）、谭爱华2015风机盘管湿工况（开源核心整盘55台／专业版逐管62台）及平片空气侧交叉参考；谭爱华整盘结果可用`tools/run_measured_v6_tan.py`逐位复现。早期数据集[`validation/measured/`](validation/measured/README.zh-CN.md)（历史参考）列出Altwieb等（Energies 2022，DOI 10.3390/en15020400）平片水盘管2个工况，CETIAT（IEA HPT Annex 54 2021年报第4章，ICR 2019 DOI 10.18462/iir.icr.2019.1439）R410A可逆盘管蒸发/冷凝4个工况，共两台试件。目录内给出页码/表图定位、所下载PDF的SHA-256、映射假设、逐项结果及验收评估；未对实测数据做任何拟合。
 
 | 工况 | 实测 | 本仓库（整体模型） | Pro逐管网络 | 结论 |
 |---|---:|---:|---:|---|

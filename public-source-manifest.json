@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0.dev14",
+  "version": "0.1.0.dev15",
   "edition": "community",
   "publication_status": "reviewed_public_source_candidate",
   "original_license_status": "MIT_owner_approved",
@@ -35,11 +35,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "806dd260b0d74b47d5945a619a97bb9de5c59e0af777df1338a1a269b61c20d5"
+      "sha256": "864e803f5e156de4f34f7e308b66b61ca32a3b82bba72cb2ee3d46f59bfa680c"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "1708b7a153250478068ec94c2c50e8ac088c5fff430802ee3baee96be252f5e1"
+      "sha256": "7e55bef35f58ad3a7ceeefbefc09ccdb7252abd8e3ecef4b27042be0f519d886"
     },
     {
       "path": "RELEASE_CHECKLIST.md",
@@ -55,7 +55,7 @@
     },
     {
       "path": "docs/EXTERNAL_REVIEW_STATUS.md",
-      "sha256": "f8c8fe67818ddf349de6ddbdc3aad7e825532867ac5be0dd4ee61b57a04589da"
+      "sha256": "2c9dc15b7326d8ce01f29b82780558e0bf81d2a4b96282a4b608ca685c0ee4b1"
     },
     {
       "path": "docs/EXTERNAL_REVIEW_V3.md",
@@ -111,7 +111,7 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256": "6791f868db96947e11b92cfce454bf0e431a4e63e1bf344f9b0dfa0d2fe631b2"
+      "sha256": "04ee6f6058df5099545c9e354d71b63d71da6728ec19e5600fba8639a608382f"
     },
     {
       "path": "references/python-hvac/README.md",
@@ -155,7 +155,7 @@
     },
     {
       "path": "src/fintube_hx/__init__.py",
-      "sha256": "077dbb34f0623440a4beca694915d319825cd7bed855b386ef46a2a16d8b45bb"
+      "sha256": "74b95cd117c62d85e745a101f74621dad8acd0a5e2d795239abb99c95d904f3a"
     },
     {
       "path": "src/fintube_hx/__main__.py",
@@ -264,6 +264,10 @@
     {
       "path": "tests/test_iteration_budget.py",
       "sha256": "d1d155062aa4dc36ff3518333c7c5a6a53ac5832ea1456d14fe046f772e418dd"
+    },
+    {
+      "path": "tests/test_measured_v6.py",
+      "sha256": "cf845997dbc58de4cad37c80a4497f8b313199394dd6f1cc58bd77a282ba84c6"
     },
     {
       "path": "tests/test_measured_validation.py",
@@ -394,16 +398,48 @@
       "sha256": "98d385dcfb32b537af78fe8d2d240d5ceacb8acad3417bd921e332e2f8506531"
     },
     {
+      "path": "tools/run_measured_v6_tan.py",
+      "sha256": "06abdef4527a2081517188dff3f349ab6cd8076ec6e37c20294e6c98b9224650"
+    },
+    {
       "path": "tools/run_measured_validation.py",
       "sha256": "57bc8195d8d58e90efaff4d080a22ba8608cc0427f66e6e16698e11e4cde6f90"
     },
     {
+      "path": "validation/measured-v6/README.md",
+      "sha256": "7cd082170c2fcfe24520290140f27ca8450e4bdb5dd98467b98b0c455c9cf2c6"
+    },
+    {
+      "path": "validation/measured-v6/README.zh-CN.md",
+      "sha256": "c029acc3763066496e66d2a5a74c035cb4dc2fe06eae2015a40744bece2b382f"
+    },
+    {
+      "path": "validation/measured-v6/SHA256SUMS.txt",
+      "sha256": "7316a0f4dba183f7956ba4e015b7f44b4f22a5d644d02efc5266ff5f53b3fdb9"
+    },
+    {
+      "path": "validation/measured-v6/cetiat_iea_annex54.json",
+      "sha256": "f9dba62428bcc9560fd8a3edeff96bfa92cf433f87ce924e174df52d2427b6cf"
+    },
+    {
+      "path": "validation/measured-v6/kh1994_airside_crosscheck.json",
+      "sha256": "5c78a8f38a10f9b13ce9bd6eab6a9092a4bebe00984f63e62b419281bfd2d001"
+    },
+    {
+      "path": "validation/measured-v6/tan2015_fcu_measured.json",
+      "sha256": "d4c0feb9c02bc4c14769d4caf648ff0ff6fc500c8a4c1f1ea2d1d9930b032ff4"
+    },
+    {
+      "path": "validation/measured-v6/tan2015_fcu_results.json",
+      "sha256": "a7d042dbae4f9c1386cabb3eac50d58d007c1381ed2f180c06c570834febf385"
+    },
+    {
       "path": "validation/measured/README.md",
-      "sha256": "64bce8f380c90c00401ba332360c45b774afc99c33028070d5c4cc523e166550"
+      "sha256": "ada78e2a0b49cacfaa36bb14d8b3ce4e4d7a2fae9e6ece2fd02332741bcb17de"
     },
     {
       "path": "validation/measured/README.zh-CN.md",
-      "sha256": "d0cd9d95d0c53e26576e76dceebabe1b3ed5cbee65f32b48325d47ba8088d40a"
+      "sha256": "a602a8ef53e2a07d469fcc2f694c624dab86003819dd6d46cd305c843fed9e95"
     },
     {
       "path": "validation/measured/cases.json",
@@ -426,5 +462,5 @@
       "sha256": "1a9ab2e34e3f6d8ded538501ed6630001305f9e5de7039810d9294f2e4af889b"
     }
   ],
-  "measured_validation": "validation/measured/README.md"
+  "measured_validation": "validation/measured-v6/README.md"
 }
