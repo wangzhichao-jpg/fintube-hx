@@ -1,4 +1,6 @@
-# Measured validation set: six published operating points
+# Measured validation set: six published operating points (v5, historical)
+
+> **Superseded by [`../measured-v6/`](../measured-v6/README.md).** All six points here are historical references: W1/W2 have an unresolved duct bypass; the CETIAT points were computed with a plain-fin substitute and are restored in v6 with the louver correlation.
 
 [ **English** | [简体中文](README.zh-CN.md) ]
 

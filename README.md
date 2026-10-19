@@ -82,7 +82,7 @@ There are no actual tube-route networks, row-by-row crossflow, intermediate spli
 
 ## Measured validation (six published points)
 
-[`validation/measured/`](validation/measured/README.md) lists every published measurement used so far: two plain-fin water-coil points from Altwieb et al. (Energies 2022, doi:10.3390/en15020400) and four R410A evaporation/condensation points from CETIAT (IEA HPT Annex 54 2021 report, Ch. 4; ICR 2019, doi:10.18462/iir.icr.2019.1439) — two specimens in total. It gives page/table/figure locators, SHA-256 of the retrieved PDFs, mapping assumptions, all results and an acceptance assessment. Nothing is fitted to the measurements.
+[`validation/measured-v6/`](validation/measured-v6/README.md) is the current measured validation set: the CETIAT louver coil (20 points, R410A/R32, condensation and evaporation; capacity 20/20 within ±5 %, evaporator superheat 11/12 within ±3 K, condenser subcooling 2/8 within ±2 K), Tan 2015 wet fan-coil units (55 open-core lumped / 62 Professional tube-network units) and a plain-fin air-side cross-check; the Tan lumped results reproduce bit-for-bit with `tools/run_measured_v6_tan.py`. The earlier set [`validation/measured/`](validation/measured/README.md) (historical) lists two plain-fin water-coil points from Altwieb et al. (Energies 2022, doi:10.3390/en15020400) and four R410A evaporation/condensation points from CETIAT (IEA HPT Annex 54 2021 report, Ch. 4; ICR 2019, doi:10.18462/iir.icr.2019.1439) — two specimens in total. It gives page/table/figure locators, SHA-256 of the retrieved PDFs, mapping assumptions, all results and an acceptance assessment. Nothing is fitted to the measurements.
 
 | Case | Measured | This repo (lumped) | Pro tube network | Verdict |
 |---|---:|---:|---:|---|

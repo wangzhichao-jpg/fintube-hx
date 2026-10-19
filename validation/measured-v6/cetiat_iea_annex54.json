@@ -1,0 +1,1444 @@
+{
+ "source": {
+  "citation": "IEA HPT Annex 54, 2021 Progress Annual Report (Jan 2022), Chapter 4 (CETIAT); Pardo, Gaillard, Mondot, ICR 2019, DOI 10.18462/iir.icr.2019.1439",
+  "pdf_sha256": "2b63f13f894dbcd5809f8b05c55a76f4e1a98d54e8f233d2b9c37d1f059204a9",
+  "locators": {
+   "geometry": "Fig.2a p87",
+   "instrumentation P4/Outlet P": "Fig.4 p88",
+   "conditions": "Table 2/3 p88-89",
+   "results": "Table 4 p90, Table 5 p91",
+   "heat balance": "p89-90",
+   "accuracy": "p87"
+  }
+ },
+ "points": {
+  "condensation": [
+   {
+    "id": "C-R410A-1",
+    "fluid": "R410A",
+    "kg_h": 230,
+    "dew_c": 46.6,
+    "bubble_c": 46.3,
+    "sc_k": 6.2,
+    "q_kw": 13.31,
+    "dp_kpa": 18
+   },
+   {
+    "id": "C-R410A-2",
+    "fluid": "R410A",
+    "kg_h": 270,
+    "dew_c": 48.3,
+    "bubble_c": 48.1,
+    "sc_k": 6.6,
+    "q_kw": 15.29,
+    "dp_kpa": 18
+   },
+   {
+    "id": "C-R410A-3",
+    "fluid": "R410A",
+    "kg_h": 330,
+    "dew_c": 50.2,
+    "bubble_c": 49.9,
+    "sc_k": 4.8,
+    "q_kw": 17.8,
+    "dp_kpa": 23
+   },
+   {
+    "id": "C-R410A-4",
+    "fluid": "R410A",
+    "kg_h": 360,
+    "dew_c": 51.1,
+    "bubble_c": 50.7,
+    "sc_k": 4.0,
+    "q_kw": 19.25,
+    "dp_kpa": 21
+   },
+   {
+    "id": "C-R32-1",
+    "fluid": "R32",
+    "kg_h": 230,
+    "dew_c": 49.4,
+    "bubble_c": 49.3,
+    "sc_k": 4.4,
+    "q_kw": 17.78,
+    "dp_kpa": 16
+   },
+   {
+    "id": "C-R32-2",
+    "fluid": "R32",
+    "kg_h": 270,
+    "dew_c": 51.5,
+    "bubble_c": 51.3,
+    "sc_k": 4.3,
+    "q_kw": 20.1,
+    "dp_kpa": 17
+   },
+   {
+    "id": "C-R32-3",
+    "fluid": "R32",
+    "kg_h": 330,
+    "dew_c": 54.0,
+    "bubble_c": 53.8,
+    "sc_k": 3.3,
+    "q_kw": 23.44,
+    "dp_kpa": 20
+   },
+   {
+    "id": "C-R32-4",
+    "fluid": "R32",
+    "kg_h": 360,
+    "dew_c": 56.3,
+    "bubble_c": 56.1,
+    "sc_k": 5.7,
+    "q_kw": 25.45,
+    "dp_kpa": 21
+   }
+  ],
+  "evaporation": [
+   {
+    "id": "E-R410A-1",
+    "fluid": "R410A",
+    "kg_h": 230,
+    "air": "dry 20(10)",
+    "bubble_c": 2.2,
+    "dew_c": 1.4,
+    "sh_k": 16.6,
+    "q_kw": 12.2,
+    "dp_kpa": 22
+   },
+   {
+    "id": "E-R410A-4",
+    "fluid": "R410A",
+    "kg_h": 230,
+    "air": "wet 16(14)",
+    "bubble_c": 3.4,
+    "dew_c": 2.6,
+    "sh_k": 11.7,
+    "q_kw": 11.9,
+    "dp_kpa": 20
+   },
+   {
+    "id": "E-R32-1",
+    "fluid": "R32",
+    "kg_h": 230,
+    "air": "dry 20(10)",
+    "bubble_c": 2.2,
+    "dew_c": 1.0,
+    "sh_k": 12.7,
+    "q_kw": 17.4,
+    "dp_kpa": 29
+   },
+   {
+    "id": "E-R32-4",
+    "fluid": "R32",
+    "kg_h": 230,
+    "air": "wet 16(14)",
+    "bubble_c": 2.2,
+    "dew_c": 1.0,
+    "sh_k": 11.0,
+    "q_kw": 17.5,
+    "dp_kpa": 29
+   },
+   {
+    "id": "E-R410A-2",
+    "fluid": "R410A",
+    "kg_h": 270,
+    "air": "dry 20(10)",
+    "bubble_c": 1.1,
+    "dew_c": -0.3,
+    "sh_k": 17.6,
+    "q_kw": 14.3,
+    "dp_kpa": 36
+   },
+   {
+    "id": "E-R410A-5",
+    "fluid": "R410A",
+    "kg_h": 270,
+    "air": "wet 16(14)",
+    "bubble_c": 0.4,
+    "dew_c": -1.0,
+    "sh_k": 15.1,
+    "q_kw": 14.1,
+    "dp_kpa": 37
+   },
+   {
+    "id": "E-R410A-3",
+    "fluid": "R410A",
+    "kg_h": 330,
+    "air": "dry 20(10)",
+    "bubble_c": -0.7,
+    "dew_c": -2.8,
+    "sh_k": 18.5,
+    "q_kw": 17.5,
+    "dp_kpa": 52,
+    "subzero_mode": "initial_frost"
+   },
+   {
+    "id": "E-R410A-6",
+    "fluid": "R410A",
+    "kg_h": 330,
+    "air": "wet 16(14)",
+    "bubble_c": -0.5,
+    "dew_c": -2.7,
+    "sh_k": 16.0,
+    "q_kw": 17.3,
+    "dp_kpa": 52,
+    "subzero_mode": "initial_frost"
+   },
+   {
+    "id": "E-R32-2",
+    "fluid": "R32",
+    "kg_h": 270,
+    "air": "dry 20(10)",
+    "bubble_c": -3.7,
+    "dew_c": -4.7,
+    "sh_k": 20.9,
+    "q_kw": 21.1,
+    "dp_kpa": 59,
+    "subzero_mode": "initial_frost"
+   },
+   {
+    "id": "E-R32-3",
+    "fluid": "R32",
+    "kg_h": 330,
+    "air": "dry 20(10)",
+    "bubble_c": -3.5,
+    "dew_c": -7.1,
+    "sh_k": 12.5,
+    "q_kw": 25.1,
+    "dp_kpa": 78,
+    "subzero_mode": "initial_frost"
+   },
+   {
+    "id": "E-R32-5",
+    "fluid": "R32",
+    "kg_h": 270,
+    "air": "wet 16(14)",
+    "bubble_c": 0.6,
+    "dew_c": -1.4,
+    "sh_k": 12.4,
+    "q_kw": 20.6,
+    "dp_kpa": 46,
+    "subzero_mode": "initial_frost"
+   },
+   {
+    "id": "E-R32-6",
+    "fluid": "R32",
+    "kg_h": 330,
+    "air": "wet 16(14)",
+    "bubble_c": -1.7,
+    "dew_c": -5.1,
+    "sh_k": 14.0,
+    "q_kw": 25.2,
+    "dp_kpa": 77,
+    "subzero_mode": "initial_frost"
+   }
+  ],
+  "deferred": [
+   {
+    "what": "R454B全部工况",
+    "why": "非共沸混合物，物性层暂不支持混合物写法"
+   }
+  ]
+ },
+ "inputs_derivation": [
+  {
+   "field": "3排×32管、8回路、管长813 mm、Do 8.37/Di 7.81 mm、Pt 25.5、Pl 20 mm、片距2.5 mm、片厚0.08 mm、铝片铜管、光管、百叶片",
+   "level": "D0",
+   "source": "Fig.2a"
+  },
+  {
+   "field": "回路走向（每路12管，每排4管；冷凝顺流从迎风排进，蒸发逆流从背风排进）",
+   "level": "D0/D2",
+   "source": "Fig.2d、Fig.4；沿用v4人工复核的流路"
+  },
+  {
+   "field": "风量",
+   "level": "D1",
+   "value": "迎面风速×0.813²：冷凝2.15→5116 m³/h（原文5115±50），蒸发2.25→5354 m³/h（原文约5350）"
+  },
+  {
+   "field": "冷凝进口压力",
+   "level": "D1",
+   "value": "进口露点温度的饱和压力（R32为纯工质，表中露点、泡点相差0.1–0.2 K，说明两者分别对应进口和出口压力）"
+  },
+  {
+   "field": "冷凝进口温度",
+   "level": "D0",
+   "value": "80 ℃"
+  },
+  {
+   "field": "冷凝风侧湿度",
+   "level": "D4",
+   "value": "RH 0.40（干工况，对换热影响可忽略）"
+  },
+  {
+   "field": "蒸发进口压力",
+   "level": "D1",
+   "value": "进口泡点温度的饱和压力"
+  },
+  {
+   "field": "蒸发进口焓",
+   "level": "D1",
+   "value": "节流前30 ℃液体的焓（表2），按等焓节流；高压侧压力未给出，取2.8 MPa，在2.0–3.5 MPa范围内焓变化<0.3 kJ/kg"
+  },
+  {
+   "field": "蒸发风侧湿度",
+   "level": "D1",
+   "value": "干球（湿球）：20(10)、16(14) ℃"
+  },
+  {
+   "field": "百叶Lh/Lp",
+   "level": "D4",
+   "value": "扫描0.24、0.40、0.583、0.824；参考值0.583"
+  },
+  {
+   "field": "边界外推",
+   "level": "声明",
+   "value": "geometry.correlation_range_tolerance = 0.005（Pt 25.5>25.4、片距2.5>2.49 mm，均超出0.4%）"
+  },
+  {
+   "field": "回弯",
+   "level": "D4",
+   "value": "每个回弯等效长度 L/D = 50（Crane TP-410近距回弯，与v5一致）"
+  },
+  {
+   "field": "导热系数",
+   "level": "D4",
+   "value": "铝205、铜385 W/(m·K)（与v4/v5一致）"
+  }
+ ],
+ "model": {
+  "software": "Pro 0.6.6.dev3 / core 0.1.0.dev9；逐管制冷剂网络，每管8段，各排空气完全混合",
+  "air_side": "Wang 1999百叶片，Schmidt翅片效率",
+  "in_tube": "默认（冷凝Shah 1979、蒸发Liu-Winterton）",
+  "wet_surface": "湿工况点用threlkeld_braun",
+  "no_multipliers": true
+ },
+ "comparison": {
+  "quantities": [
+   "换热量Q",
+   "冷凝过冷度SC（相对出口泡点）/ 蒸发过热度SH（相对出口露点）",
+   "回路压降（冷凝Outlet P−P4，蒸发P4−Outlet P；由Fig.4，两者都是一个回路加集管支路，不含毛细管和分液器）"
+  ],
+  "tolerance": {
+   "Q_relative": 0.05,
+   "SC_K": 2.0,
+   "SH_K": 3.0,
+   "dp_relative": 0.3
+  },
+  "note": "给定流量和进口状态时，Q受出口状态约束（报告容量窗口），SC/SH才是主要判别量；压降在第3项（集管、重力、局部损失）完成前预计不通过，照实报告",
+  "verdict_rule": "每个量单独判定。参考比值下在容差内且四个比值都在容差内=稳健通过；仅参考值在容差内=条件通过；否则不通过"
+ },
+ "amendments": {
+  "amendment_2026_10_19": "U2b首次运行时按表中出口露点<0 ℃把R410A-2、R410A-5列为待定，这个判断有误：表面温度由进口泡点（1.1、0.4 ℃）和过热段决定，计算表面始终>0 ℃，现有程序本就可以计算。现补入这两个点，容差与判定规则沿用原声明，不作任何修改。",
+  "amendment_2026_10_19_b": "补入6个0 ℃以下蒸发工况（表4，R410A-3、R410A-6、R32-2、R32-3、R32-5、R32-6），采用subzero_evaporation=initial_frost＋threlkeld_braun（初始结霜极限：沉积为冰并计融化潜热，霜层厚度/热阻/堵塞不计）。原文未给试验时长与霜量，该假设为D4；容差与判定规则沿用原声明。"
+ },
+ "generated_with": {
+  "professional": "0.6.6.dev6",
+  "core": "0.1.0.dev13",
+  "note": "Refrigerant tube-network results from the Professional edition; circuit inputs are not published here."
+ },
+ "results": [
+  {
+   "id": "C-R410A-1",
+   "kind": "condenser",
+   "measured": {
+    "q_w": 13310.0,
+    "sc_k": 6.2,
+    "dp_pa": 18000
+   },
+   "result_reference_lh_lp_0583": {
+    "q_w": 13412.636764543271,
+    "dp_pa": 2353.2590885115787,
+    "sc_k": 7.400767847699342,
+    "converged": true,
+    "energy_balance": 5.202807023272948e-06
+   },
+   "deviation_reference": {
+    "q_rel": 0.007711252031801008,
+    "state_k": 1.2007678476993418,
+    "dp_rel": -0.869263383971579
+   },
+   "deviation_envelope_lh_lp_0p24_0p824": {
+    "q_rel": [
+     -0.060619434927263294,
+     0.008368045039163219
+    ],
+    "state_k": [
+     -5.996903883166522,
+     1.2739078431587698
+    ],
+    "dp_rel": [
+     -0.8702540050034877,
+     -0.8665312986528604
+    ]
+   },
+   "plain_fin_control_deviation": {
+    "q_rel": -0.060619434927263294,
+    "state_k": -5.996903883166522,
+    "dp_rel": -0.8304505181140267
+   },
+   "verdict": {
+    "Q": "robust_pass",
+    "SC": "robust_pass",
+    "dp": "fail"
+   }
+  },
+  {
+   "id": "C-R410A-2",
+   "kind": "condenser",
+   "measured": {
+    "q_w": 15290.0,
+    "sc_k": 6.6,
+    "dp_pa": 18000
+   },
+   "result_reference_lh_lp_0583": {
+    "q_w": 15416.945697413488,
+    "dp_pa": 2994.5313878059387,
+    "sc_k": 7.623936767821874,
+    "converged": true,
+    "energy_balance": 5.0899301836439425e-06
+   },
+   "deviation_reference": {
+    "q_rel": 0.008302530896892701,
+    "state_k": 1.0239367678218745,
+    "dp_rel": -0.8336371451218922
+   },
+   "deviation_envelope_lh_lp_0p24_0p824": {
+    "q_rel": [
+     -0.07198372457315416,
+     0.00912905510322215
+    ],
+    "state_k": [
+     -6.600799842065191,
+     1.112874128174349
+    ],
+    "dp_rel": [
+     -0.8349568209706082,
+     -0.8300121048259704
+    ]
+   },
+   "plain_fin_control_deviation": {
+    "q_rel": -0.07198372457315416,
+    "state_k": -6.600799842065191,
+    "dp_rel": -0.7820820973573976
+   },
+   "verdict": {
+    "Q": "robust_pass",
+    "SC": "robust_pass",
+    "dp": "fail"
+   }
+  },
+  {
+   "id": "C-R410A-3",
+   "kind": "condenser",
+   "measured": {
+    "q_w": 17800.0,
+    "sc_k": 4.8,
+    "dp_pa": 23000
+   },
+   "result_reference_lh_lp_0583": {
+    "q_w": 18238.383433318235,
+    "dp_pa": 4196.114885549992,
+    "sc_k": 7.064774305332719,
+    "converged": true,
+    "energy_balance": 4.791307140416318e-06
+   },
+   "deviation_reference": {
+    "q_rel": 0.024628282770687404,
+    "state_k": 2.264774305332719,
+    "dp_rel": -0.8175602223673917
+   },
+   "deviation_envelope_lh_lp_0p24_0p824": {
+    "q_rel": [
+     -0.08598077072528831,
+     0.02596562310978423
+    ],
+    "state_k": [
+     -4.805707547595477,
+     2.3982650286494733
+    ],
+    "dp_rel": [
+     -0.8190980330376035,
+     -0.8138013996855437
+    ]
+   },
+   "plain_fin_control_deviation": {
+    "q_rel": -0.08598077072528831,
+    "state_k": -4.805707547595477,
+    "dp_rel": -0.758865257172906
+   },
+   "verdict": {
+    "Q": "robust_pass",
+    "SC": "fail",
+    "dp": "fail"
+   }
+  },
+  {
+   "id": "C-R410A-4",
+   "kind": "condenser",
+   "measured": {
+    "q_w": 19250.0,
+    "sc_k": 4.0,
+    "dp_pa": 21000
+   },
+   "result_reference_lh_lp_0583": {
+    "q_w": 19568.47271371172,
+    "dp_pa": 4831.977714504581,
+    "sc_k": 6.7616765763267495,
+    "converged": true,
+    "energy_balance": 4.669188621666578e-06
+   },
+   "deviation_reference": {
+    "q_rel": 0.01654403707593355,
+    "state_k": 2.7616765763267495,
+    "dp_rel": -0.7699058231188295
+   },
+   "deviation_envelope_lh_lp_0p24_0p824": {
+    "q_rel": [
+     -0.10494124482497502,
+     0.01810167683737074
+    ],
+    "state_k": [
+     -4.007720674442396,
+     2.9135435300676136
+    ],
+    "dp_rel": [
+     -0.7714927004530937,
+     -0.7645767428557877
+    ]
+   },
+   "plain_fin_control_deviation": {
+    "q_rel": -0.10494124482497502,
+    "state_k": -4.007720674442396,
+    "dp_rel": -0.6948634200701933
+   },
+   "verdict": {
+    "Q": "robust_pass",
+    "SC": "fail",
+    "dp": "fail"
+   }
+  },
+  {
+   "id": "C-R32-1",
+   "kind": "condenser",
+   "measured": {
+    "q_w": 17780.0,
+    "sc_k": 4.4,
+    "dp_pa": 16000
+   },
+   "result_reference_lh_lp_0583": {
+    "q_w": 17945.635031450718,
+    "dp_pa": 3230.195774319116,
+    "sc_k": 6.977169057037827,
+    "converged": true,
+    "energy_balance": 4.575662290881013e-06
+   },
+   "deviation_reference": {
+    "q_rel": 0.009315806043347363,
+    "state_k": 2.5771690570378265,
+    "dp_rel": -0.7981127641050553
+   },
+   "deviation_envelope_lh_lp_0p24_0p824": {
+    "q_rel": [
+     -0.11521705190762,
+     0.010538521975115955
+    ],
+    "state_k": [
+     -4.4,
+     2.734197576436179
+    ],
+    "dp_rel": [
+     -0.7998522926824807,
+     -0.7933208458611625
+    ]
+   },
+   "plain_fin_control_deviation": {
+    "q_rel": -0.11521705190762,
+    "state_k": -4.4,
+    "dp_rel": -0.7332086500126169
+   },
+   "verdict": {
+    "Q": "robust_pass",
+    "SC": "fail",
+    "dp": "fail"
+   }
+  },
+  {
+   "id": "C-R32-2",
+   "kind": "condenser",
+   "measured": {
+    "q_w": 20100.0,
+    "sc_k": 4.3,
+    "dp_pa": 17000
+   },
+   "result_reference_lh_lp_0583": {
+    "q_w": 20528.74828041551,
+    "dp_pa": 4054.190107365139,
+    "sc_k": 7.103105513943717,
+    "converged": true,
+    "energy_balance": 4.501001836269972e-06
+   },
+   "deviation_reference": {
+    "q_rel": 0.02133076021967728,
+    "state_k": 2.8031055139437173,
+    "dp_rel": -0.7615182289785213
+   },
+   "deviation_envelope_lh_lp_0p24_0p824": {
+    "q_rel": [
+     -0.11550843904611963,
+     0.022837756952444277
+    ],
+    "state_k": [
+     -4.3,
+     2.9862127647912873
+    ],
+    "dp_rel": [
+     -0.7636748925624689,
+     -0.7556612594375551
+    ]
+   },
+   "plain_fin_control_deviation": {
+    "q_rel": -0.11550843904611963,
+    "state_k": -4.3,
+    "dp_rel": -0.6826221130649998
+   },
+   "verdict": {
+    "Q": "robust_pass",
+    "SC": "fail",
+    "dp": "fail"
+   }
+  },
+  {
+   "id": "C-R32-3",
+   "kind": "condenser",
+   "measured": {
+    "q_w": 23440.0,
+    "sc_k": 3.3,
+    "dp_pa": 20000
+   },
+   "result_reference_lh_lp_0583": {
+    "q_w": 24081.804127751944,
+    "dp_pa": 5531.5979733187705,
+    "sc_k": 6.320050833880714,
+    "converged": true,
+    "energy_balance": 4.331997439139512e-06
+   },
+   "deviation_reference": {
+    "q_rel": 0.027380722173717675,
+    "state_k": 3.020050833880714,
+    "dp_rel": -0.7234201013340615
+   },
+   "deviation_envelope_lh_lp_0p24_0p824": {
+    "q_rel": [
+     -0.13299341216381744,
+     0.02957481318813926
+    ],
+    "state_k": [
+     -3.3,
+     3.2653937615511497
+    ],
+    "dp_rel": [
+     -0.7261085392257898,
+     -0.7163533574152738
+    ]
+   },
+   "plain_fin_control_deviation": {
+    "q_rel": -0.13299341216381744,
+    "state_k": -3.3,
+    "dp_rel": -0.6311738040318013
+   },
+   "verdict": {
+    "Q": "robust_pass",
+    "SC": "fail",
+    "dp": "fail"
+   }
+  },
+  {
+   "id": "C-R32-4",
+   "kind": "condenser",
+   "measured": {
+    "q_w": 25450.0,
+    "sc_k": 5.7,
+    "dp_pa": 21000
+   },
+   "result_reference_lh_lp_0583": {
+    "q_w": 25860.53935127429,
+    "dp_pa": 5720.26741649257,
+    "sc_k": 8.410815546746392,
+    "converged": true,
+    "energy_balance": 4.5340133389011135e-06
+   },
+   "deviation_reference": {
+    "q_rel": 0.016131212230816816,
+    "state_k": 2.7108155467463915,
+    "dp_rel": -0.7276063135003539
+   },
+   "deviation_envelope_lh_lp_0p24_0p824": {
+    "q_rel": [
+     -0.12213355059371367,
+     0.017713119830472968
+    ],
+    "state_k": [
+     -5.7,
+     2.887999068403178
+    ],
+    "dp_rel": [
+     -0.7301783177433757,
+     -0.7212487734915423
+    ]
+   },
+   "plain_fin_control_deviation": {
+    "q_rel": -0.12213355059371367,
+    "state_k": -5.7,
+    "dp_rel": -0.6334903822919088
+   },
+   "verdict": {
+    "Q": "robust_pass",
+    "SC": "fail",
+    "dp": "fail"
+   }
+  },
+  {
+   "id": "E-R410A-1",
+   "kind": "evaporator",
+   "measured": {
+    "q_w": 12200.0,
+    "sh_k": 16.6,
+    "dp_pa": 22000
+   },
+   "result_reference_lh_lp_0583": {
+    "q_w": 12341.586497816414,
+    "dp_pa": 15662.398142373655,
+    "sh_k": 17.92744686489607,
+    "converged": true,
+    "energy_balance": 1.2176596530906052e-05
+   },
+   "deviation_reference": {
+    "q_rel": 0.01160545064068974,
+    "state_k": 1.3274468648960678,
+    "dp_rel": -0.2880728117102884
+   },
+   "deviation_envelope_lh_lp_0p24_0p824": {
+    "q_rel": [
+     -0.00302486845872052,
+     0.011716282095965092
+    ],
+    "state_k": [
+     -1.4330063448913748,
+     1.3473193668321741
+    ],
+    "dp_rel": [
+     -0.3143246893022019,
+     -0.2879283385554233
+    ]
+   },
+   "plain_fin_control_deviation": {
+    "q_rel": -0.00302486845872052,
+    "state_k": -1.4330063448913748,
+    "dp_rel": -0.3143246893022019
+   },
+   "verdict": {
+    "Q": "robust_pass",
+    "SH": "robust_pass",
+    "dp": "robust_pass"
+   }
+  },
+  {
+   "id": "E-R410A-4",
+   "kind": "evaporator",
+   "measured": {
+    "q_w": 11900.0,
+    "sh_k": 11.7,
+    "dp_pa": 20000
+   },
+   "result_reference_lh_lp_0583": {
+    "q_w": 12028.035476601908,
+    "dp_pa": 14915.810200051521,
+    "sh_k": 12.651982992478281,
+    "converged": true,
+    "energy_balance": 1.4584023674678625e-05
+   },
+   "deviation_reference": {
+    "q_rel": 0.010759283748059456,
+    "state_k": 0.9519829924782819,
+    "dp_rel": -0.254209489997424
+   },
+   "deviation_envelope_lh_lp_0p24_0p824": {
+    "q_rel": [
+     0.004710144481114176,
+     0.010877825636739225
+    ],
+    "state_k": [
+     -0.12868366856066515,
+     0.9735100676270925
+    ],
+    "dp_rel": [
+     -0.2653779681798012,
+     -0.2529340717442625
+    ]
+   },
+   "plain_fin_control_deviation": {
+    "q_rel": 0.004710144481114176,
+    "state_k": -0.12868366856066515,
+    "dp_rel": -0.2653779681798012
+   },
+   "verdict": {
+    "Q": "robust_pass",
+    "SH": "robust_pass",
+    "dp": "robust_pass"
+   }
+  },
+  {
+   "id": "E-R32-1",
+   "kind": "evaporator",
+   "measured": {
+    "q_w": 17400.0,
+    "sh_k": 12.7,
+    "dp_pa": 29000
+   },
+   "result_reference_lh_lp_0583": {
+    "q_w": 17713.42665220195,
+    "dp_pa": 20079.933945658035,
+    "sh_k": 14.059398628531937,
+    "converged": true,
+    "energy_balance": 1.2579508324316275e-05
+   },
+   "deviation_reference": {
+    "q_rel": 0.01801302598861776,
+    "state_k": 1.3593986285319382,
+    "dp_rel": -0.30758848463248156
+   },
+   "deviation_envelope_lh_lp_0p24_0p824": {
+    "q_rel": [
+     -0.12164675056760055,
+     0.019559883869519012
+    ],
+    "state_k": [
+     -12.7,
+     1.7392685375217418
+    ],
+    "dp_rel": [
+     -0.3652200789111385,
+     -0.3050778770177336
+    ]
+   },
+   "plain_fin_control_deviation": {
+    "q_rel": -0.12164675056760055,
+    "state_k": -12.7,
+    "dp_rel": -0.3652200789111385
+   },
+   "verdict": {
+    "Q": "robust_pass",
+    "SH": "robust_pass",
+    "dp": "fail"
+   }
+  },
+  {
+   "id": "E-R32-4",
+   "kind": "evaporator",
+   "measured": {
+    "q_w": 17500.0,
+    "sh_k": 11.0,
+    "dp_pa": 29000
+   },
+   "result_reference_lh_lp_0583": {
+    "q_w": 17638.164076702695,
+    "dp_pa": 20942.24231726525,
+    "sh_k": 13.012011616382097,
+    "converged": true,
+    "energy_balance": 9.924198829432845e-06
+   },
+   "deviation_reference": {
+    "q_rel": 0.007895090097296942,
+    "state_k": 2.0120116163820967,
+    "dp_rel": -0.27785371319775
+   },
+   "deviation_envelope_lh_lp_0p24_0p824": {
+    "q_rel": [
+     -0.022254459958546136,
+     0.00831054313016022
+    ],
+    "state_k": [
+     -5.179468272906945,
+     2.1141820818359065
+    ],
+    "dp_rel": [
+     -0.2982501366042797,
+     -0.276152306227439
+    ]
+   },
+   "plain_fin_control_deviation": {
+    "q_rel": -0.022254459958546136,
+    "state_k": -5.179468272906945,
+    "dp_rel": -0.2982501366042797
+   },
+   "verdict": {
+    "Q": "robust_pass",
+    "SH": "robust_pass",
+    "dp": "robust_pass"
+   }
+  },
+  {
+   "id": "E-R410A-2",
+   "kind": "evaporator",
+   "measured": {
+    "q_w": 14300.0,
+    "sh_k": 17.6,
+    "dp_pa": 36000
+   },
+   "result_reference_lh_lp_0583": {
+    "q_w": 14517.134510032165,
+    "dp_pa": 21510.867842636886,
+    "sh_k": 18.886343706231116,
+    "converged": true,
+    "energy_balance": 9.714486558448541e-06
+   },
+   "deviation_reference": {
+    "q_rel": 0.015184231470780851,
+    "state_k": 1.286343706231115,
+    "dp_rel": -0.4024758932600865
+   },
+   "deviation_envelope_lh_lp_0p24_0p824": {
+    "q_rel": [
+     -0.014490381258764673,
+     0.01543850129217783
+    ],
+    "state_k": [
+     -4.329691206162501,
+     1.3360699512264418
+    ],
+    "dp_rel": [
+     -0.42296517218078955,
+     -0.40058151820292953
+    ]
+   },
+   "plain_fin_control_deviation": {
+    "q_rel": -0.014490381258764673,
+    "state_k": -4.329691206162501,
+    "dp_rel": -0.42296517218078955
+   },
+   "verdict": {
+    "Q": "robust_pass",
+    "SH": "robust_pass",
+    "dp": "fail"
+   }
+  },
+  {
+   "id": "E-R410A-5",
+   "kind": "evaporator",
+   "measured": {
+    "q_w": 14100.0,
+    "sh_k": 15.1,
+    "dp_pa": 37000
+   },
+   "result_reference_lh_lp_0583": {
+    "q_w": 14278.73225817078,
+    "dp_pa": 22354.25014137791,
+    "sh_k": 16.030547632522882,
+    "converged": true,
+    "energy_balance": 1.2444425694769385e-05
+   },
+   "deviation_reference": {
+    "q_rel": 0.012676046678778752,
+    "state_k": 0.9305476325228828,
+    "dp_rel": -0.3958310772600565
+   },
+   "deviation_envelope_lh_lp_0p24_0p824": {
+    "q_rel": [
+     0.012414795908687992,
+     0.012772140825183964
+    ],
+    "state_k": [
+     0.8806852040399011,
+     0.9492599479706545
+    ],
+    "dp_rel": [
+     -0.3974532107402149,
+     -0.39463292929791605
+    ]
+   },
+   "plain_fin_control_deviation": null,
+   "verdict": {
+    "Q": "robust_pass",
+    "SH": "robust_pass",
+    "dp": "fail"
+   }
+  },
+  {
+   "id": "E-R410A-3",
+   "kind": "evaporator",
+   "measured": {
+    "q_w": 17500.0,
+    "sh_k": 18.5,
+    "dp_pa": 52000
+   },
+   "result_reference_lh_lp_0583": {
+    "q_w": 17774.177150634332,
+    "dp_pa": 32846.20869830833,
+    "sh_k": 20.256057242224585,
+    "converged": true,
+    "energy_balance": 1.3281758963187453e-05
+   },
+   "deviation_reference": {
+    "q_rel": 0.015667265750533232,
+    "state_k": 1.7560572422245855,
+    "dp_rel": -0.3683421404171475
+   },
+   "deviation_envelope_lh_lp_0p24_0p824": {
+    "q_rel": [
+     0.014058035045863893,
+     0.01621372505275409
+    ],
+    "state_k": [
+     1.4392534528669216,
+     1.8635748093601023
+    ],
+    "dp_rel": [
+     -0.37220711725279065,
+     -0.36717246078430277
+    ]
+   },
+   "plain_fin_control_deviation": null,
+   "verdict": {
+    "Q": "robust_pass",
+    "SH": "robust_pass",
+    "dp": "fail"
+   }
+  },
+  {
+   "id": "E-R410A-6",
+   "kind": "evaporator",
+   "measured": {
+    "q_w": 17300.0,
+    "sh_k": 16.0,
+    "dp_pa": 52000
+   },
+   "result_reference_lh_lp_0583": {
+    "q_w": 17485.65971587228,
+    "dp_pa": 33215.840981298476,
+    "sh_k": 16.98121898833307,
+    "converged": true,
+    "energy_balance": 1.0603659292876798e-05
+   },
+   "deviation_reference": {
+    "q_rel": 0.010731775483946882,
+    "state_k": 0.9812189883330689,
+    "dp_rel": -0.3612338272827216
+   },
+   "deviation_envelope_lh_lp_0p24_0p824": {
+    "q_rel": [
+     0.010177128716555739,
+     0.010936564399005366
+    ],
+    "state_k": [
+     0.8739405173477053,
+     1.0209179274630742
+    ],
+    "dp_rel": [
+     -0.363301736002723,
+     -0.36038773956999426
+    ]
+   },
+   "plain_fin_control_deviation": null,
+   "verdict": {
+    "Q": "robust_pass",
+    "SH": "robust_pass",
+    "dp": "fail"
+   }
+  },
+  {
+   "id": "E-R32-2",
+   "kind": "evaporator",
+   "measured": {
+    "q_w": 21100.0,
+    "sh_k": 20.9,
+    "dp_pa": 59000
+   },
+   "result_reference_lh_lp_0583": {
+    "q_w": 21351.24460637957,
+    "dp_pa": 34509.34711165435,
+    "sh_k": 23.20732854189737,
+    "converged": true,
+    "energy_balance": 8.318885608004249e-06
+   },
+   "deviation_reference": {
+    "q_rel": 0.011907327316567295,
+    "state_k": 2.3073285418973697,
+    "dp_rel": -0.41509581166687537
+   },
+   "deviation_envelope_lh_lp_0p24_0p824": {
+    "q_rel": [
+     0.010422663387571696,
+     0.012405085159396645
+    ],
+    "state_k": [
+     1.9012410789407923,
+     2.446123182119301
+    ],
+    "dp_rel": [
+     -0.41703618036444556,
+     -0.4129605318763534
+    ]
+   },
+   "plain_fin_control_deviation": null,
+   "verdict": {
+    "Q": "robust_pass",
+    "SH": "robust_pass",
+    "dp": "fail"
+   }
+  },
+  {
+   "id": "E-R32-3",
+   "kind": "evaporator",
+   "measured": {
+    "q_w": 25100.0,
+    "sh_k": 12.5,
+    "dp_pa": 78000
+   },
+   "result_reference_lh_lp_0583": {
+    "q_w": 25379.36550026183,
+    "dp_pa": 47456.075694204774,
+    "sh_k": 15.80846606274713,
+    "converged": true,
+    "energy_balance": 1.0020608248115665e-05
+   },
+   "deviation_reference": {
+    "q_rel": 0.011130099612025157,
+    "state_k": 3.3084660627471294,
+    "dp_rel": -0.39158877315122087
+   },
+   "deviation_envelope_lh_lp_0p24_0p824": {
+    "q_rel": [
+     0.0038636507102003392,
+     0.013656826296225333
+    ],
+    "state_k": [
+     1.4238045577671983,
+     3.9675294201484803
+    ],
+    "dp_rel": [
+     -0.3963295427267485,
+     -0.39038459161343353
+    ]
+   },
+   "plain_fin_control_deviation": null,
+   "verdict": {
+    "Q": "robust_pass",
+    "SH": "fail",
+    "dp": "fail"
+   }
+  },
+  {
+   "id": "E-R32-5",
+   "kind": "evaporator",
+   "measured": {
+    "q_w": 20600.0,
+    "sh_k": 12.4,
+    "dp_pa": 46000
+   },
+   "result_reference_lh_lp_0583": {
+    "q_w": 20778.683557519547,
+    "dp_pa": 29592.512385002105,
+    "sh_k": 14.423928460652235,
+    "converged": true,
+    "energy_balance": 1.1476854196504389e-05
+   },
+   "deviation_reference": {
+    "q_rel": 0.008673959102890594,
+    "state_k": 2.0239284606522343,
+    "dp_rel": -0.35668451336951945
+   },
+   "deviation_envelope_lh_lp_0p24_0p824": {
+    "q_rel": [
+     0.007104550660708364,
+     0.00919511723079558
+    ],
+    "state_k": [
+     1.6290987273020843,
+     2.155141374611196
+    ],
+    "dp_rel": [
+     -0.360232450571921,
+     -0.35570871288044403
+    ]
+   },
+   "plain_fin_control_deviation": null,
+   "verdict": {
+    "Q": "robust_pass",
+    "SH": "robust_pass",
+    "dp": "fail"
+   }
+  },
+  {
+   "id": "E-R32-6",
+   "kind": "evaporator",
+   "measured": {
+    "q_w": 25200.0,
+    "sh_k": 14.0,
+    "dp_pa": 77000
+   },
+   "result_reference_lh_lp_0583": {
+    "q_w": 25505.773689088317,
+    "dp_pa": 46298.380856662756,
+    "sh_k": 16.467932893244438,
+    "converged": true,
+    "energy_balance": 1.199808028309207e-05
+   },
+   "deviation_reference": {
+    "q_rel": 0.012133876551123635,
+    "state_k": 2.4679328932444378,
+    "dp_rel": -0.39872232653684736
+   },
+   "deviation_envelope_lh_lp_0p24_0p824": {
+    "q_rel": [
+     0.009985962179395402,
+     0.012848888936488834
+    ],
+    "state_k": [
+     1.9090230290499903,
+     2.654151923646168
+    ],
+    "dp_rel": [
+     -0.4027206442836043,
+     -0.3975733314309293
+    ]
+   },
+   "plain_fin_control_deviation": null,
+   "verdict": {
+    "Q": "robust_pass",
+    "SH": "robust_pass",
+    "dp": "fail"
+   }
+  }
+ ],
+ "circuit5_pressure_diagnostic": [
+  {
+   "id": "C-R410A-1",
+   "measured_bar": {
+    "1i": 28.288674181427805,
+    "4o": 28.28883146712604,
+    "5i": 28.286875054723755,
+    "8o": 28.257225730112356,
+    "9i": 28.255746523575137,
+    "12o": 28.111718534295743
+   },
+   "measured_dp_1i_9i_kpa": 3.292765785266738,
+   "measured_dp_1i_12o_kpa": 17.695564713206124,
+   "table_dp_kpa": 18,
+   "model_circuit5": {
+    "name": "circuit_5",
+    "dp_1i_9i_kpa": 2.120061399877071,
+    "dp_1i_12o_kpa": 2.353259088511579
+   },
+   "model_range_dp_1i_9i_kpa": [
+    2.120061399877071,
+    2.120061399877071
+   ],
+   "model_range_dp_1i_12o_kpa": [
+    2.353259088511579,
+    2.353259088511579
+   ],
+   "reading_uncertainty_kpa": 3.4567901234567904
+  },
+  {
+   "id": "C-R32-1",
+   "measured_bar": {
+    "1i": 31.013948068028697,
+    "4o": 31.026953438413955,
+    "5i": 31.023066614485124,
+    "8o": 30.99989767545323,
+    "9i": 31.001658910554724,
+    "12o": 30.87225754364719
+   },
+   "measured_dp_1i_9i_kpa": 1.2289157473972523,
+   "measured_dp_1i_12o_kpa": 14.169052438150587,
+   "table_dp_kpa": 16,
+   "model_circuit5": {
+    "name": "circuit_5",
+    "dp_1i_9i_kpa": 2.9330413704114036,
+    "dp_1i_12o_kpa": 3.230195774319116
+   },
+   "model_range_dp_1i_9i_kpa": [
+    2.9330413704114036,
+    2.9330413704114036
+   ],
+   "model_range_dp_1i_12o_kpa": [
+    3.230195774319116,
+    3.230195774319116
+   ],
+   "reading_uncertainty_kpa": 3.4567901234567904
+  },
+  {
+   "id": "E-R410A-1",
+   "measured_bar": {
+    "1i": 8.537191836471647,
+    "4o": 8.499368831661355,
+    "5i": 8.499387870796788,
+    "8o": 8.44128184059162,
+    "9i": 8.440453929689756
+   },
+   "measured_dp_1i_9i_kpa": 9.673790678189143,
+   "measured_dp_1i_12o_kpa": null,
+   "table_dp_kpa": 22,
+   "model_circuit5": {
+    "name": "circuit_5",
+    "dp_1i_9i_kpa": 10.813670980851748,
+    "dp_1i_12o_kpa": 15.662398142373656
+   },
+   "model_range_dp_1i_9i_kpa": [
+    10.813670980851748,
+    10.813670980851748
+   ],
+   "model_range_dp_1i_12o_kpa": [
+    15.662398142373656,
+    15.662398142373656
+   ],
+   "reading_uncertainty_kpa": 0.9860312243221041
+  },
+  {
+   "id": "E-R32-1",
+   "measured_bar": {
+    "1i": 8.678213073734153,
+    "4o": 8.647183169932802,
+    "5i": 8.647292554445103,
+    "8o": 8.572459600109559,
+    "9i": 8.57035946797656
+   },
+   "measured_dp_1i_9i_kpa": 10.785360575759206,
+   "measured_dp_1i_12o_kpa": null,
+   "table_dp_kpa": 29,
+   "model_circuit5": {
+    "name": "circuit_5",
+    "dp_1i_9i_kpa": 12.198792933229008,
+    "dp_1i_12o_kpa": 20.079933945658034
+   },
+   "model_range_dp_1i_9i_kpa": [
+    12.198792933229008,
+    12.198792933229008
+   ],
+   "model_range_dp_1i_12o_kpa": [
+    20.079933945658034,
+    20.079933945658034
+   ],
+   "reading_uncertainty_kpa": 0.9860312243221041
+  }
+ ],
+ "end_loss_diagnostic": [
+  {
+   "id": "C-R410A-1",
+   "G": 166.70299372116472,
+   "excess_pa": 15646.740911488421,
+   "velocity_head_outlet_pa": 14.155158719904989,
+   "K_outlet_required": 1105.3737525023982,
+   "velocity_head_inlet_vapour_pa": 154.06666890393703,
+   "K_inlet_required": 101.55824762619102
+  },
+  {
+   "id": "C-R410A-2",
+   "G": 195.69481871614988,
+   "excess_pa": 15005.468612194061,
+   "velocity_head_outlet_pa": 19.66244870442326,
+   "K_outlet_required": 763.1536050145389,
+   "velocity_head_inlet_vapour_pa": 201.23713775391167,
+   "K_inlet_required": 74.56610037131371
+  },
+  {
+   "id": "C-R410A-3",
+   "G": 239.18255620862763,
+   "excess_pa": 18803.885114450008,
+   "velocity_head_outlet_pa": 30.12806334616796,
+   "K_outlet_required": 624.131889872759,
+   "velocity_head_inlet_vapour_pa": 282.9422023684411,
+   "K_inlet_required": 66.45839665149705
+  },
+  {
+   "id": "C-R410A-4",
+   "G": 260.92642495486655,
+   "excess_pa": 16168.022285495419,
+   "velocity_head_outlet_pa": 36.29974785863806,
+   "K_outlet_required": 445.40315675079825,
+   "velocity_head_inlet_vapour_pa": 327.101605413083,
+   "K_inlet_required": 49.42813492180051
+  },
+  {
+   "id": "C-R32-1",
+   "G": 166.70299372116472,
+   "excess_pa": 12769.804225680884,
+   "velocity_head_outlet_pa": 15.943637417670152,
+   "K_outlet_required": 800.9341840355862,
+   "velocity_head_inlet_vapour_pa": 194.19293702789324,
+   "K_inlet_required": 65.75833509252024
+  },
+  {
+   "id": "C-R32-2",
+   "G": 195.69481871614988,
+   "excess_pa": 12945.809892634861,
+   "velocity_head_outlet_pa": 22.25370041988462,
+   "K_outlet_required": 581.737403145197,
+   "velocity_head_inlet_vapour_pa": 250.4207705386298,
+   "K_inlet_required": 51.69623056741552
+  },
+  {
+   "id": "C-R32-3",
+   "G": 239.18255620862763,
+   "excess_pa": 14468.40202668123,
+   "velocity_head_outlet_pa": 34.04460391147545,
+   "K_outlet_required": 424.98370855782963,
+   "velocity_head_inlet_vapour_pa": 345.2021656021663,
+   "K_inlet_required": 41.91283679070417
+  },
+  {
+   "id": "C-R32-4",
+   "G": 260.92642495486655,
+   "excess_pa": 15279.73258350743,
+   "velocity_head_outlet_pa": 40.352775070488725,
+   "K_outlet_required": 378.6538238526744,
+   "velocity_head_inlet_vapour_pa": 380.93857048452674,
+   "K_inlet_required": 40.11075214587144
+  },
+  {
+   "id": "E-R410A-1",
+   "G": 166.70299372116472,
+   "excess_pa": 6337.601857626345,
+   "velocity_head_outlet_pa": 483.37806906734056,
+   "K_outlet_required": 13.111066188531277
+  },
+  {
+   "id": "E-R410A-4",
+   "G": 166.70299372116472,
+   "excess_pa": 5084.189799948479,
+   "velocity_head_outlet_pa": 452.39281396245957,
+   "K_outlet_required": 11.238440671540761
+  },
+  {
+   "id": "E-R32-1",
+   "G": 166.70299372116472,
+   "excess_pa": 8920.066054341965,
+   "velocity_head_outlet_pa": 660.1764183019776,
+   "K_outlet_required": 13.511639929952409
+  },
+  {
+   "id": "E-R32-4",
+   "G": 166.70299372116472,
+   "excess_pa": 8057.757682734751,
+   "velocity_head_outlet_pa": 653.6635406576778,
+   "K_outlet_required": 12.327072234482452
+  },
+  {
+   "id": "E-R410A-2",
+   "G": 195.69481871614988,
+   "excess_pa": 14489.132157363114,
+   "velocity_head_outlet_pa": 706.4969843443237,
+   "K_outlet_required": 20.50841331022806
+  },
+  {
+   "id": "E-R410A-5",
+   "G": 195.69481871614988,
+   "excess_pa": 14645.74985862209,
+   "velocity_head_outlet_pa": 712.1976496080451,
+   "K_outlet_required": 20.564164830763364
+  }
+ ]
+}
