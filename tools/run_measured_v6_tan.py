@@ -4,7 +4,8 @@ Derivations (see tan2015_fcu_measured.json -> declaration.inputs_derivation):
   * dry-air flow during the wet test = air-side capacity / (h_in - h_out) from measured dry/wet bulbs (D2)
   * Pt = coil height / tubes per row (D1); Pl from the scaled circuit drawings: 22 mm (9.52 mm tubes), 12.7 mm (7 mm) (D2)
   * louver Lh/Lp = 0.583 reference (D4), Schmidt fin efficiency, Threlkeld/Braun wet surface
-Usage: python tools/run_measured_v6_tan.py [--check]   (--check compares with the recorded results)
+Usage: python tools/run_measured_v6_tan.py [--check]   (--check compares with the recorded results;
+  bit-for-bit on the recording platform, agreement within 1e-7 is required across platforms)
 """
 import json, sys
 from pathlib import Path
@@ -57,7 +58,7 @@ def main():
         if '--check' not in sys.argv:
             print(f"{key}  ΔQw {dq*100:+.2f}%")
     print(f'{n} units rerun; max |ΔQw - recorded| = {worst:.2e}')
-    return 0 if worst < 1e-9 else 1
+    return 0 if worst < 1e-7 else 1
 
 
 if __name__ == '__main__':

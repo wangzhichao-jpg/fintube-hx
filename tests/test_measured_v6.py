@@ -1,4 +1,8 @@
-"""Measured validation set v6: integrity and reproducibility of the open-core (lumped) results."""
+"""Measured validation set v6: integrity and reproducibility of the open-core (lumped) results.
+
+The recorded deviations are bit-for-bit on the recording platform; other CPUs/maths libraries
+give ~1e-9 differences (seen on GitHub-hosted runners), so reproduction is checked to 1e-7."""
+REPRO_ABS = 1e-7
 import hashlib, json, subprocess, sys
 from pathlib import Path
 import pytest
@@ -27,7 +31,7 @@ def test_tan2015_lumped_results_reproduce():
     for rec in picked:
         r = run_case(T.build(rec, meas['geometry_tables']))
         dq = r['heat_transfer_w'] / (rec['q_water_kw'] * 1000) - 1
-        assert dq == pytest.approx(rec_rows[(rec['design'], rec['unit'], rec['sample'])]['dev_ref']['qw_rel'], abs=1e-12)
+        assert dq == pytest.approx(rec_rows[(rec['design'], rec['unit'], rec['sample'])]['dev_ref']['qw_rel'], abs=REPRO_ABS)
 
 
 def test_cetiat_declared_counts():

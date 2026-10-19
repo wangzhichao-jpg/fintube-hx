@@ -35,11 +35,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "ca346d03da11f057ca0ba49805f18c0083fd3e92f27951394314a2b0d282aac9"
+      "sha256": "0c53de7a97b5ac847db8860216c830ff3b4955b888f421a830322f7e88db68bf"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "f72babec53e0873631c8635b570eb50b4bab5657e31f740b5f985397e46e21ec"
+      "sha256": "3c0ef114b48db6018af1b8bb2587c91b2a285966eb7eb99723b7acf2eadb6b2e"
     },
     {
       "path": "RELEASE_CHECKLIST.md",
@@ -267,7 +267,7 @@
     },
     {
       "path": "tests/test_measured_v6.py",
-      "sha256": "cf845997dbc58de4cad37c80a4497f8b313199394dd6f1cc58bd77a282ba84c6"
+      "sha256": "e139d97e1b1649ffa03c09f2e1ef929aa90d85f1ae0f77b4b09b2731b9cb6075"
     },
     {
       "path": "tests/test_measured_validation.py",
@@ -399,7 +399,7 @@
     },
     {
       "path": "tools/run_measured_v6_tan.py",
-      "sha256": "06abdef4527a2081517188dff3f349ab6cd8076ec6e37c20294e6c98b9224650"
+      "sha256": "3c2e8b359a845962a4f9262588bb40f991b85fa353889bb04c1039d79d2479e2"
     },
     {
       "path": "tools/run_measured_validation.py",
