@@ -26,8 +26,19 @@ The difference between the two models comes mainly from the two blind tubes in u
 
 **Kang et al. 1994 plain-fin air side** (J. Xi'an Jiaotong Univ. 28(1)). Independent j/f cross-reference, not a coil acceptance case. Seven of eight specimens agree within −22 % … +17 % in the common velocity range. File: `kh1994_airside_crosscheck.json`.
 
+## Out-of-range extrapolation references (not acceptance)
+Both data sets are good measurements, but their geometry lies outside the sample range of every published plain-fin correlation, so the software refuses to compute them. The results were obtained in a research script with the range check removed, using the same Wang-Chi 2000 expressions, only to show how far an extrapolation would be from measurement.
+
+- **Batista 2022** (ATE 212:118528), wide-pitch water coil: Pt 60 mm, Pt/Pl 2.0, Dc 16.3 mm. The largest Pt in the plain-fin database is 40 mm.
+  - Capacity error +4 % … +10 %. This looks small only because the air-side effectiveness is high, so Q is insensitive to UA.
+  - Compared with the authors' U, the model's UA is +21 % … +72 % too high, and the air pressure drop is about 2×.
+  - File: `batista2022_extrapolation_reference.json`.
+- **Joppolo 2015** (CSTE 6:136, open access), R134a condensers A/B, three conditions each: 11 rows × 6 tubes, single circuit. Rows exceed Wang's 1–6.
+  - The measured values were read from Fig. 7; the readings reproduce the deviation ranges stated in the paper's text.
+  - Capacity error +1.7 % … +9.2 %. Refrigerant pressure drop: all 12 repeats within ±30 %.
+  - Outlet subcooling implied by the measured capacity is about 0–2 K, against 3–6 K in the model. This has the same sign as the CETIAT condenser points. **Condenser subcooling may be over-predicted by 2–5 K**; this is published as a known issue.
+  - File: `joppolo2015_extrapolation_reference.json`.
+
 ## Not yet included
 - ARTI/NIST 2002 evaporator: the fins are a wavy/slit hybrid (report p. 46) with no applicable correlation.
-- Batista 2022: needs a large-tube plain-fin correlation first.
-- Joppolo 2015: results are only available as figures.
 - Micro-fin coil data: none found yet. The micro-fin correlations are implementation-verified only.

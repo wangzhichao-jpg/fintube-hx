@@ -76,13 +76,17 @@ print(result["heat_transfer_w"], result["fluid_out"]["temperature_c"])
 
 ## Current engineering scope
 
-The water wet/dry policy uses inlet water temperature and a contact approximation, not local wall temperature or partially wet area. Air properties are inlet-based; water properties use an iterated mean temperature. Wang uses the fin-collar diameter, not the bare-tube OD. For the equal-thickness collar convention this is Dc = OD + 2×fin thickness; actual formed collar dimensions are not independently specified in this baseline. The default fin count is L/fin pitch; `fin_count` supplies the actual count. The outer-edge geometry is idealized.
+By default the water wet/dry policy uses inlet water temperature and a contact approximation, not local wall temperature or partially wet area; the optional `wet_surface_model: "threlkeld_braun"` (dev8) evaluates the enthalpy-potential wet surface with wet-fin efficiency instead. Air properties are inlet-based; water properties use an iterated mean temperature. Wang uses the fin-collar diameter, not the bare-tube OD. For the equal-thickness collar convention this is Dc = OD + 2×fin thickness; actual formed collar dimensions are not independently specified in this baseline. The default fin count is L/fin pitch; `fin_count` supplies the actual count. The outer-edge geometry is idealized.
 
-There are no actual tube-route networks, row-by-row crossflow, intermediate split/merge junctions, brine properties, louver/wavy fins, enhanced tubes, fouling/contact resistances, or frost model. Evaporation at/below 0°C is rejected. Correlation range checks reject extrapolation rather than silently clipping geometry.
+Louver and herringbone-wavy fins (dev9), micro-fin tube correlations (dev11, for extensions), optional contact conductance and inner fouling (dev13) and the clean-surface onset-of-frost limit (dev14, tube networks only) are available. There are no actual tube-route networks, row-by-row crossflow, intermediate split/merge junctions, brine properties, transient frost growth or tube-to-tube conduction through shared fins in this core. Evaporation at/below 0°C is rejected unless declared (`subzero_evaporation`). Correlation range checks reject extrapolation rather than silently clipping geometry.
 
-## Measured validation (six published points)
+**Known issue (measured):** condenser outlet subcooling tends to be over-predicted — by 2.3–3.0 K on the in-range CETIAT points and by 2.5–5 K on the out-of-range Joppolo 2015 condensers (capacity +1 … +9 %). The cause is not yet identified; nothing has been tuned to it (see `validation/measured-v6/`).
+
+## Measured validation
 
 [`validation/measured-v6/`](validation/measured-v6/README.md) is the current measured validation set: the CETIAT louver coil (20 points, R410A/R32, condensation and evaporation; capacity 20/20 within ±5 %, evaporator superheat 11/12 within ±3 K, condenser subcooling 2/8 within ±2 K), Tan 2015 wet fan-coil units (55 open-core lumped / 62 Professional tube-network units) and a plain-fin air-side cross-check; the Tan lumped results reproduce bit-for-bit with `tools/run_measured_v6_tan.py`. The earlier set [`validation/measured/`](validation/measured/README.md) (historical) lists two plain-fin water-coil points from Altwieb et al. (Energies 2022, doi:10.3390/en15020400) and four R410A evaporation/condensation points from CETIAT (IEA HPT Annex 54 2021 report, Ch. 4; ICR 2019, doi:10.18462/iir.icr.2019.1439) — two specimens in total. It gives page/table/figure locators, SHA-256 of the retrieved PDFs, mapping assumptions, all results and an acceptance assessment. Nothing is fitted to the measurements.
+
+Historical v5 results (superseded; kept for traceability):
 
 | Case | Measured | This repo (lumped) | Pro tube network | Verdict |
 |---|---:|---:|---:|---|
