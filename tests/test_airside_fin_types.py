@@ -109,3 +109,24 @@ def test_declared_boundary_extrapolation_is_limited_and_disclosed():
         geometry_metrics(case(correlation_range_tolerance=0.005)['geometry'])
     with pytest.raises(ValueError, match='Re'):        # Re is never extended
         wang_louver_1999(8010., .00974, .00229, .0254, .022, .0018, 3, .0024, .0012, 18., range_tolerance=0.01)
+
+
+def test_contact_and_inner_fouling_resistances():
+    base = run_case(case())
+    g = case()['geometry']; m = geometry_metrics(g)
+    hct, rf = 6000.0, 1e-4
+    r = run_case(case(contact_conductance_w_m2_k=hct, inner_fouling_resistance_m2_k_w=rf))
+    gm = r['geometry_model']
+    assert gm['resistance_contact_k_w'] == pytest.approx(1 / (hct * math.pi * g['tube_outer_diameter_m'] * g['tube_length_m'] * m['tube_count']))
+    assert gm['resistance_inner_fouling_k_w'] == pytest.approx(rf / m['inner_area_m2'])
+    expected_ua = 1 / (gm['resistance_air_k_w'] + gm['resistance_water_k_w'] + gm['resistance_wall_k_w']
+                       + gm['resistance_contact_k_w'] + gm['resistance_inner_fouling_k_w'])
+    assert gm['ua_w_k'] == pytest.approx(expected_ua, rel=1e-12)
+    assert r['heat_transfer_w'] < base['heat_transfer_w']
+    assert any('接触热导' in w for w in r['warnings'])
+    c = case(contact_conductance_w_m2_k=hct); c['air']['relative_humidity'] = 0.6; c['model']['wet_surface_model'] = 'threlkeld_braun'
+    w = run_case(c); c2 = case(); c2['air']['relative_humidity'] = 0.6; c2['model']['wet_surface_model'] = 'threlkeld_braun'
+    assert w['heat_transfer_w'] < run_case(c2)['heat_transfer_w']
+    for bad in (0.0, -1.0, float('nan')):
+        with pytest.raises(ValueError):
+            geometry_metrics(case(contact_conductance_w_m2_k=bad)['geometry'])
