@@ -22,7 +22,7 @@ Fintube HX follows a three-tier architecture where Community and Pro share the s
 |---|---|---|
 | **Community (This Repo, MIT)** | Academic research, algorithm benchmarking & scripted workflows | Lumped/segmented baseline solvers, Wang & Chi (2000) plain-fin water geometry, Hausen/Gnielinski tube-side HTC, bounded inverse flow targets, CLI & JSON/CSV/XLSX I/O |
 | **Pro Engineering Workbench** | HVAC&R coil design & rating engineers | Engineering unit forms, P-h/P-x state helpers, **interactive tube-by-tube circuit routing & parallel pressure balancing**, two-phase boiling/condensation correlations, multi-condition screening, Word/Excel reports |
-| **Enterprise & Lab Validation** | OEMs & coil manufacturers | Physical test-rig calibration, custom fin/tube correlations, and bespoke software by the **Jianke Huanneng Technology (National Air-Conditioning Equipment Quality Inspection Center)** team |
+| **Enterprise & Lab Validation** | OEMs & coil manufacturers | Physical test-rig calibration, custom fin/tube correlations, and bespoke software by the **Jianke Huanneng Technology Co., Ltd. (National Air-Conditioning Equipment Quality Inspection Center)** team, backed by the **State Key Laboratory of Building Safety and Built Environment** |
 
 ## Implemented models
 

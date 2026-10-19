@@ -35,11 +35,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "4485fa193deffe0a12db73978a0e6b5733eb59d74df8a8b78ce7a6f2432d585c"
+      "sha256": "ca346d03da11f057ca0ba49805f18c0083fd3e92f27951394314a2b0d282aac9"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "74074a00941d958de084b454677226928e71283c1f15343e9012e5caffb7d989"
+      "sha256": "f72babec53e0873631c8635b570eb50b4bab5657e31f740b5f985397e46e21ec"
     },
     {
       "path": "RELEASE_CHECKLIST.md",
