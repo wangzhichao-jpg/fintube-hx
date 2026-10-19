@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fintube-hx"
-version = "0.1.0.dev13"
+version = "0.1.0.dev14"
 description = "Open-source fin-tube heat exchanger thermal-hydraulic simulation and rating core (water coils, evaporators, condensers)"
 readme = "README.md"
 license = "MIT"

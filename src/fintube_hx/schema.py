@@ -100,7 +100,7 @@ def normalize_subzero(c):
     if 'subzero_evaporation' in m:
         from .thermal import SUBZERO_MODES
         if c['kind']!='evaporator':raise ValueError('model.subzero_evaporation applies only to evaporators')
-        if m['subzero_evaporation'] not in SUBZERO_MODES:raise ValueError('model.subzero_evaporation must be reject or dry_only')
+        if m['subzero_evaporation'] not in SUBZERO_MODES:raise ValueError('model.subzero_evaporation must be reject, dry_only or initial_frost')
     return c
 
 

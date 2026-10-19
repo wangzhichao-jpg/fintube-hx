@@ -1,4 +1,4 @@
-# External review: status of every Community item (0.1.0.dev13)
+# External review: status of every Community item (0.1.0.dev14)
 
 Three independent review rounds were received on 2026-10-13 (round 1 on dev4, round 2 on dev5, round 3 on the developer replies). Detailed replies: [round 1](EXTERNAL_REVIEW_2026-10-13.md), [round 3 follow-up](EXTERNAL_REVIEW_V3.md). This table records the state of each item raised against the public core; items that concern only the Professional application are not listed.
 
@@ -19,7 +19,7 @@ Status: **fixed** = code changed and covered by tests; **clarified** = the claim
 | 11 | Air-side +19 % vs python-hvac | clarified: reference uses bare-tube OD and a different free-flow area | review replies |
 | 12 | Whole-coil wet/dry decision from inlet water temperature; no partially wet model (+12 % … +16 % in the mapped case) | **partly addressed (dev8)**: optional `model.wet_surface_model: threlkeld_braun` (enthalpy-potential ε-NTU, Threlkeld wet fin, larger-of-dry-and-wet). Default unchanged; still no resolved dry/wet boundary inside the coil, no wet-surface j, and no measured wet validation yet | `wet_surface.py`, `tests/test_wet_surface.py` |
 | 13 | Wet contact-factor / equivalent-cp approximation, not a rigorous enthalpy-potential model | **addressed as an option (dev8)**: `model.wet_surface_model: threlkeld_braun`; default unchanged | `wet_surface.py`, `tests/test_wet_surface.py` |
-| 14 | Evaporation at or below 0 °C rejected (no frost model) | **partly addressed (dev12)**: optional dry sub-zero surfaces above the air frost point; frosting still **open** | `thermal.py`, `tests/test_subzero_dry.py` |
+| 14 | Evaporation at or below 0 °C rejected (no frost model) | **partly addressed (dev12)**: optional dry sub-zero surfaces above the air frost point; dev14 adds the initial-frost (onset) limit; transient frost growth still **open** | `thermal.py`, `tests/test_subzero_dry.py` |
 | 15 | Water pressure drop: straight tubes only (no bends, headers, inlet/outlet) | **open** in this core (the Professional tube network now accepts a return-bend equivalent length) | README |
 | 16 | Air pressure drop: core friction only (no Kc/Ke, acceleration, wet film) | **open** | README |
 | 17 | Annular-fin efficiency proxy; no contact or fouling resistance | **partly addressed (dev9)**: optional Schmidt plate-fin efficiency (`geometry.fin_efficiency_method`); optional constant contact conductance and inner fouling resistance added in dev13 (no default values) | `airside.py`, `tests/test_airside_fin_types.py` |
