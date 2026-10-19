@@ -49,5 +49,20 @@ def test_field_rules():
     c['model']['subzero_evaporation'] = 'dry_only'
     with pytest.raises(ValueError, match='only to evaporators'):
         run_case(c)
-    with pytest.raises(ValueError, match='reject or dry_only'):
+    with pytest.raises(ValueError, match='reject, dry_only or initial_frost'):
         run_case(sub_zero_case(0.10, 'always'))
+
+
+def test_initial_frost_element_and_lumped_rejection():
+    from fintube_hx.wet_surface import wet_element
+    from fintube_hx.thermal import condensate_enthalpy_rate
+    air = air_state(10.0, 0.8, 101325.0)
+    with pytest.raises(ValueError, match='frost'):
+        wet_element(air, 0.2, 60.0, 8.0, 7.0, lambda h: 0.8, -4.0, None, 1e-3)
+    r = wet_element(air, 0.2, 60.0, 8.0, 7.0, lambda h: 0.8, -4.0, None, 1e-3, allow_frost=True)
+    assert r['deposit'] == 'ice' and r['effective_surface_t_c'] < 0 and r['condensate_kg_s'] > 0
+    assert r['condensate_enthalpy_rate_w'] == pytest.approx(condensate_enthalpy_rate(r['condensate_kg_s'], r['effective_surface_t_c']))
+    assert r['heat_to_fluid_w'] > r['air_enthalpy_drop_w']         # latent heat of fusion released to the fluid
+    assert condensate_enthalpy_rate(1.0, 5.0) == 1.0 * 4180.0 * 5.0
+    with pytest.raises(NotImplementedError, match='strict wet-surface tube network'):
+        run_case(sub_zero_case(0.10, 'initial_frost'))

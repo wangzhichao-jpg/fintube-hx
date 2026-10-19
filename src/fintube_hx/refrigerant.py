@@ -14,6 +14,9 @@ def _cell(name, p, h_in, air_in, m_ref, m_da, ua, direction, subzero="reject"):
     if direction * (air_in["t_db_c"] - t_ref) <= 1e-9 or ua == 0:
         return fin, dict(air_in), 0.0, 0.0, t_ref, False
     if direction == 1 and t_ref <= 0:
+        if subzero == "initial_frost":
+            raise NotImplementedError("initial_frost requires the strict wet-surface tube network (Professional), "
+                                      "not this lumped contact-factor baseline")
         if subzero == "reject":
             raise ValueError("Evaporating below/equal 0 C requires frost treatment, absent in this baseline")
         check_subzero_surface(t_ref, air_in, subzero)

@@ -58,7 +58,7 @@ def contact_air(air_in: dict, surface_t_c: float, fraction: float, m_da: float,
     return out, q, condensate
 
 
-SUBZERO_MODES = ('reject', 'dry_only')
+SUBZERO_MODES = ('reject', 'dry_only', 'initial_frost')
 
 
 def check_subzero_surface(surface_t_c: float, air_in: dict, mode: str = 'reject') -> bool:
@@ -73,6 +73,8 @@ def check_subzero_surface(surface_t_c: float, air_in: dict, mode: str = 'reject'
     """
     if surface_t_c > 0:
         return False
+    if mode == 'initial_frost':
+        return True          # deposition handled by the caller's strict wet-surface model (clean-surface limit)
     if mode != 'dry_only':
         raise ValueError('Evaporating surface at/below 0 C requires a frost model, absent here '
                          '(model.subzero_evaporation="dry_only" allows dry sub-zero surfaces only)')
@@ -80,3 +82,15 @@ def check_subzero_surface(surface_t_c: float, air_in: dict, mode: str = 'reject'
         raise ValueError(f'Surface {surface_t_c:.2f} C is below the air frost point {air_in["dew_point_c"]:.2f} C: '
                          'frost deposition requires a frost model, absent here')
     return True
+
+
+ICE_FUSION_J_KG = 333.4e3       # latent heat of fusion at 0 C
+ICE_CP_J_KG_K = 2050.0
+
+
+def condensate_enthalpy_rate(mass_kg_s: float, surface_t_c: float) -> float:
+    """Enthalpy flow of removed water, 0 C liquid reference.  Liquid above 0 C uses the legacy
+    expression m*4180*T unchanged; at or below 0 C the deposit is ice (-333.4 kJ/kg + 2050*T)."""
+    if surface_t_c > 0:
+        return mass_kg_s * LIQUID_WATER_CP * surface_t_c
+    return mass_kg_s * (-ICE_FUSION_J_KG + ICE_CP_J_KG_K * surface_t_c)

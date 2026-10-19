@@ -27,7 +27,7 @@ import math
 from scipy.optimize import brentq
 from ht.hx import effectiveness_from_NTU
 from .properties import air_state
-from .thermal import air_with_h_w, LIQUID_WATER_CP
+from .thermal import air_with_h_w, LIQUID_WATER_CP, condensate_enthalpy_rate
 
 MODEL_ID = "threlkeld_braun"
 MODEL_NOTE = ("湿表面：Braun-Klein-Mitchell(1989)焓势ε-NTU + Threlkeld湿翅片效率；Le=1，湿表面沿用干表面换热系数，"
@@ -89,21 +89,47 @@ class _SaturationCurve:
         raise ValueError("Saturation-curve inversion did not converge")
 
 
+class _PiecewiseSaturation:
+    """Two Chebyshev pieces joined at 0 C (ice saturation below, liquid above)."""
+
+    def __init__(self, p_pa, t_lo, t_hi):
+        self.a = _SaturationCurve(p_pa, t_lo, 0.0); self.b = _SaturationCurve(p_pa, 0.0, t_hi)
+        self.i0 = self.b.i(0.0)
+
+    def _pick(self, t):
+        return self.a if t < 0 else self.b
+
+    def i(self, t):
+        return self._pick(t).i(t)
+
+    def slope(self, t):
+        return self._pick(t).slope(t)
+
+    def secant(self, t1, t2):
+        return self.slope(0.5 * (t1 + t2)) if abs(t1 - t2) < 0.02 else (self.i(t1) - self.i(t2)) / (t1 - t2)
+
+    def t_of(self, i_target):
+        return (self.a if i_target < self.i0 else self.b).t_of(i_target)
+
+
 def wet_element(air_in: dict, m_da: float, h_c: float, area_outer_m2: float, area_fin_m2: float,
                 fin_efficiency, fluid_in_t_c: float, fluid_capacity_w_k: float | None,
                 inner_resistance_k_w: float, arrangement: str = "counterflow",
-                conductance_multiplier: float = 1.0, max_iterations: int = 200) -> dict | None:
+                conductance_multiplier: float = 1.0, max_iterations: int = 200,
+                allow_frost: bool = False) -> dict | None:
     """Fully wet element.  Returns None when the fully wet analysis is not admissible
     (effective surface at/above the inlet dew point, or no enthalpy potential)."""
     p = air_in["pressure_pa"]; cp_a = air_in["cp_j_kg_da_k"]
     i_in, w_in = air_in["enthalpy_j_kg_da"], air_in["humidity_ratio_kg_kg_da"]
     if not (m_da > 0 and h_c > 0 and area_outer_m2 > 0 and 0 <= area_fin_m2 < area_outer_m2):
         raise ValueError("Wet element requires positive air flow, coefficient and areas")
-    if fluid_in_t_c <= 0:
+    if fluid_in_t_c <= 0 and not allow_frost:
         raise ValueError("Wet surface at/below 0 C requires a frost model, absent here")
     if air_in["dew_point_c"] <= fluid_in_t_c:
         return None
-    sat = _SaturationCurve(p, fluid_in_t_c - 0.5, air_in["t_db_c"] + 0.5)
+    lo, hi = fluid_in_t_c - 0.5, air_in["t_db_c"] + 0.5
+    # Frost mode: the saturation curve has a slope break at 0 C (ice/water); fit each side separately.
+    sat = _PiecewiseSaturation(p, lo, hi) if allow_frost and lo < 0 < hi else _SaturationCurve(p, lo, hi)
     i_r = sat.i(fluid_in_t_c)
     if i_in - i_r <= 1e-9:
         return None
@@ -145,17 +171,17 @@ def wet_element(air_in: dict, m_da: float, h_c: float, area_outer_m2: float, are
     t_s_eff = sat.t_of(i_s_eff)
     if t_s_eff >= air_in["dew_point_c"]:
         return None
-    if t_s_eff <= 0 or t_b <= 0:
+    if (t_s_eff <= 0 or t_b <= 0) and not allow_frost:
         raise ValueError("Wet surface at/below 0 C requires a frost model, absent here")
     w_s_eff = air_state(t_s_eff, 1.0, p)["humidity_ratio_kg_kg_da"]
     w_out = w_s_eff + (w_in - w_s_eff) * decay
     air_out = air_with_h_w(i_out, w_out, p)
     condensate = max(0.0, m_da * (w_in - air_out["humidity_ratio_kg_kg_da"]))
-    drain_w = condensate * LIQUID_WATER_CP * t_s_eff
+    drain_w = condensate_enthalpy_rate(condensate, t_s_eff)
     return {"model": MODEL_ID, "air_out": air_out, "air_enthalpy_drop_w": m_da * (i_in - air_out["enthalpy_j_kg_da"]),
             "heat_to_fluid_w": m_da * (i_in - air_out["enthalpy_j_kg_da"]) - drain_w,
             "condensate_kg_s": condensate, "condensate_enthalpy_rate_w": drain_w,
-            "effective_surface_t_c": t_s_eff, "tube_base_t_c": t_b, "fin_mean_surface_t_c": t_wm,
+            "effective_surface_t_c": t_s_eff, "deposit": "ice" if t_s_eff <= 0 else "liquid", "tube_base_t_c": t_b, "fin_mean_surface_t_c": t_wm,
             "wet_fin_efficiency": eta_f, "wet_equivalent_h_w_m2_k": h_ow,
             "saturation_slope_fin_j_kg_k": b_wm, "saturation_slope_base_j_kg_k": b_wp,
             "saturation_slope_inner_j_kg_k": b_r, "air_side_mass_conductance_kg_s": k_air * conductance_multiplier,
