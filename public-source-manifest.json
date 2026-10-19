@@ -35,11 +35,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "0c53de7a97b5ac847db8860216c830ff3b4955b888f421a830322f7e88db68bf"
+      "sha256": "1080523e81a4ede7efa8125215ae60ff838c09f090e43c3c495b18c7b574e569"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "3c0ef114b48db6018af1b8bb2587c91b2a285966eb7eb99723b7acf2eadb6b2e"
+      "sha256": "8a0b10bb177de3200967672e488af7e31460f7c28f09d14563dfe93dbe97ca19"
     },
     {
       "path": "RELEASE_CHECKLIST.md",
@@ -443,11 +443,11 @@
     },
     {
       "path": "validation/measured/README.md",
-      "sha256": "ada78e2a0b49cacfaa36bb14d8b3ce4e4d7a2fae9e6ece2fd02332741bcb17de"
+      "sha256": "31a14bb1359b13f703c2f8573d6c5421c1a52fc7fc81b94ee6de6b550de024ba"
     },
     {
       "path": "validation/measured/README.zh-CN.md",
-      "sha256": "a602a8ef53e2a07d469fcc2f694c624dab86003819dd6d46cd305c843fed9e95"
+      "sha256": "10d8750b59abf1a2c15e3c537224a56d93c3a19c417d47b6dc33f5099ae4647c"
     },
     {
       "path": "validation/measured/cases.json",

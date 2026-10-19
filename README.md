@@ -84,20 +84,26 @@ Louver and herringbone-wavy fins (dev9), micro-fin tube correlations (dev11, for
 
 ## Measured validation
 
-[`validation/measured-v6/`](validation/measured-v6/README.md) is the current measured validation set: the CETIAT louver coil (20 points, R410A/R32, condensation and evaporation; capacity 20/20 within ±5 %, evaporator superheat 11/12 within ±3 K, condenser subcooling 2/8 within ±2 K), Tan 2015 wet fan-coil units (55 open-core lumped / 62 Professional tube-network units) and a plain-fin air-side cross-check; the Tan lumped results reproduce with `tools/run_measured_v6_tan.py` (bit-for-bit on the same platform; across CPUs/maths libraries the capacity deviation agrees within 1e-7). The earlier set [`validation/measured/`](validation/measured/README.md) (historical) lists two plain-fin water-coil points from Altwieb et al. (Energies 2022, doi:10.3390/en15020400) and four R410A evaporation/condensation points from CETIAT (IEA HPT Annex 54 2021 report, Ch. 4; ICR 2019, doi:10.18462/iir.icr.2019.1439) — two specimens in total. It gives page/table/figure locators, SHA-256 of the retrieved PDFs, mapping assumptions, all results and an acceptance assessment. Nothing is fitted to the measurements.
+Current set: [`validation/measured-v6/`](validation/measured-v6/README.md). It records sources with page/table locators, the D0–D4 grade of every input, the tolerances declared before running, and every result. Nothing is fitted and no multipliers are used.
 
-Historical v5 results (superseded; kept for traceability):
+| Data set | Points | Computed with | Capacity | Outlet state | Result |
+|---|---:|---|---|---|---|
+| CETIAT louver coil, condensation (IEA HPT Annex 54) | 8 | Pro tube network | +0.8 … +2.7 % | subcooling +1.0 … +3.0 K | capacity 8/8 within ±5 %; subcooling 2/8 within ±2 K |
+| CETIAT louver coil, evaporation | 12 | Pro tube network | +0.8 … +1.8 % | superheat +0.9 … +3.3 K | capacity 12/12 within ±5 %; superheat 11/12 within ±3 K |
+| Tan 2015 wet fan-coil units | 62 | Pro tube network (thesis circuits) | mean +3.9 % (−1.4 … +11.5 %) | SHR mean −0.028 | 58/62 within Qw ±10 % and SHR ±0.05 |
+| Tan 2015 wet fan-coil units | 55 | **this repository** (lumped) | mean +5.7 % (+0.6 … +11.9 %) | SHR mean −0.040 | 36 robust + 2 conditional pass; 17 fail on SHR |
+| Kang et al. 1994 plain-fin air side | 8 specimens | this repository | — | — | j/f cross-check: 7/8 within −22 … +17 % |
+| Batista 2022, Joppolo 2015 | 9 + 6 | extrapolation only | — | — | outside every published correlation range; reference, not acceptance |
 
-| Case | Measured | This repo (lumped) | Pro tube network | Verdict |
-|---|---:|---:|---:|---|
-| W1 water coil | 333.5 W | −7.3 % | −7.6 % | consistent (boundary-incomplete reference) |
-| W2 water coil | 523.1 W | −15.8 % | −15.8 % | not met, open |
-| E1 evaporator | 12.20 kW | — | −0.3 %, SH −1.4 K | consistent (capacity fixed by boundary data) |
-| E2 evaporator | 14.30 kW | — | −1.5 %, SH −4.3 K | superheat not met |
-| C1 condenser | 13.31 kW | — | −6.1 %, SC −6.0 K | subcooling not met |
-| C2 condenser | 15.29 kW | — | −7.2 %, SC −6.6 K | subcooling not met |
+**Known issue:** condenser subcooling is over-predicted (by 2.3–3.0 K on CETIAT and 2.5–5 K on Joppolo).
 
-The refrigerant points need a tube-circuit model that is not in this repository; Pro results are recorded for scrutiny. `python tools/run_measured_validation.py` re-runs the water points.
+The refrigerant points need a tube-circuit model, which is part of Fintube HX Pro and not of this repository; their Pro results are published for scrutiny.
+
+**Why the lumped model and the tube network give different numbers.** The lumped model in this repository treats the whole coil as ideal counterflow and cannot represent blind (water-free) tubes. The Pro network follows the actual circuits row by row. On the 48 Tan units computed both ways the means are +5.3 % (lumped) and +4.6 % (network). Almost all of that gap comes from coil pre-03#, which has two blind tubes: the two models differ by 5.3 points there and by 0.04 points on average on the other coils. The headline means (+5.7 % and +3.9 %) also differ because the network additionally covers 14 units (post-03#/04#) that the lumped run does not include.
+
+Reproduce the lumped results with `python tools/run_measured_v6_tan.py --check`. It is bit-for-bit on the recording platform; across CPUs and maths libraries the capacity deviation agrees within 1e-7.
+
+The earlier v5 set ([`validation/measured/`](validation/measured/README.md), six points) is superseded. Its water-coil boundaries were incomplete because of a duct bypass, and its CETIAT points used a plain-fin substitute for the louver fin. Its table is kept there for traceability.
 
 ## Reproducible comparisons
 

@@ -35,6 +35,9 @@ Error = (calculated − measured) / measured. "v4" = mapping reviewed on 2026-10
 | C1 | CETIAT R410A condensation Run 1, 230 kg/h | 13.31 kW | −6.0 % | −6.1 % | n/a | SC 0.2 K vs 6.2 K (−6.0 K) |
 | C2 | Run 2, 270 kg/h | 15.29 kW | −7.2 % | −7.2 % | n/a | SC 0.0 K vs 6.6 K (−6.6 K) |
 
+On W1 the lumped model of this repository gives −7.3 % and the Pro tube network −7.6 %; on W2 both give −15.8 %. The 0.3-point difference is not an accuracy ranking. The lumped model treats the coil as ideal counterflow, the most effective flow arrangement; the network follows the real circuits row by row in crossflow, which transfers slightly less heat.
+
+
 Refrigerant pressure drop (v5 Pro, tubes + return bends only) vs measured P4↔Outlet P: E1 −31 %, E2 −42 %, C1 −83 %, C2 −78 %. The measured span also contains the collector/outlet piping (and, in condensation, a flow-independent 18 kPa), which the model does not include; these differences are reported but not used for acceptance.
 
 ## 3. What each comparison can discriminate
