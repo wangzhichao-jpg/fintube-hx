@@ -72,7 +72,10 @@ def recommended_iteration_budget(c):
 
 
 def normalize_solver(c):
-    solver=c.setdefault('solver',{});check_keys(solver,{'max_iterations','tolerance_k'},'solver')
+    solver=c.setdefault('solver',{});check_keys(solver,{'max_iterations','tolerance_k','time_limit_s'},'solver')
+    if 'time_limit_s' in solver:
+        # Optional wall-time fuse (0.1.0.dev17); never defaulted into the case.  Enforced by tube networks.
+        solver['time_limit_s']=number(solver['time_limit_s'],'solver.time_limit_s',1,86400)
     n=solver.setdefault('max_iterations',recommended_iteration_budget(c))
     if isinstance(n,bool) or not isinstance(n,int) or not 1<=n<=5000:raise ValueError('solver.max_iterations must be an integer in 1..5000')
     solver['tolerance_k']=number(solver.get('tolerance_k',1e-5),'solver.tolerance_k',1e-9,1)

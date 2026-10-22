@@ -39,7 +39,20 @@ def air_state(t_db_c: float, rh: float, p_pa: float = 101325.0) -> dict:
     return dict(_cached_air_state(float(t_db_c), float(rh), float(p_pa)))
 
 
-def air_from_h_w(h_j_kg_da: float, w: float, p_pa: float = 101325.0) -> dict:
+@lru_cache(maxsize=32000)
+def air_wh(t_db_c: float, rh: float, p_pa: float = 101325.0) -> tuple[float, float]:
+    """(humidity ratio, enthalpy) only -- bit-identical to air_state(...)[W, H] (same HAPropsSI
+    arguments and checks), without the specific-volume, cp and dew-point evaluations (0.1.0.dev17)."""
+    t_db_c, rh, p_pa = map(float, (t_db_c, rh, p_pa))
+    if not (0.0 <= rh <= 1.0) or p_pa <= 0:
+        raise ValueError("Air RH must be 0..1 and absolute pressure positive")
+    args = ("T", t_db_c + 273.15, "P", p_pa, "R", rh)
+    return (_finite(HAPropsSI("W", *args), "humidity_ratio_kg_kg_da"),
+            _finite(HAPropsSI("H", *args), "enthalpy_j_kg_da"))
+
+
+def _t_rh_from_h_w(h_j_kg_da: float, w: float, p_pa: float) -> tuple[float, float]:
+    """Shared first half of air_from_h_w: dry-bulb (K) and clamped RH, same calls and checks."""
     if w < 0 or p_pa <= 0:
         raise ValueError("Humidity ratio must be nonnegative and pressure positive")
     t = HAPropsSI("T", "H", float(h_j_kg_da), "W", float(w), "P", float(p_pa))
@@ -54,7 +67,18 @@ def air_from_h_w(h_j_kg_da: float, w: float, p_pa: float = 101325.0) -> dict:
         rh = 1.0
     if rh > 1.0 + 1e-6:
         raise ValueError("Supersaturated air state; condensation model must resolve it")
-    return dict(air_state(t - 273.15, min(1.0, max(0.0, rh)), p_pa))
+    return t, min(1.0, max(0.0, rh))
+
+
+def air_from_h_w_wh(h_j_kg_da: float, w: float, p_pa: float = 101325.0) -> tuple[float, float]:
+    """(humidity ratio, enthalpy) of air_from_h_w(h, w, p), bit-identical, without the full state."""
+    t, rh = _t_rh_from_h_w(h_j_kg_da, w, p_pa)
+    return air_wh(t - 273.15, rh, p_pa)
+
+
+def air_from_h_w(h_j_kg_da: float, w: float, p_pa: float = 101325.0) -> dict:
+    t, rh = _t_rh_from_h_w(h_j_kg_da, w, p_pa)
+    return dict(air_state(t - 273.15, rh, p_pa))
 
 
 def air_mass_flow(air: dict) -> float:

@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0.dev16",
+  "version": "0.1.0.dev17",
   "edition": "community",
   "publication_status": "reviewed_public_source_candidate",
   "original_license_status": "MIT_owner_approved",
@@ -23,7 +23,7 @@
     },
     {
       "path": "CORE_API.md",
-      "sha256": "0e23fd7b58ccc70a9902694abd42f4e55fc209ccce2097b1821ecd3bf64c3c2f"
+      "sha256": "24fc1687f20475ac69cffa13f52bbbdb6aaf5db12c7b7257c702e48597dfb158"
     },
     {
       "path": "LICENSE",
@@ -35,11 +35,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "5e3b52e363c0ae7d69993ce6312a40c1201510a101aafcf7e2f9cb31956e6261"
+      "sha256": "7e401bc02243321875d103e09b5862ca244ec4a421972af899705db508d9912c"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "58c9f34c24793fd531b8ae95d67e380d59082203090ee132e72550d59c5725cc"
+      "sha256": "fc586cc77cd862f88d85e9145f8109bfdb50a2840504a7171bf4988a8b47316b"
     },
     {
       "path": "RELEASE_CHECKLIST.md",
@@ -111,7 +111,7 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256": "8c6def2f0abbfda005bf9c02175b0d0b4cf63ac1db843bb277702468756f587e"
+      "sha256": "956077b27ffb3d1f393bffd0543bcc75f7e5c85871d5f855327dcd6b1974f90d"
     },
     {
       "path": "references/python-hvac/README.md",
@@ -155,7 +155,7 @@
     },
     {
       "path": "src/fintube_hx/__init__.py",
-      "sha256": "08dbb15dafed0fa73e41789ac8e2f11575cfe70106f5a8301428eb25ab7b7747"
+      "sha256": "5110bcc4441d26ac565be90a2e99d9389982d86ee743f1f6e2aa1437575b227e"
     },
     {
       "path": "src/fintube_hx/__main__.py",
@@ -163,7 +163,7 @@
     },
     {
       "path": "src/fintube_hx/airside.py",
-      "sha256": "12fae22f9142f6468b00523745ba40bb3e0f05ce20e1417eb112237d83f0c4f5"
+      "sha256": "b274a0f049fc3443a45e19c0668b0e6cb9bcab8921e13120085589c5f1b34935"
     },
     {
       "path": "src/fintube_hx/airside_pressure.py",
@@ -207,7 +207,7 @@
     },
     {
       "path": "src/fintube_hx/properties.py",
-      "sha256": "f11235f9227c9f17a28459c890e88b9b6944d2caf4fb110c2ce6312c449ab018"
+      "sha256": "a26e756fa2e6c52aaa2bfe94deecf6000ff7f5118607913a62a95f4e3fe2f1c1"
     },
     {
       "path": "src/fintube_hx/refrigerant.py",
@@ -223,7 +223,7 @@
     },
     {
       "path": "src/fintube_hx/schema.py",
-      "sha256": "1e0028b288eda215683a16fbc242d1fe9c8969e54f0368f9e23d08f0945eaa16"
+      "sha256": "2a766066a091d254ab7f1893f73a48fe6ea2452cb6257ebc1df819054cf621b5"
     },
     {
       "path": "src/fintube_hx/spreadsheet.py",
@@ -235,7 +235,7 @@
     },
     {
       "path": "src/fintube_hx/thermal.py",
-      "sha256": "a49c91c1617fdca2210e95023bc98849db567dc1e6d6408976368d16b8a765f4"
+      "sha256": "38aedc3485e08e2dee20ff8e1c6ae98ba62495461ee264d4f9e87022ccb91eeb"
     },
     {
       "path": "src/fintube_hx/units.py",
@@ -268,6 +268,10 @@
     {
       "path": "tests/test_community.py",
       "sha256": "e64dc417be82e48abefb56640b71617203da2c6e4cdd7db84a0f14e1d87a8905"
+    },
+    {
+      "path": "tests/test_exact_fast_paths.py",
+      "sha256": "a59be11fe211dad95020b1cb3c8c9ab7808ffc4a6aaf1bd6393ebdfd9eeff864"
     },
     {
       "path": "tests/test_external_review.py",

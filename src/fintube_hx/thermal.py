@@ -1,7 +1,7 @@
 """Air-side contact approximation, with condensate enthalpy relative to 0 C."""
 from __future__ import annotations
 from scipy.optimize import brentq
-from .properties import air_state, air_from_h_w
+from .properties import air_state, air_from_h_w, air_wh, air_from_h_w_wh
 
 LIQUID_WATER_CP = 4180.0  # J/kg/K; disclosed prototype condensate approximation
 
@@ -24,13 +24,29 @@ def air_with_h_w(h: float, w: float, p: float) -> dict:
         return saturated
 
 
+def air_with_h_w_wh(h: float, w: float, p: float) -> tuple[float, float]:
+    """(humidity ratio, enthalpy) of air_with_h_w(h, w, p), bit-identical (0.1.0.dev17)."""
+    try:
+        return air_from_h_w_wh(h, w, p)
+    except ValueError:
+        s = air_with_h_w(h, w, p)          # rare fog path: the full routine, same result by construction
+        return s["humidity_ratio_kg_kg_da"], s["enthalpy_j_kg_da"]
+
+
 def contact_air(air_in: dict, surface_t_c: float, fraction: float, m_da: float,
-                wet: bool | None = None, outlet_state: bool = True) -> tuple[dict, float, float]:
+                wet: bool | None = None, outlet_state: bool = True, wh_only: bool = False) -> tuple[dict, float, float]:
     """Interpolate towards a cold saturated surface or dry sensible surface.
 
     Return outlet, positive heat from air to fluid, condensate mass rate.
     Condensate is assumed to drain at surface temperature and carry cp*T.
+
+    ``wh_only`` (0.1.0.dev17): the outlet is returned as {humidity ratio, enthalpy} only; heat and
+    condensate are bit-identical to the full call.  ``outlet_state=False`` returns no outlet: the wet
+    branch is then bit-identical as well (it skips only unused state properties), the dry branch keeps
+    its historical shortcut q = m_da*(h_in - h_out) without the outlet flash.
     """
+    if wh_only or not outlet_state:
+        return _contact_air_wh(air_in, surface_t_c, fraction, m_da, wet, outlet_state)
     fraction = min(1.0, max(0.0, fraction))
     p = air_in["pressure_pa"]
     w_in, h_in = air_in["humidity_ratio_kg_kg_da"], air_in["enthalpy_j_kg_da"]
@@ -56,6 +72,35 @@ def contact_air(air_in: dict, surface_t_c: float, fraction: float, m_da: float,
         out = air_from_h_w(h_out, w_in, p)
         q, condensate = m_da * (h_in - out["enthalpy_j_kg_da"]), 0.0
     return out, q, condensate
+
+
+def _contact_air_wh(air_in, surface_t_c, fraction, m_da, wet, outlet_state):
+    """Same arithmetic as contact_air, with only the humidity ratio and enthalpy of each state evaluated."""
+    fraction = min(1.0, max(0.0, fraction))
+    p = air_in["pressure_pa"]
+    w_in, h_in = air_in["humidity_ratio_kg_kg_da"], air_in["enthalpy_j_kg_da"]
+    if wet is None:
+        wet = surface_t_c < air_in["dew_point_c"]
+    if wet and surface_t_c >= air_in["dew_point_c"]:
+        raise ValueError("Wet contact requested above the air dew point")
+    if wet:
+        ws, hs = air_wh(surface_t_c, 1.0, p)
+        w = w_in + fraction * (ws - w_in)
+        h = h_in + fraction * (hs - h_in)
+        w_out, h_out = (ws, hs) if fraction == 1.0 else air_with_h_w_wh(h, w, p)
+        condensate = max(0.0, m_da * (w_in - w_out))
+        q = m_da * (h_in - h_out) - condensate * LIQUID_WATER_CP * surface_t_c
+    else:
+        from CoolProp.HumidAirProp import HAPropsSI
+        h_surface = HAPropsSI("H", "T", surface_t_c + 273.15, "W", w_in, "P", p)
+        h_out = h_in + fraction * (h_surface - h_in)
+        if not outlet_state:
+            return None, m_da * (h_in - h_out), 0.0
+        w_out, h_out = air_from_h_w_wh(h_out, w_in, p)
+        q, condensate = m_da * (h_in - h_out), 0.0
+    if not outlet_state:
+        return None, q, condensate
+    return {"humidity_ratio_kg_kg_da": w_out, "enthalpy_j_kg_da": h_out}, q, condensate
 
 
 SUBZERO_MODES = ('reject', 'dry_only', 'initial_frost')
