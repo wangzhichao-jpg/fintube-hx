@@ -72,7 +72,7 @@ print(result["heat_transfer_w"], result["fluid_out"]["temperature_c"])
 - `fluid.inlet_t_c`与`fluid.inlet_h_j_kg`二选一；两相入口使用**P-h**。JSON没有入口干度字段。
 - `model.segments`只控制制冷剂分段。水模型为整体模型，可不填；历史输入即使填写也不生成分段，结果`numerical_controls`明确标为**未应用**。
 - 反求区间必须括住所选根。端点同号不证明内部无根，程序不认证非单调响应的全局唯一性。
-- 压降是**直管/芯体摩擦分项**，不是完整盘管或系统总阻力；未含回弯、集管、进出口收缩/扩张及湿膜额外损失。
+- 压降是**直管/芯体摩擦分项**，不是完整盘管或系统总阻力；水侧未含回弯、集管和进出口附件。默认（旧口径）空气侧只有干表面芯体摩擦；可选的`model.pressure_scope: "v1"`（0.1.0.dev16）补入加速项和湿工况附加压降（见下文）。每个结果都在`model_coverage`中列出已计入、未计入、外推和降级的项目。
 
 ## 工程模型范围
 
@@ -108,6 +108,13 @@ print(result["heat_transfer_w"], result["fluid_out"]["temperature_c"])
 ## 可复现的软件对照
 
 [`references/python-hvac/`](references/python-hvac/README.md)提供固定版本上游复现与水例映射。映射水例为**4363.49W**，参考复现为**4084.46W**，差异+6.83%。这是几何/模型定义不同的软件交叉比较，不是实测精度或拟合结果。
+
+**0.1.0.dev16**（核心 API 2）新增以下内容，所有旧结果保持逐位不变（Community 72 例、专业版 289 例逐位核对）：
+
+- **`model.pressure_scope`**：缺省或`"legacy_v0"`时输出与以前完全相同；`"v1"`时输出`air_pressure_drop_breakdown_pa`（芯体摩擦、进出口、加速、湿附加）和`air_pressure_drop_total_pa`。经核对原文，Wang 1999/2000/2002 的摩擦系数在数据整理时**已包含**进出口损失，因此标为`included_in_f`、不再重复叠加；原文整理时扣除的加速项 (1+σ²)(ρ1/ρ2−1) 予以补入。`v1`要求填写`geometry.fin_surface`（`"bare_aluminum"`裸铝或`"hydrophilic"`亲水涂层，不提供“未知”）。
+- **湿工况空气摩擦**（无亲水涂层的平片）：Wang、Lin、Lee 2000（IJHMT 43:1869，式 11–15；31 个无涂层样本，Re 300–5000，片距 1.19–3.2 mm）。亲水涂层、百叶片和波纹片，或超出样本范围时，湿附加标为`not_computed`并说明原因，换热量不受影响。
+- **声明式外推**：平片`geometry.fin_pitch_extrapolation: true`（片距 8.7–12 mm，只放宽片距及由片距决定的水力直径）；`geometry.row_extrapolation: "saturate_at_row_6"`配合逐排接口`air_side_factors_by_row`，供 7–12 排的逐管网络使用（第 1–6 排取 6 排平均值，第 7 排起取第 6 排局部值 6·j(6)−5·j(5)）。本仓库的整盘模型仍拒绝超过 6 排。所有外推结果都会标注，不作为验收依据。
+- **结构化中文错误**`fintube_hx.errors.ModelRangeError`（`ValueError`的子类），包含字段、允许范围、关联式出处和可选的降级路径；条缝片、Dc < 6.9 mm 小管径、顺排、扁管，以及 CoolProp 未内置的混合工质（如 R454B），都会明确提示“本版本不支持，规划中”。
 
 **0.1.0.dev14**在湿表面单元中支持`subzero_evaporation: "initial_frost"`（清洁表面开始结霜的瞬时极限：沉积按冰计入融化焓，饱和曲线在0 ℃分段；不计霜层厚度、霜层热阻与堵塞）。集总接触因子制冷剂模型会拒绝该选项，它用于严格湿表面的逐管网络。**0.1.0.dev13**新增可选`geometry.contact_conductance_w_m2_k`（翅片套管-管接触热导，按管外表面积π·Do·L计）和`geometry.inner_fouling_resistance_m2_k_w`（管内污垢热阻），均按常数串联、不设默认值；不填时一切不变。**0.1.0.dev12**新增蒸发器可选项`model.subzero_evaporation: "dry_only"`：表面温度≤0 ℃时，只要不低于当地进风霜点（CoolProp在0 ℃以下按冰面饱和）、即不发生结霜，就按干表面计算；低于霜点则因需要结霜模型而拒绝。判定以制冷剂温度代表表面温度，偏保守。默认（`reject`）不变。**0.1.0.dev11**新增`geometry.tube_type: "microfin"`及模块`fintube_hx.microfin`：NIST TN 2224（Kedzierski & Lin 2023）微肋管几何与沸腾Nu关联式（含混合物滑移修正）、NISTIR 6333（Choi、Kedzierski、Domanski 1999）两相压降；几何参数超出TN 2224数据库范围即报错。本核心的集总水盘管明确拒绝微肋管，关联式供扩展调用（专业版蒸发器网络使用）。目前仅完成对原文算例和几何的实现核对，尚无整盘实测验收。**0.1.0.dev10**新增显式声明的`correlation_range_tolerance`，不填时一切不变。**0.1.0.dev9**新增百叶片、人字波纹片与Schmidt翅片效率（模块`fintube_hx.airside`），未设`fin_efficiency_method`的平片算例逐位不变。**0.1.0.dev8**新增可选`wet_surface_model`（模块`fintube_hx.wet_surface`），不填时所有既有结果逐位不变。**0.1.0.dev7**新增`fin_count`、`exposed_tubes`及实测验证数据集；未提供这两个字段时，所有既有结果逐位不变。
 

@@ -18,14 +18,28 @@ def validate_geometry(value: dict, equal_circuits: bool = True) -> dict:
              'louver_pitch_m','louver_height_m','wave_height_m','wave_projected_length_m','fin_efficiency_method',
              'correlation_range_tolerance','microfin_count','microfin_height_m','microfin_apex_angle_deg',
              'microfin_helix_angle_deg','microfin_tip_thickness_m','contact_conductance_w_m2_k',
-             'inner_fouling_resistance_m2_k_w'}
+             'inner_fouling_resistance_m2_k_w','fin_surface','row_extrapolation','fin_pitch_extrapolation'}
     unknown=set(g)-allowed
     if unknown:
         raise ValueError('Unsupported active geometry fields: '+', '.join(sorted(unknown)))
     from .airside import FIN_TYPES, FIN_EFFICIENCY_METHODS
-    if g.get('fin_type') not in FIN_TYPES or g.get('tube_type') not in ('smooth','microfin') or g.get('arrangement')!='staggered':
-        raise NotImplementedError('Geometry baseline supports plain, louver or wavy_herringbone continuous fins '
-                                  'on staggered smooth or micro-fin tubes only')
+    from .errors import UnsupportedFeatureError, ModelRangeError, range_error, fallback, PLANNED_NOTE, \
+        ROW_EXTRAPOLATION_MAX_ROWS, PLAIN_FIN_PITCH_EXTRAPOLATION_MAX_M
+    legacy_en='Geometry baseline supports plain, louver or wavy_herringbone continuous fins on staggered smooth or micro-fin tubes only'
+    if g.get('fin_type') not in FIN_TYPES:
+        what=('条缝片（桥片）：关联式须按原文实现，原文尚未取得' if g.get('fin_type') in ('slit','bridge')
+              else f'片型 {g.get("fin_type")!r}')
+        raise UnsupportedFeatureError(f'{what}；{PLANNED_NOTE}。本版支持平片 plain、百叶片 louver、人字波纹片 wavy_herringbone',
+                                      field='geometry.fin_type',value=g.get('fin_type'),allowed={'enum':list(FIN_TYPES)},message_en=legacy_en)
+    if g.get('tube_type') not in ('smooth','microfin'):
+        raise UnsupportedFeatureError(f'管型 {g.get("tube_type")!r}（扁管、微通道等）{PLANNED_NOTE}。本版支持光管 smooth 与内螺纹管 microfin',
+                                      field='geometry.tube_type',value=g.get('tube_type'),allowed={'enum':['smooth','microfin']},message_en=legacy_en)
+    if g.get('arrangement')!='staggered':
+        raise UnsupportedFeatureError(f'排列方式 {g.get("arrangement")!r}（顺排等）{PLANNED_NOTE}。本版只支持叉排 staggered',
+                                      field='geometry.arrangement',value=g.get('arrangement'),allowed={'enum':['staggered']},message_en=legacy_en)
+    if 'fin_surface' in g and g['fin_surface'] not in ('hydrophilic','bare_aluminum'):
+        raise ModelRangeError('geometry.fin_surface 只能为 hydrophilic（亲水涂层）或 bare_aluminum（裸铝）',
+                              field='geometry.fin_surface',value=g['fin_surface'],allowed={'enum':['hydrophilic','bare_aluminum']})
     mf_keys=('microfin_count','microfin_height_m','microfin_apex_angle_deg','microfin_helix_angle_deg','microfin_tip_thickness_m')
     if g['tube_type']=='microfin':
         for key in mf_keys:
@@ -70,8 +84,31 @@ def validate_geometry(value: dict, equal_circuits: bool = True) -> dict:
         v=g.get(key)
         if isinstance(v,bool) or not isinstance(v,int) or v<1:
             raise ValueError(f'geometry.{key} must be a positive integer')
-    if g['rows']>6:
-        raise ValueError('Wang plain-fin baseline restricted to 1..6 rows')
+    if 'row_extrapolation' in g:
+        if g['row_extrapolation']!='saturate_at_row_6':
+            raise ModelRangeError('geometry.row_extrapolation 只能为 saturate_at_row_6',field='geometry.row_extrapolation',
+                                  value=g['row_extrapolation'],allowed={'enum':['saturate_at_row_6']})
+        if g['rows']<=6:
+            raise ModelRangeError(f'排数 {g["rows"]} 在关联式样本范围 1～6 排以内，不应声明 row_extrapolation',
+                                  field='geometry.row_extrapolation',value=g['row_extrapolation'],
+                                  fallbacks=[fallback('remove_row_extrapolation','删除该声明',{'geometry.row_extrapolation':None})])
+    if g['rows']>ROW_EXTRAPOLATION_MAX_ROWS:
+        raise ModelRangeError(f'排数 {g["rows"]} 超过外推上限 {ROW_EXTRAPOLATION_MAX_ROWS} 排，一律拒绝',field='geometry.rows',value=g['rows'],
+                              allowed={'min':1,'max':ROW_EXTRAPOLATION_MAX_ROWS},message_en='Wang plain-fin baseline restricted to 1..6 rows')
+    if g['rows']>6 and g.get('row_extrapolation')!='saturate_at_row_6':
+        raise range_error('空气侧关联式','rows',g['rows'],1,6,message_en='Wang plain-fin baseline restricted to 1..6 rows')
+    if 'fin_pitch_extrapolation' in g:
+        pf=g.get('fin_pitch_m')
+        if g['fin_pitch_extrapolation'] is not True:
+            raise ModelRangeError('geometry.fin_pitch_extrapolation 只能为 true（不声明时请删除该字段）',
+                                  field='geometry.fin_pitch_extrapolation',value=g['fin_pitch_extrapolation'])
+        if g['fin_type']!='plain':
+            raise ModelRangeError('大片距外推只用于平片；百叶片与波纹片只允许 correlation_range_tolerance（≤ 1%）',
+                                  field='geometry.fin_pitch_extrapolation',value=True)
+        if isinstance(pf,bool) or not isinstance(pf,(int,float)) or not 0.0087<pf<=PLAIN_FIN_PITCH_EXTRAPOLATION_MAX_M:
+            raise ModelRangeError(f'大片距外推只适用于片距 8.7～{PLAIN_FIN_PITCH_EXTRAPOLATION_MAX_M*1000:g} mm（当前 {pf}）；'
+                                  '片距 ≤ 8.7 mm 时不应声明，超过 12 mm 一律拒绝',field='geometry.fin_pitch_m',value=pf,
+                                  allowed={'min':0.0087,'max':PLAIN_FIN_PITCH_EXTRAPOLATION_MAX_M})
     if g['tubes_per_row']>500 or g['circuits_count']>500:
         raise ValueError('Geometry exceeds baseline size limit')
     for key in ['tube_length_m','tube_outer_diameter_m','tube_inner_diameter_m','transverse_pitch_m',

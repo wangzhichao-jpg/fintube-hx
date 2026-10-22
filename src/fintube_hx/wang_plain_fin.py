@@ -8,14 +8,23 @@ Jiefeng validation or permission to extrapolate beyond the stated range.
 import math
 
 
-def wang_plain_fin(Re,dc,dh,pt,pl,pf,rows):
+SOURCE='Wang, Chi & Chang 2000, IJHMT 43:2693-2700 (Part II), Eqs. (5)-(9)'
+
+
+def wang_plain_fin(Re,dc,dh,pt,pl,pf,rows,*,extended_upper=None):
+    """``extended_upper`` (fintube_hx addition, 0.1.0.dev16) raises upper bounds only for a declared
+    extrapolation (plain-fin pitch up to 12 mm and the Dh it implies); the equations are unchanged."""
     limits={'Re':(Re,300.,20000.),'collar diameter':(dc,.0069,.0136),
             'hydraulic diameter':(dh,.00130,.00937),'transverse pitch':(pt,.0204,.0318),
             'longitudinal pitch':(pl,.0127,.032),'fin pitch':(pf,.001,.0087),
             'rows':(rows,1,6)}
+    for name,hi in (extended_upper or {}).items():
+        value,lo,_=limits[name];limits[name]=(value,lo,hi)
     for name,(value,lo,hi) in limits.items():
         if not math.isfinite(value) or not lo<=value<=hi:
-            raise ValueError(f'Wang plain-fin {name}={value:g} outside validated correlation range [{lo:g},{hi:g}]')
+            from .errors import range_error
+            raise range_error('Wang & Chi 2000 平片关联式',name,value,lo,hi,source=SOURCE,fin_type='plain',
+                              message_en=f'Wang plain-fin {name}={value:g} outside validated correlation range [{lo:g},{hi:g}]')
     ln=math.log(Re)
     if rows<2:
         c1=1.9-.23*ln;c2=-.236+.126*ln

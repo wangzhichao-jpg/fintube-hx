@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0.dev15",
+  "version": "0.1.0.dev16",
   "edition": "community",
   "publication_status": "reviewed_public_source_candidate",
   "original_license_status": "MIT_owner_approved",
@@ -23,7 +23,7 @@
     },
     {
       "path": "CORE_API.md",
-      "sha256": "73db532e1de2033f448c4b9b5ce7afceecd887aa85872734274d98ea5278fc79"
+      "sha256": "0e23fd7b58ccc70a9902694abd42f4e55fc209ccce2097b1821ecd3bf64c3c2f"
     },
     {
       "path": "LICENSE",
@@ -31,15 +31,15 @@
     },
     {
       "path": "PORTING.md",
-      "sha256": "955661fbba2be962313313558d3a47bc80edf3c8596e0ce9e5f5ec4f12837c94"
+      "sha256": "7615e4ae48bae6ac3c905fd0390db020a05f863e29426547bff197f2db9ae993"
     },
     {
       "path": "README.md",
-      "sha256": "1080523e81a4ede7efa8125215ae60ff838c09f090e43c3c495b18c7b574e569"
+      "sha256": "5e3b52e363c0ae7d69993ce6312a40c1201510a101aafcf7e2f9cb31956e6261"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "8a0b10bb177de3200967672e488af7e31460f7c28f09d14563dfe93dbe97ca19"
+      "sha256": "58c9f34c24793fd531b8ae95d67e380d59082203090ee132e72550d59c5725cc"
     },
     {
       "path": "RELEASE_CHECKLIST.md",
@@ -55,7 +55,7 @@
     },
     {
       "path": "docs/EXTERNAL_REVIEW_STATUS.md",
-      "sha256": "3642a9b2101381efe910e0fcbcf6e54a6bef2e6b493824953f045b004544b780"
+      "sha256": "de1037d1d3e7df1fc6269aae42a0c1c293e2b8ef1e0521d5539123ab0cf41f76"
     },
     {
       "path": "docs/EXTERNAL_REVIEW_V3.md",
@@ -111,7 +111,7 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256": "04ee6f6058df5099545c9e354d71b63d71da6728ec19e5600fba8639a608382f"
+      "sha256": "8c6def2f0abbfda005bf9c02175b0d0b4cf63ac1db843bb277702468756f587e"
     },
     {
       "path": "references/python-hvac/README.md",
@@ -155,7 +155,7 @@
     },
     {
       "path": "src/fintube_hx/__init__.py",
-      "sha256": "74b95cd117c62d85e745a101f74621dad8acd0a5e2d795239abb99c95d904f3a"
+      "sha256": "08dbb15dafed0fa73e41789ac8e2f11575cfe70106f5a8301428eb25ab7b7747"
     },
     {
       "path": "src/fintube_hx/__main__.py",
@@ -163,15 +163,27 @@
     },
     {
       "path": "src/fintube_hx/airside.py",
-      "sha256": "00b5ca89709ed285306590948fce648ee3f57eb8743049025b168c6684455fa2"
+      "sha256": "12fae22f9142f6468b00523745ba40bb3e0f05ce20e1417eb112237d83f0c4f5"
+    },
+    {
+      "path": "src/fintube_hx/airside_pressure.py",
+      "sha256": "ee20e7b41129b82954f071ac9bed877094cc0b9a6f25a72aa8348abf0016e2e3"
     },
     {
       "path": "src/fintube_hx/cli.py",
       "sha256": "ff3fa5f653eb454765556270838d9a3f045277a768515ccbd4d932248a51cec5"
     },
     {
+      "path": "src/fintube_hx/coverage.py",
+      "sha256": "6997987f7169f9351a16365959e76d1794b9a7736b5096d68fb7d90e56700dfa"
+    },
+    {
       "path": "src/fintube_hx/engine.py",
-      "sha256": "7c71c669149d7c1697e93ec322430893c16f91a21ac82476cec831b0ed7d671e"
+      "sha256": "db46f925125f09d24a5346babdc0e1a0f485404e8e260d2e541d4895a64f183d"
+    },
+    {
+      "path": "src/fintube_hx/errors.py",
+      "sha256": "c1d53608946303bf88f231af1fad851a088b94296a4c8711e9663645fddde7d0"
     },
     {
       "path": "src/fintube_hx/exposed_tubes.py",
@@ -179,11 +191,11 @@
     },
     {
       "path": "src/fintube_hx/geometry.py",
-      "sha256": "4af90dbadd4c1d3e4ed5d7600160c82c4ea3076476ebd2ec259c419611d0d53c"
+      "sha256": "060c9f5ccd24ca8b1098486a5ced58b931ccb83e65b103b5f32ddd4f60363837"
     },
     {
       "path": "src/fintube_hx/geometry_performance.py",
-      "sha256": "72bb2780a4b3cabba3495abc92e2f5dfa79ca5e5378d19f0f8fecaa27fae85bf"
+      "sha256": "d9975b875aab2cd23b8558e6574db79eb64394e2e038fea85dc2238592fd1e35"
     },
     {
       "path": "src/fintube_hx/inverse.py",
@@ -195,7 +207,7 @@
     },
     {
       "path": "src/fintube_hx/properties.py",
-      "sha256": "d53caf8e85afdefd8ee7022d2fb33b3caccc651708fc19d9701ee3d27b61b973"
+      "sha256": "f11235f9227c9f17a28459c890e88b9b6944d2caf4fb110c2ce6312c449ab018"
     },
     {
       "path": "src/fintube_hx/refrigerant.py",
@@ -211,7 +223,7 @@
     },
     {
       "path": "src/fintube_hx/schema.py",
-      "sha256": "b25c07457aec89971e704a612ffc93651f2526820c3ac76206d297f89ac18c4d"
+      "sha256": "1e0028b288eda215683a16fbc242d1fe9c8969e54f0368f9e23d08f0945eaa16"
     },
     {
       "path": "src/fintube_hx/spreadsheet.py",
@@ -231,11 +243,11 @@
     },
     {
       "path": "src/fintube_hx/wang_plain_fin.py",
-      "sha256": "1ccb90d8bbc63f5964830d83ae20e480db793a5a9906da2c7f3fc2b2be2463f4"
+      "sha256": "89ba7ff047330b1a570fd5979401e6c460510adb5899eee2841a7d231dd5249f"
     },
     {
       "path": "src/fintube_hx/water.py",
-      "sha256": "1093620de3f0d43c7468c868fd7775c2af09f34b2b2e428a5d668fd561eb8fe4"
+      "sha256": "e652d974f6b8826c3f8f01383f450c5d8d692aa048d159bf85f245ec8322b799"
     },
     {
       "path": "src/fintube_hx/wet_surface.py",
@@ -250,6 +262,10 @@
       "sha256": "6ba3899a853ae7439dbdc1fab9ed15b55fe77ad6edcd073f7923e5398dc46378"
     },
     {
+      "path": "tests/test_airside_pressure_v1.py",
+      "sha256": "8d174c92181f2da1ef45f9961428c7fb213062f47372127786b4eeda00d75ae4"
+    },
+    {
       "path": "tests/test_community.py",
       "sha256": "e64dc417be82e48abefb56640b71617203da2c6e4cdd7db84a0f14e1d87a8905"
     },
@@ -260,6 +276,10 @@
     {
       "path": "tests/test_fin_count_exposed.py",
       "sha256": "d82bec5b65a02005bc3fe99bc62c33e4ddef22f873557a93ce81f7f46a6eafe8"
+    },
+    {
+      "path": "tests/test_fin_pitch_extrapolation.py",
+      "sha256": "11c06093df410ccacf334e2749388e2522090a02e8cbe89ba99838747e6767bd"
     },
     {
       "path": "tests/test_iteration_budget.py",
@@ -278,8 +298,16 @@
       "sha256": "1f2c3852b9f2fe8ec44b7bd423ef8d819342bc5232ae2679db32bb5ca0a838a2"
     },
     {
+      "path": "tests/test_range_errors.py",
+      "sha256": "89f3c0701bdf36b51c4a2847da6c35cc61569112a95d73a5405f4f5547581484"
+    },
+    {
       "path": "tests/test_reference_evidence.py",
       "sha256": "1b944b81b702f49aa7b81c762fb24567d9625995d125f3f1959119b457f31101"
+    },
+    {
+      "path": "tests/test_row_saturation.py",
+      "sha256": "f81ab5cb6eafdadee4f7180efc8d280770eaeb65f771309214d081c8284f06a6"
     },
     {
       "path": "tests/test_subzero_dry.py",
@@ -288,6 +316,10 @@
     {
       "path": "tests/test_units_inverse.py",
       "sha256": "bf5629c56ff4439812e64664b72618bccba443f827d06957b9a21a1a4b30dc83"
+    },
+    {
+      "path": "tests/test_wet_friction.py",
+      "sha256": "2c0565a8e6aa4ca36ca72ce8f3f163d40bebbb5c50b510ce2eeb7dd9bbf611e9"
     },
     {
       "path": "tests/test_wet_surface.py",
@@ -392,6 +424,10 @@
     {
       "path": "third_party_licenses/scipy/LICENSE.txt",
       "sha256": "f0f5c56b298ec9795df1199edc328a987242716d14a1bde6813112e22dc15f99"
+    },
+    {
+      "path": "tools/legacy_snapshot.py",
+      "sha256": "f1e527e1492e4d6bbb821cc4a58b5453055f56820f72e9e4d612bd8eaf41703c"
     },
     {
       "path": "tools/reproduce_external_review.py",
