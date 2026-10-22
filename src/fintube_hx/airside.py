@@ -260,6 +260,9 @@ ROW_EXTRAPOLATION_NOTE = ('边界外推：排数 N={rows} > 6，按声明的 row
                           '第 7 排起取第 6 排局部值 j6=6·j(6)−5·j(5)、f6=6·f(6)−5·f(5)）。结果不属于关联式已验证范围，不计入验收。')
 
 
+ROW6_LOCAL_J_FLOOR = 0.5      # j6 >= 0.5 * j(6); decision 2026-10-22 (option a)
+
+
 def air_side_factors_by_row(g: dict, metrics: dict, Re: float) -> dict:
     """Per-row j and f for a tube network.
 
@@ -267,8 +270,9 @@ def air_side_factors_by_row(g: dict, metrics: dict, Re: float) -> dict:
     7 <= N <= 12 (requires geometry.row_extrapolation='saturate_at_row_6'): rows 1..6 take j(6), f(6);
     rows 7..N take the row-6 local value j6 = 6 j(6) - 5 j(5), f6 = 6 f(6) - 5 f(5), with the actual coil's
     geometry (Dc, Dh, pitches) and only N varied.  A non-physical local value raises instead of switching
-    rule: j6 must lie in (0, j(1)]; f6 must be finite and positive (contract v1.1: no 1-row upper bound for f,
-    because the Wang plain-fin f grows weakly with N -- c1 contains -0.00758/N -- so f6 > f(1) always)."""
+    rule: j6 must lie in [0.5 j(6), j(1)] (lower bound: decision of 2026-10-22, the difference is ill-conditioned at
+    low Re and would otherwise let rows 7+ silently stop transferring heat); f6 must be finite and positive
+    (contract C-1: no 1-row upper bound for f, because the Wang plain-fin f grows weakly with N)."""
     from .errors import ModelRangeError, ROW_EXTRAPOLATION_MAX_ROWS
     n = g['rows']
     if n <= 6:
@@ -285,9 +289,12 @@ def air_side_factors_by_row(g: dict, metrics: dict, Re: float) -> dict:
     b1 = air_side_factors(dict(g, rows=1), metrics, Re)
     j6 = 6 * b6['colburn_j'] - 5 * b5['colburn_j']
     f6 = 6 * b6['fanning_friction_factor'] - 5 * b5['fanning_friction_factor']
-    if not (math.isfinite(j6) and 0 < j6 <= b1['colburn_j']):
-        raise ModelRangeError(f'排数外推在此 Re 下不适用：第 6 排局部 j6 = {j6:.6g}（须在 0 与 1 排值 {b1["colburn_j"]:.6g} 之间）',
-                              field='geometry.rows', value=n, source=b6.get('source'))
+    j_floor = ROW6_LOCAL_J_FLOOR * b6['colburn_j']
+    if not (math.isfinite(j6) and j_floor <= j6 <= b1['colburn_j']):
+        raise ModelRangeError(f'排数外推在此 Re 下不适用：第 6 排局部 j6 = {j6:.6g}，须在 {ROW6_LOCAL_J_FLOOR:g}×6 排平均值 {j_floor:.6g} '
+                              f'与 1 排值 {b1["colburn_j"]:.6g} 之间（差分外推在低 Re 下病态，拒绝以免静默失真）',
+                              field='geometry.rows', value=n, source=b6.get('source'),
+                              allowed={'j6_min': j_floor, 'j6_max': b1['colburn_j']})
     if not (math.isfinite(f6) and f6 > 0):
         raise ModelRangeError(f'排数外推在此 Re 下不适用：第 6 排局部 f6 = {f6:.6g}（须为有限正值）',
                               field='geometry.rows', value=n, source=b6.get('source'))

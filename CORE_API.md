@@ -24,6 +24,8 @@ The package is organized into decoupled layers:
   `air_side_factors_by_row` (7–12 rows only with `geometry.row_extrapolation: "saturate_at_row_6"`), declared plain-fin pitch extrapolation (`geometry.fin_pitch_extrapolation`), `wang_lin_lee_2000_wet_plain` and `wet_friction_factor` (wet Fanning f or a `not_computed` reason).
 - **`fintube_hx.airside_pressure`** and **`fintube_hx.coverage`** (0.1.0.dev16)  
   v1 air-pressure breakdown (acceleration, entrance/exit included in f, wet increment) and the `model_coverage` vocabulary; `schema.normalize_pressure_scope` validates `model.pressure_scope`.
+- **Exact fast paths** (0.1.0.dev17)  
+  `properties.air_wh`, `properties.air_from_h_w_wh`, `thermal.air_with_h_w_wh` and `contact_air(..., wh_only=True)` return only the humidity ratio and enthalpy, bit-identical to the full routines (same CoolProp calls and refusals) without the unused volume/cp/dew-point evaluations; `contact_air(..., outlet_state=False)` is now bit-identical in the wet branch too. Optional `solver.time_limit_s` (wall-time fuse, enforced by tube networks). Row extrapolation additionally requires the local row-6 j ≥ 0.5·j(6).
 - **`fintube_hx.thermal.check_subzero_surface`** (0.1.0.dev12)  
   Optional dry sub-zero evaporating surfaces (`model.subzero_evaporation: dry_only`): accepted only at or above the local air frost point; frost deposition is rejected.
 - **`fintube_hx.microfin`** (0.1.0.dev11)  
