@@ -56,8 +56,10 @@ def _check(name, values, limits, tolerance=0.0):
             extended[key] = {'value': value, 'published_range': [lo, hi],
                              'relative_excess': (value - hi) / hi if value > hi else (value - lo) / lo}
             continue
-        raise ValueError(f'{name} {key}={value:g} outside published sample range [{lo:g},{hi:g}]'
-                         + (f' (+{tol:.1%} declared tolerance)' if tol else ''))
+        from .errors import range_error
+        raise range_error(f'{name} 关联式', key, value, lo, hi, source=name,
+                          message_en=f'{name} {key}={value:g} outside published sample range [{lo:g},{hi:g}]'
+                          + (f' (+{tol:.1%} declared tolerance)' if tol else ''))
     return extended
 
 
@@ -139,11 +141,49 @@ def wang_herringbone_2002(Re, dc, dh, pt, pl, pf, tf, rows, pd, xf, range_tolera
             'correlation_range_checked': True}
 
 
+PLAIN_PITCH_PUBLISHED_MAX_M = 0.0087          # Wang & Chi 2000 sample upper bound (wang_plain_fin limits)
+PLAIN_DH_PUBLISHED_MAX_M = 0.00937
+
+
+def _plain_pitch_extension(g: dict, metrics: dict) -> dict:
+    """Declared plain-fin pitch extrapolation (8.7..12 mm, contract 2.1 / spec C2): only the fin-pitch upper
+    bound and the Dh upper bound implied by it are raised.  The same coil at Fp = 8.7 mm must satisfy the
+    published Dh range, so no other parameter is extrapolated through Dh."""
+    from .errors import range_error, PLAIN_FIN_PITCH_EXTRAPOLATION_MAX_M
+    from .geometry import geometry_metrics
+    ref = {k: v for k, v in g.items() if k not in ('fin_pitch_extrapolation', 'fin_count', 'row_extrapolation')}
+    ref['fin_pitch_m'] = PLAIN_PITCH_PUBLISHED_MAX_M
+    if ref['rows'] > 6:
+        ref['rows'] = 6
+    dh_ref = geometry_metrics(ref, equal_circuits=False)['air_hydraulic_diameter_m']
+    if not 0.0013 <= dh_ref <= PLAIN_DH_PUBLISHED_MAX_M:
+        raise range_error('Wang & Chi 2000 平片关联式（按片距 8.7 mm 核算的水力直径）', 'hydraulic diameter', dh_ref,
+                          0.0013, PLAIN_DH_PUBLISHED_MAX_M, fin_type='plain')
+    pf, dh = g['fin_pitch_m'], metrics['air_hydraulic_diameter_m']
+    disclosure = {'fin pitch': {'value': pf, 'published_range': [0.001, PLAIN_PITCH_PUBLISHED_MAX_M],
+                                'relative_excess': (pf - PLAIN_PITCH_PUBLISHED_MAX_M) / PLAIN_PITCH_PUBLISHED_MAX_M}}
+    if dh > PLAIN_DH_PUBLISHED_MAX_M:
+        disclosure['hydraulic diameter'] = {'value': dh, 'published_range': [0.0013, PLAIN_DH_PUBLISHED_MAX_M],
+                                            'relative_excess': (dh - PLAIN_DH_PUBLISHED_MAX_M) / PLAIN_DH_PUBLISHED_MAX_M,
+                                            'reference_at_8_7mm_pitch': dh_ref}
+    return {'upper': {'fin pitch': PLAIN_FIN_PITCH_EXTRAPOLATION_MAX_M,
+                      'hydraulic diameter': max(PLAIN_DH_PUBLISHED_MAX_M, dh)}, 'disclosure': disclosure}
+
+
 def air_side_factors(g: dict, metrics: dict, Re: float) -> dict:
-    """j and f for the declared fin type; Re is based on the collar diameter and Gc."""
+    """Bank-average j and f for the declared fin type and N = rows (1..6); Re is based on Dc and Gc.
+    Tube networks with 7..12 rows use :func:`air_side_factors_by_row`."""
     t = g['fin_type']; dc, dh = metrics['collar_diameter_m'], metrics['air_hydraulic_diameter_m']
     pt, pl, pf, n = g['transverse_pitch_m'], g['longitudinal_pitch_m'], g['fin_pitch_m'], g['rows']
+    if n > 6:
+        from .errors import ModelRangeError
+        raise ModelRangeError(f'整排平均 j/f 只定义到 6 排（当前 {n} 排）；7～12 排只能在逐管网络中按声明的排数饱和外推逐排计算',
+                              field='geometry.rows', value=n, allowed={'min': 1, 'max': 6}, source='air_side_factors_by_row')
     if t == 'plain':
+        if g.get('fin_pitch_extrapolation'):
+            ext = _plain_pitch_extension(g, metrics)
+            return {**wang_plain_fin(Re, dc, dh, pt, pl, pf, n, extended_upper=ext['upper']),
+                    'range_extrapolation': ext['disclosure'], 'range_extrapolation_basis': 'fin_pitch_extrapolation'}
         return wang_plain_fin(Re, dc, dh, pt, pl, pf, n)
     if t == 'louver':
         return wang_louver_1999(Re, dc, dh, pt, pl, pf, n, g['louver_pitch_m'], g['louver_height_m'],
@@ -194,12 +234,132 @@ def extrapolation_warning(factors: dict) -> str | None:
         return None
     items = '、'.join(f"{k} {v['value']:.6g}（文献样本{v['published_range'][0]:g}–{v['published_range'][1]:g}，"
                      f"超出{abs(v['relative_excess']):.2%}）" for k, v in ext.items())
-    return '边界外推：按声明的correlation_range_tolerance在文献样本范围外使用关联式——' + items + '。结果不属于关联式已验证范围。'
+    basis = factors.get('range_extrapolation_basis', 'correlation_range_tolerance')
+    return f'边界外推：按声明的{basis}在文献样本范围外使用关联式——' + items + '。结果不属于关联式已验证范围。'
 
 
 def geometry_extrapolation_warning(g: dict, metrics: dict) -> str | None:
     """Same disclosure from the geometry alone (only geometric bounds can be extended;
     Re = 1000 lies inside both published Re ranges and does not affect this check)."""
-    if g['fin_type'] == 'plain' or 'correlation_range_tolerance' not in g:
-        return None
-    return extrapolation_warning(air_side_factors(g, metrics, 1000.0))
+    notes = []
+    if g['fin_type'] == 'plain' and g.get('fin_pitch_extrapolation'):
+        gg = dict(g, rows=min(g['rows'], 6))
+        notes.append(extrapolation_warning(air_side_factors(gg, metrics, 1000.0)))
+    elif g['fin_type'] != 'plain' and 'correlation_range_tolerance' in g:
+        gg = dict(g, rows=min(g['rows'], 6))
+        notes.append(extrapolation_warning(air_side_factors(gg, metrics, 1000.0)))
+    if g.get('row_extrapolation'):
+        notes.append(ROW_EXTRAPOLATION_NOTE.format(rows=g['rows']))
+    notes = [n for n in notes if n]
+    return '；'.join(notes) if notes else None
+
+
+# ---------------------------------------------------------------- 7..12 rows (contract 2.1, spec C1/P4)
+
+ROW_EXTRAPOLATION_NOTE = ('边界外推：排数 N={rows} > 6，按声明的 row_extrapolation=saturate_at_row_6 逐排取值（第 1～6 排取 6 排整排平均，'
+                          '第 7 排起取第 6 排局部值 j6=6·j(6)−5·j(5)、f6=6·f(6)−5·f(5)）。结果不属于关联式已验证范围，不计入验收。')
+
+
+def air_side_factors_by_row(g: dict, metrics: dict, Re: float) -> dict:
+    """Per-row j and f for a tube network.
+
+    N <= 6: every row takes the bank average j(N), f(N) -- exactly the value air_side_factors returns.
+    7 <= N <= 12 (requires geometry.row_extrapolation='saturate_at_row_6'): rows 1..6 take j(6), f(6);
+    rows 7..N take the row-6 local value j6 = 6 j(6) - 5 j(5), f6 = 6 f(6) - 5 f(5), with the actual coil's
+    geometry (Dc, Dh, pitches) and only N varied.  A non-physical local value raises instead of switching
+    rule: j6 must lie in (0, j(1)]; f6 must be finite and positive (contract v1.1: no 1-row upper bound for f,
+    because the Wang plain-fin f grows weakly with N -- c1 contains -0.00758/N -- so f6 > f(1) always)."""
+    from .errors import ModelRangeError, ROW_EXTRAPOLATION_MAX_ROWS
+    n = g['rows']
+    if n <= 6:
+        bank = air_side_factors(g, metrics, Re)
+        rows = [{'row': k + 1, 'colburn_j': bank['colburn_j'], 'fanning_friction_factor': bank['fanning_friction_factor'],
+                 'basis': f'bank_average_N{n}'} for k in range(n)]
+        return {'rows': rows, 'bank': bank, 'row_extrapolation': None}
+    if g.get('row_extrapolation') != 'saturate_at_row_6' or n > ROW_EXTRAPOLATION_MAX_ROWS:
+        raise ModelRangeError(f'排数 {n} 超出关联式样本范围 1～6 排；7～{ROW_EXTRAPOLATION_MAX_ROWS} 排须声明 row_extrapolation=saturate_at_row_6，'
+                              f'超过 {ROW_EXTRAPOLATION_MAX_ROWS} 排一律拒绝', field='geometry.rows', value=n,
+                              allowed={'min': 1, 'max': ROW_EXTRAPOLATION_MAX_ROWS})
+    b6 = air_side_factors(dict(g, rows=6), metrics, Re)
+    b5 = air_side_factors(dict(g, rows=5), metrics, Re)
+    b1 = air_side_factors(dict(g, rows=1), metrics, Re)
+    j6 = 6 * b6['colburn_j'] - 5 * b5['colburn_j']
+    f6 = 6 * b6['fanning_friction_factor'] - 5 * b5['fanning_friction_factor']
+    if not (math.isfinite(j6) and 0 < j6 <= b1['colburn_j']):
+        raise ModelRangeError(f'排数外推在此 Re 下不适用：第 6 排局部 j6 = {j6:.6g}（须在 0 与 1 排值 {b1["colburn_j"]:.6g} 之间）',
+                              field='geometry.rows', value=n, source=b6.get('source'))
+    if not (math.isfinite(f6) and f6 > 0):
+        raise ModelRangeError(f'排数外推在此 Re 下不适用：第 6 排局部 f6 = {f6:.6g}（须为有限正值）',
+                              field='geometry.rows', value=n, source=b6.get('source'))
+    rows = ([{'row': k + 1, 'colburn_j': b6['colburn_j'], 'fanning_friction_factor': b6['fanning_friction_factor'],
+              'basis': 'bank_average_N6'} for k in range(6)]
+            + [{'row': k + 1, 'colburn_j': j6, 'fanning_friction_factor': f6, 'basis': 'local_row6_saturated'}
+               for k in range(6, n)])
+    return {'rows': rows, 'bank': None,
+            'bank_average': {'colburn_j': sum(r['colburn_j'] for r in rows) / n,
+                             'fanning_friction_factor': sum(r['fanning_friction_factor'] for r in rows) / n},
+            'row_extrapolation': {'method': 'saturate_at_row_6', 'rows': n, 'j_bank_6': b6['colburn_j'], 'j_bank_5': b5['colburn_j'],
+                                  'f_bank_6': b6['fanning_friction_factor'], 'f_bank_5': b5['fanning_friction_factor'],
+                                  'j_local_6': j6, 'f_local_6': f6, 'j_bank_1': b1['colburn_j'],
+                                  'f_bank_1': b1['fanning_friction_factor'], 'source': b6.get('source')}}
+
+
+# ---------------------------------------------------------------- wet-surface friction (spec A2/A4)
+
+WET_PLAIN_SOURCE = 'Wang, Lin & Lee 2000, IJHMT 43:1869-1872, Eqs. (11)-(15); Table 1 (31 samples, none hydrophilic)'
+# Table 1 extremes and the stated Re range (300 < Re_Dc < 5000); Re_film range is not given in the paper.
+WET_PLAIN_RANGE = {'Re': (300., 5000.), 'collar diameter': (.00753, .01034), 'fin pitch': (.00119, .0032),
+                   'longitudinal pitch': (.0124, .022), 'transverse pitch': (.021, .0254), 'rows': (1, 6)}
+
+
+def wang_lin_lee_2000_wet_plain(Re, dc, dh, pt, pl, pf, rows, ao_apo, re_film, *, rows_extrapolated=False):
+    """Fanning f of a fully wet, non-hydrophilic plain-fin coil (entrance/exit losses included, Eq. 6).
+
+    Re_film = 2*Gamma/mu_water, Gamma = condensate mass flow / (N * W) [kg/(s m)].  Rows enter only
+    through Re_film, so a declared row extrapolation (N > 6) needs no further rule (P4)."""
+    vals = {'Re': Re, 'collar diameter': dc, 'fin pitch': pf, 'longitudinal pitch': pl, 'transverse pitch': pt, 'rows': rows}
+    if rows_extrapolated:
+        vals.pop('rows')
+    _check('Wang, Lin & Lee 2000 wet plain', vals, WET_PLAIN_RANGE)
+    if not (math.isfinite(re_film) and re_film > 0):
+        raise ValueError('Condensate film Reynolds number must be positive and finite')
+    ln = math.log
+    f1 = -0.7339 + 7.187 * (pf / pl) ** 2.5 * ln(9 * re_film)               # (12)
+    f2 = -0.5417 * ln(ao_apo) * (pf / dc) ** 0.9                             # (13)
+    f3 = 0.02722 * ln(6 * re_film) * (pl / pt) ** 3.2 * ln(Re)               # (14)
+    f4 = 0.2973 * ln(ao_apo) * ln(dh / dc)                                   # (15)
+    f = (16.55 * Re ** f1 * (10 * re_film) ** f2 * ao_apo ** f3 * (pl / pt) ** f4 * (pf / dh) ** -0.5827
+         * math.exp(dh / dc) ** -1.117)                                      # (11)
+    if not (math.isfinite(f) and f > 0):
+        raise ValueError('Wet friction correlation returned a non-physical value')
+    return {'fanning_friction_factor': f, 're_film': re_film, 'exponents': {'f1': f1, 'f2': f2, 'f3': f3, 'f4': f4},
+            'source': WET_PLAIN_SOURCE, 'friction_definition': 'Fanning, entrance/exit losses included (paper Eq. 6)'}
+
+
+WET_FRICTION_UNAVAILABLE = {
+    'louver': '百叶片湿工况摩擦关联式（Wang, Lin & Lee 2000, IJHMT 43:3443）原文尚未取得，湿附加未计算',
+    'wavy_herringbone': '人字波纹片湿工况摩擦关联式原文尚未取得，湿附加未计算',
+}
+
+
+def wet_friction_factor(g: dict, metrics: dict, Re: float, condensate_kg_s: float, mu_water_pa_s: float) -> dict:
+    """Wet Fanning f, or {'not_computed': reason} (spec A4: only the wet increment is refused)."""
+    from .errors import ModelRangeError
+    if g['fin_type'] in WET_FRICTION_UNAVAILABLE:
+        return {'not_computed': WET_FRICTION_UNAVAILABLE[g['fin_type']]}
+    if g.get('fin_surface') != 'bare_aluminum':
+        return {'not_computed': '湿工况摩擦关联式的原文样本均无亲水涂层，不适用于亲水涂层翅片，湿附加未计算'}
+    rows = g['rows']
+    gamma = condensate_kg_s / (rows * g['tube_length_m'])
+    re_film = 2 * gamma / mu_water_pa_s
+    try:
+        r = wang_lin_lee_2000_wet_plain(Re, metrics['collar_diameter_m'], metrics['air_hydraulic_diameter_m'],
+                                        g['transverse_pitch_m'], g['longitudinal_pitch_m'], g['fin_pitch_m'], rows,
+                                        metrics['total_outer_area_m2'] / metrics['bare_outer_area_m2'], re_film,
+                                        rows_extrapolated=rows > 6 and g.get('row_extrapolation') == 'saturate_at_row_6')
+    except ModelRangeError as exc:
+        return {'not_computed': '湿工况摩擦关联式超出适用范围：' + exc.message_zh, 're_film': re_film}
+    except ValueError as exc:
+        return {'not_computed': f'湿工况摩擦关联式不可用：{exc}', 're_film': re_film}
+    r['condensate_film_basis'] = 'Gamma = condensate/(N * tube_length); mu = liquid water at the drain temperature'
+    return r

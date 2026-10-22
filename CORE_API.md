@@ -18,6 +18,12 @@ The package is organized into decoupled layers:
   Dry Churchill–Bernstein convection of unfinned straight tube ends and return bends standing in the air stream (`model.exposed_tubes`), with exact constant-air-temperature element heat. Used by the lumped water model and available to extensions.
 - **`fintube_hx.airside`** (0.1.0.dev9)  
   Air-side j/f dispatch by `geometry.fin_type` (plain: Wang & Chi 2000; louver: Wang et al. 1999; wavy_herringbone: Wang et al. 2002) with published sample-range checks (optionally extended for geometric bounds only by a declared `geometry.correlation_range_tolerance` ≤ 1 %, disclosed in results, 0.1.0.dev10), and fin efficiency by `geometry.fin_efficiency_method` (equal-area annular, legacy default for plain fins; Schmidt, default for the enhanced fins).
+- **`fintube_hx.errors`** (0.1.0.dev16, API 2)  
+  `ModelRangeError` (a `ValueError`) and `UnsupportedFeatureError` (also a `NotImplementedError`): Chinese `message_zh` (= `str(exc)`, with the former English text kept in parentheses), `field`, `value`, `allowed`, `source`, `fallbacks` (user-confirmed patches) and `to_dict()`.
+- **`fintube_hx.airside`** additions (0.1.0.dev16)  
+  `air_side_factors_by_row` (7–12 rows only with `geometry.row_extrapolation: "saturate_at_row_6"`), declared plain-fin pitch extrapolation (`geometry.fin_pitch_extrapolation`), `wang_lin_lee_2000_wet_plain` and `wet_friction_factor` (wet Fanning f or a `not_computed` reason).
+- **`fintube_hx.airside_pressure`** and **`fintube_hx.coverage`** (0.1.0.dev16)  
+  v1 air-pressure breakdown (acceleration, entrance/exit included in f, wet increment) and the `model_coverage` vocabulary; `schema.normalize_pressure_scope` validates `model.pressure_scope`.
 - **`fintube_hx.thermal.check_subzero_surface`** (0.1.0.dev12)  
   Optional dry sub-zero evaporating surfaces (`model.subzero_evaporation: dry_only`): accepted only at or above the local air frost point; frost deposition is rejected.
 - **`fintube_hx.microfin`** (0.1.0.dev11)  

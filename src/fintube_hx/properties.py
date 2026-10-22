@@ -62,6 +62,17 @@ def air_mass_flow(air: dict) -> float:
     return float(air["volume_flow_m3_h"]) / 3600.0 / state["specific_volume_m3_kg_da"]
 
 
+@lru_cache(maxsize=256)
+def fluid_available(name: str) -> bool:
+    """True when CoolProp's HEOS backend can build the fluid (pure, predefined pseudo-pure blend or '&' mixture)."""
+    import CoolProp.CoolProp as CP
+    try:
+        CP.AbstractState("HEOS", name)
+    except ValueError:
+        return False
+    return True
+
+
 _STATE_LOCAL = local()
 
 

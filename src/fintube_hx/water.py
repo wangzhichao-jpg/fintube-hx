@@ -124,12 +124,30 @@ def simulate_water(case: dict) -> dict:
         result["wet_surface"] = {k: v for k, v in wet_detail_strict.items() if k != "air_out"}
     if wet_model != "contact_factor":
         result["wet_surface_model"] = wet_model
+    if geometry_mode and c["model"].get("pressure_scope") == "v1":
+        from .geometry_performance import air_pressure_v1
+        wet_fraction = 1.0 if surface_condition in ("wet", "wet_approximation") else 0.0
+        result.update(air_pressure_v1(geometry_detail, c, ain, aout, wet_fraction, condensate, drain_t))
+        result["warnings"] = [_V1_WARNINGS.get(w, w) for w in result["warnings"]]
+        result["warnings"].append("v1 压降口径：空气压降 = 芯体摩擦 + 加速项 + 湿附加（进出口损失按原文已含在 f 中），见 "
+                                 "air_pressure_drop_breakdown_pa；水侧仍只有直管摩擦，集管/回弯/进出口未计入。")
     if exposed_detail is not None:
         result["exposed_tubes"] = exposed_detail
         result["finned_core_heat_w"] = abs(fluid_heat - q_exposed)
         result["warnings"].append("外露光管/U弯按Churchill-Bernstein单管横掠、给定迎面风速和进风状态计算，"
                                   "整体模型按平均水温线性计入；其换热进入旁通气流，不并入芯体出风状态。")
     return result
+
+
+# Legacy disclosure sentences that are no longer true under the v1 pressure scope (legacy text is untouched).
+_V1_WARNINGS = {
+    "整盘按逆流集总：饱和焓曲线以割线斜率线性化，未逐管分段；空气压降仍为干表面摩擦。":
+        "整盘按逆流集总：饱和焓曲线以割线斜率线性化，未逐管分段；空气压降按 v1 口径计入湿附加（如可用）。",
+    "几何湿段只修改空气侧热阻/等效翅片效率；压降仍为干表面摩擦基线，未考虑水膜阻力。":
+        "几何湿段只修改空气侧热阻/等效翅片效率；空气压降按 v1 口径计入湿附加（如可用）。",
+    "压降仅预测空气芯体摩擦和水侧直管摩擦，不含U弯/集管/局部损失；未耦合沿程压力状态。":
+        "空气压降见 v1 分项；水侧压降仅直管摩擦，不含U弯/集管/进出口；未耦合沿程压力状态。",
+}
 
 
 def _strict_wet_coil(ain, m_da, tin, c_water, ua_dry, detail):

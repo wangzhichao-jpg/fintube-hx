@@ -45,6 +45,12 @@ def normalize_boundaries(case,*,extra_case_fields=(),extra_air_fields=()):
     a['volume_flow_m3_h']=number(a.get('volume_flow_m3_h'),'air.volume_flow_m3_h',1e-6)
     check_keys(f,{'name','pressure_pa','mass_flow_kg_s','inlet_t_c','inlet_h_j_kg'},'fluid')
     if not isinstance(f.get('name'),str) or not f['name']:raise ValueError('fluid.name is required')
+    if c['kind']!='water':
+        from .properties import fluid_available
+        if not fluid_available(f['name']):
+            from .errors import UnsupportedFeatureError,PLANNED_NOTE
+            raise UnsupportedFeatureError(f'工质 {f["name"]} 不在 CoolProp 内置物性库中（如 R454B、R513A 等混合工质）；{PLANNED_NOTE}',
+                                          field='fluid.name',value=f['name'])
     f['pressure_pa']=number(f.get('pressure_pa'),'fluid.pressure_pa',1)
     f['mass_flow_kg_s']=number(f.get('mass_flow_kg_s'),'fluid.mass_flow_kg_s',1e-9)
     if ('inlet_t_c' in f)==('inlet_h_j_kg' in f):raise ValueError('Provide exactly one of inlet_h_j_kg or inlet_t_c')
@@ -84,6 +90,32 @@ def normalize_mass_flow_target(c):
     t['mass_flow_bounds_kg_s']=[lo,hi];t['tolerance_k']=number(t.get('tolerance_k',.001),'target.tolerance_k',1e-8,1)
 
 
+PRESSURE_SCOPES=('legacy_v0','v1')
+FIN_SURFACES=('hydrophilic','bare_aluminum')
+V1_ONLY_NETWORK_KEYS=('inlet_fittings','outlet_fittings','distributor','capillaries','outlet_header','accessory_rated_point')
+
+
+def normalize_pressure_scope(c,*,geometry_active):
+    """Interface contract v1, section 1.  The field is never defaulted into the case (legacy inputs and their
+    hashes stay unchanged); absent means legacy_v0.  Returns the effective scope."""
+    from .errors import ModelRangeError,SWITCH_TO_V1
+    m=c['model'];scope=m.get('pressure_scope','legacy_v0')
+    if scope not in PRESSURE_SCOPES:
+        raise ModelRangeError('model.pressure_scope 只能为 legacy_v0（旧口径）或 v1（新口径）',field='model.pressure_scope',
+                              value=scope,allowed={'enum':list(PRESSURE_SCOPES)})
+    g=c['geometry'] if isinstance(c.get('geometry'),dict) else {}
+    net=c['network'] if isinstance(c.get('network'),dict) else {}
+    if scope=='legacy_v0':
+        bad=(['geometry.fin_surface'] if 'fin_surface' in g else [])+[f'network.{k}' for k in V1_ONLY_NETWORK_KEYS if k in net]
+        if bad:
+            raise ModelRangeError(f'{"、".join(bad)} 只在 v1 压降口径下可用；旧项目口径（legacy_v0）不包含这些字段，不会静默忽略',
+                                  field=bad[0],fallbacks=[SWITCH_TO_V1])
+    elif geometry_active and g.get('fin_surface') not in FIN_SURFACES:
+        raise ModelRangeError('v1 口径下几何/网络模式必须填写翅片表面处理 geometry.fin_surface：hydrophilic（亲水涂层）或 bare_aluminum（裸铝），'
+                              '不提供“未知”',field='geometry.fin_surface',value=g.get('fin_surface'),allowed={'enum':list(FIN_SURFACES)})
+    return scope
+
+
 WET_SURFACE_MODELS=('contact_factor','threlkeld_braun')
 
 
@@ -113,7 +145,7 @@ def validate_case(case):
         raise EditionCapabilityError('Actual tube-network models are not in Community')
     if m.get('air_arrangement','counterflow')!='counterflow':
         raise EditionCapabilityError('Community supports only the lumped counterflow contract')
-    check_keys(m,{'water_model','refrigerant_model','ua_mode','ua_w_k','segments','air_arrangement','exposed_tubes','wet_surface_model','subzero_evaporation'},'model')
+    check_keys(m,{'water_model','refrigerant_model','ua_mode','ua_w_k','segments','air_arrangement','exposed_tubes','wet_surface_model','subzero_evaporation','pressure_scope'},'model')
     if c['kind']=='water':
         if 'refrigerant_model' in m:raise ValueError('refrigerant_model is only applicable to evaporators/condensers')
         m.setdefault('water_model','lumped')
@@ -129,6 +161,10 @@ def validate_case(case):
         if 'ua_w_k' in m:raise ValueError('Do not supply UA when ua_mode=geometry; no hidden manual override')
         from .geometry import validate_geometry
         c['geometry']=validate_geometry(c.get('geometry'))
+        if c['geometry']['rows']>6:
+            from .errors import ModelRangeError
+            raise ModelRangeError(f'集总（整体）模型不支持排数外推（当前 {c["geometry"]["rows"]} 排）；7～12 排只在专业版逐管网络中按声明外推',
+                                  field='geometry.rows',value=c['geometry']['rows'],allowed={'min':1,'max':6})
         if 'exposed_tubes' in m:
             from .exposed_tubes import normalize_exposed_tubes
             m['exposed_tubes']=normalize_exposed_tubes(m['exposed_tubes'])
@@ -138,6 +174,7 @@ def validate_case(case):
         if 'wet_surface_model' in m:raise ValueError('model.wet_surface_model requires a geometry-derived water coil')
         m['ua_w_k']=number(m.get('ua_w_k'),'model.ua_w_k',0)
         if 'geometry' in c:raise ValueError('Input-UA Community models do not accept inactive geometry; move archival notes to metadata')
+    normalize_pressure_scope(c,geometry_active=mode=='geometry')
     normalize_subzero(c)
     n=m.setdefault('segments',80)
     if isinstance(n,bool) or not isinstance(n,int) or not 1<=n<=400:raise ValueError('model.segments must be an integer from 1 to 400')

@@ -27,7 +27,8 @@ The baseline package provides clean, reproducible reference models for fin-tube 
 
 ## 2. Model Assumptions & Boundaries
 
-- **Fin Type**: Continuous plain flat fins with round tubes in a staggered layout. Enhanced surfaces (wavy, louvered, slit) and microchannel geometries are not covered by this baseline core.
+- **Fin Type**: Continuous plain, louvered (Wang 1999) and herringbone wavy (Wang 2002) fins on round tubes in a staggered layout, each within its published sample range (declared extrapolations are flagged). Slit/bridge fins, inline banks, tubes with Dc < 6.9 mm and microchannel/flat-tube geometries are not covered and are refused with a structured error (`fintube_hx.errors`).
+- **Air pressure drop**: legacy scope = dry core friction; `model.pressure_scope: "v1"` adds acceleration and the wet increment for uncoated plain fins (0.1.0.dev16).
 - **Airflow**: 1D uniform face velocity and row-by-row air mixing. Two-dimensional maldistribution and CFD velocity profile mappings are external to this core.
 - **Tube Circuiting**: The baseline models use lumped cross-counterflow formulations. Individual tube-by-tube network marching and header pressure balancing can be built on top of the provided resistance and property utilities.
 
