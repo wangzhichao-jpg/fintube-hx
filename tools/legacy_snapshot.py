@@ -49,6 +49,8 @@ VOLATILE_KEYS = frozenset({
     # SHA-256 digests of records that themselves contain timestamps/uuid4 (the hashed numbers are compared directly)
     'result_sha256', 'workset_sha256', 'snapshot_sha256',
 })
+# Version identity stored under a parent key (contract change C-2): (parent, key).
+VOLATILE_CHILD_KEYS = frozenset({('shared_core', 'api')})
 # Random uuid4 identifiers (design/workset plans) are not deleted: they are mapped, in deterministic traversal order,
 # to '<uuid#n>' so that references between them (ranked ids, best candidate) are still compared.
 _UUID = r'(?:[0-9a-f]{32}|[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})'
@@ -72,11 +74,11 @@ def normalize(value, volatile=VOLATILE_KEYS):
     """JSON round trip (tuples -> lists, exact float repr), removal of volatile metadata keys, uuid4 -> ordinal."""
     ids = {}
 
-    def strip(v):
+    def strip(v, parent=None):
         if isinstance(v, dict):
-            return {k: strip(x) for k, x in v.items() if k not in volatile}
+            return {k: strip(x, k) for k, x in v.items() if k not in volatile and (parent, k) not in VOLATILE_CHILD_KEYS}
         if isinstance(v, list):
-            return [strip(x) for x in v]
+            return [strip(x, parent) for x in v]
         if isinstance(v, str) and UUID_RE.match(v):
             return ':'.join(ids.setdefault(part, f'<uuid#{len(ids) + 1}>') for part in v.split(':'))
         return v
@@ -244,6 +246,7 @@ def main_cli(*, edition, build_corpus, runner, script, environment, default_work
                          'runner': str(script), 'runner_sha256': file_sha256(script)},
                 'environment': environment(),
                 'normalization': {'volatile_keys': sorted(VOLATILE_KEYS),
+                                  'volatile_child_keys': sorted('.'.join(p) for p in VOLATILE_CHILD_KEYS),
                                   'allowed_new_keys': [f'{p or "*"}.{k}' for p, k in ALLOWED_NEW_KEYS]},
                 'groups': {k: v for k, v in corpus['groups'].items() if wanted is None or k in wanted},
                 'excluded': corpus.get('excluded', []),
@@ -267,7 +270,8 @@ def main_cli(*, edition, build_corpus, runner, script, environment, default_work
               'allow_text_change': a.allow_text_change, 'cases': len(cases), 'identical': 0,
               'identical_with_allowed_additions': 0, 'failed': [], 'allowed_text_changes': [], 'seconds': 0.0}
     for c, r in zip(cases, results):
-        diffs = list(diff_trees(c['output'], r['output'], tuple(a.allow_text_change)))
+        # Re-normalize the stored output with the current rules (idempotent; makes a rule change effective).
+        diffs = list(diff_trees(normalize(c['output']), r['output'], tuple(a.allow_text_change)))
         failing = [d for d in diffs if d[0] in FAILING]
         if failing:
             report['failed'].append({'id': c['id'], 'group': c['group'], 'difference_count': len(failing),
