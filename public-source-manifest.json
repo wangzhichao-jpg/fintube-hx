@@ -482,6 +482,22 @@
       "sha256": "a7d042dbae4f9c1386cabb3eac50d58d007c1381ed2f180c06c570834febf385"
     },
     {
+      "path": "validation/measured-v7/README.md",
+      "sha256": "df302d4a8b5a014989e4b3636983b3e519615d3d29cea795b7097f22df6ed051"
+    },
+    {
+      "path": "validation/measured-v7/README.zh-CN.md",
+      "sha256": "6c19ed50eb82aba576a9ba8352bcd0244dd0e627c9b820584325cb7b12278a37"
+    },
+    {
+      "path": "validation/measured-v7/SHA256SUMS.txt",
+      "sha256": "82a26ca67ebc28e288ca059e233b9b521aef36319ffe6c358e9737e269c3467b"
+    },
+    {
+      "path": "validation/measured-v7/v7_results_public.json",
+      "sha256": "04527b27a8109b97feca4683ac421dd8ad2feb601f009f37923ac15283e27ffa"
+    },
+    {
       "path": "validation/measured/README.md",
       "sha256": "31a14bb1359b13f703c2f8573d6c5421c1a52fc7fc81b94ee6de6b550de024ba"
     },
@@ -510,5 +526,5 @@
       "sha256": "1a9ab2e34e3f6d8ded538501ed6630001305f9e5de7039810d9294f2e4af889b"
     }
   ],
-  "measured_validation": "validation/measured-v6/README.md"
+  "measured_validation": "validation/measured-v7/README.md"
 }

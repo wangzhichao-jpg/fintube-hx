@@ -1,0 +1,5346 @@
+{
+ "title": "Internal acceptance set v7 (public facts and results)",
+ "computed_with": "Fintube HX Professional 0.7.0.dev1 (tube-network models, v1 pressure scope), shared core fintube-hx 0.1.0.dev17",
+ "reproducibility_note": "Per-tube network inputs (circuit paths) belong to the Professional edition and are not published here, same rule as measured-v6. The Community core alone cannot reproduce these numbers.",
+ "declared_before_run": {
+  "declared_at_utc": "2026-10-23T04:25:00Z",
+  "f3_tolerances": {
+   "heat_transfer_relative": 0.05,
+   "air_dp_dry_relative": 0.15,
+   "air_dp_wet_relative": 0.2,
+   "refrigerant_dp_same_scope_relative": 0.25
+  },
+  "auxiliary_tolerances": {
+   "note": "不是 F3 指标，沿用 v6 运行前声明的容差，只作辅助报告，不进入达标判定",
+   "evaporator_superheat_k": 3.0,
+   "condenser_subcooling_k": 2.0,
+   "shr_absolute": 0.05
+  },
+  "classification_rules_F4": {
+   "order": "按以下顺序归类，归入前一类的点不再进入后一类",
+   "rejected": "产品拒绝计算（ModelRangeError / UnsupportedFeatureError）。记录拒绝信息和产品给出的降级路径，不计入。",
+   "extrapolated": "产品结果的 model_coverage.extrapolated 非空（如 correlation_range_tolerance、rows_saturate_at_6）。同样按 F3 容差逐点判定并公开，但单独列表，不计入通过率。",
+   "degraded": "产品结果的 model_coverage.degraded 中有影响该比较量的条目（湿工况空气压降：wet_increment_not_computed；冷媒口径 b：accessory_not_computed 影响到测量跨度的一侧；入口状态默认过冷度：default_subcooling_5k 影响换热量与过热度）。单独列表，不计入。",
+   "scope_mismatch": "实测压降的测量跨度与产品的口径 a（回路内）、口径 b（盘管接口）都不一致（例如实测含原文未给几何的集管或接头）。给出与最接近口径的偏差，标注“口径不一致”，不计入。",
+   "counted": "其余的点计入通过率。输入中的 D4 量（原文未给，如百叶高度/节距）按声明区间扫描：以参考值判定通过与否，同时报告区间内是否全部通过（稳健通过/条件通过）。"
+  },
+  "metric_status_rule_P1": {
+   "达标": "计入点数 ≥ 1 且通过率 ≥ 90%",
+   "未达标": "计入点数 ≥ 1 且通过率 < 90%（不阻止发布，逐点公开失败点）",
+   "无证据": "计入点数 = 0（不阻止发布；冷媒口径 b 无证据时须注明“未宣称该口径实测精度”）"
+  },
+  "new_data_from_search": "截至声明时，检索方没有提供新的、符合《数据准入与推导记录规范_v6》的数据（裸铝/亲水湿工况空气压降；带附件几何或接口测点的冷媒压降）。v7 数据集 = v6 全部数据集。",
+  "expected_evidence_before_run": {
+   "note": "运行前按数据可得性写下的预判，运行结果以实际为准",
+   "heat_transfer": "有计入证据（谭爱华 62 台）",
+   "air_dp_dry": "无证据（范围内没有实测干工况空气压降；Batista 被拒绝，康海军为拟合式参考）",
+   "air_dp_wet": "无证据（谭爱华、CETIAT 未给空气压降；ARTI 已排除）",
+   "refrigerant_dp_same_scope": "无证据（CETIAT 口径不一致且为外推；Joppolo 为外推；谭爱华水阻力口径不一致）——须注明“未宣称该口径实测精度”"
+  }
+ },
+ "run_started_utc": "2026-10-23T07:16:32Z",
+ "summary": [
+  {
+   "metric": "heat_transfer",
+   "label": "换热量",
+   "class": "F3",
+   "counted": 62,
+   "passed": 43,
+   "robust_passed": 31,
+   "pass_rate": 0.6935483870967742,
+   "status": "未达标",
+   "not_counted": {
+    "extrapolated": {
+     "n": 26,
+     "pass": 23
+    },
+    "rejected": {
+     "n": 15,
+     "pass": 0
+    }
+   }
+  },
+  {
+   "metric": "air_dp_dry",
+   "label": "空气压降（干工况）",
+   "class": "F3",
+   "counted": 0,
+   "passed": 0,
+   "robust_passed": 0,
+   "pass_rate": null,
+   "status": "无证据",
+   "not_counted": {
+    "rejected": {
+     "n": 9,
+     "pass": 0
+    }
+   }
+  },
+  {
+   "metric": "air_dp_wet",
+   "label": "空气压降（湿工况）",
+   "class": "F3",
+   "counted": 0,
+   "passed": 0,
+   "robust_passed": 0,
+   "pass_rate": null,
+   "status": "无证据",
+   "not_counted": {}
+  },
+  {
+   "metric": "refrigerant_dp",
+   "label": "冷媒压降（同口径）",
+   "class": "F3",
+   "counted": 0,
+   "passed": 0,
+   "robust_passed": 0,
+   "pass_rate": null,
+   "status": "无证据",
+   "not_counted": {
+    "extrapolated": {
+     "n": 26,
+     "pass": 6
+    },
+    "rejected": {
+     "n": 6,
+     "pass": 0
+    }
+   }
+  },
+  {
+   "metric": "water_dp",
+   "label": "水侧压降（参考）",
+   "class": "aux",
+   "counted": 0,
+   "passed": 0,
+   "robust_passed": 0,
+   "pass_rate": null,
+   "status": "辅助：无证据",
+   "not_counted": {
+    "scope_mismatch": {
+     "n": 62,
+     "pass": 51
+    }
+   }
+  },
+  {
+   "metric": "shr",
+   "label": "显热比",
+   "class": "aux",
+   "counted": 62,
+   "passed": 61,
+   "robust_passed": 56,
+   "pass_rate": 0.9838709677419355,
+   "status": "辅助：达标",
+   "not_counted": {}
+  },
+  {
+   "metric": "superheat",
+   "label": "蒸发过热度",
+   "class": "aux",
+   "counted": 0,
+   "passed": 0,
+   "robust_passed": 0,
+   "pass_rate": null,
+   "status": "辅助：无证据",
+   "not_counted": {
+    "extrapolated": {
+     "n": 12,
+     "pass": 11
+    }
+   }
+  },
+  {
+   "metric": "subcooling",
+   "label": "冷凝过冷度",
+   "class": "aux",
+   "counted": 0,
+   "passed": 0,
+   "robust_passed": 0,
+   "pass_rate": null,
+   "status": "辅助：无证据",
+   "not_counted": {
+    "extrapolated": {
+     "n": 8,
+     "pass": 2
+    }
+   }
+  }
+ ],
+ "rows": [
+  {
+   "dataset": "tan2015",
+   "id": "post-03#-1",
+   "metric": "heat_transfer",
+   "measured": 3272.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 3247.2153628148135,
+   "deviation_ref": -0.007574766865888316,
+   "deviation_interval": [
+    -0.050106611473040186,
+    0.007650520466481181
+   ],
+   "pass_ref": true,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-03#-1",
+   "metric": "shr",
+   "measured": 0.6902573028943976,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6822976682068688,
+   "deviation_ref": -0.007959634687528805,
+   "deviation_interval": [
+    -0.008643380840542725,
+    -0.007812314963289824
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-03#-1",
+   "metric": "water_dp",
+   "measured": 22395.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 17363.183582825703,
+   "deviation_ref": -0.22468481434133947,
+   "deviation_interval": [
+    -0.22491565175325834,
+    -0.22402913579296735
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-03#-2",
+   "metric": "heat_transfer",
+   "measured": 3244.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 3198.8790221466465,
+   "deviation_ref": -0.01390905605837034,
+   "deviation_interval": [
+    -0.05587733311094267,
+    0.001054841717940569
+   ],
+   "pass_ref": true,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-03#-2",
+   "metric": "shr",
+   "measured": 0.6789672460437494,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.674740792672033,
+   "deviation_ref": -0.004226453371716343,
+   "deviation_interval": [
+    -0.004727483016368272,
+    -0.004226453371716343
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-03#-2",
+   "metric": "water_dp",
+   "measured": 20847.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 16802.197622442152,
+   "deviation_ref": -0.19402323488069495,
+   "deviation_interval": [
+    -0.19426206921287714,
+    -0.19334635266032418
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-03#-3",
+   "metric": "heat_transfer",
+   "measured": 3216.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 3230.0589176501994,
+   "deviation_ref": 0.004371553995708766,
+   "deviation_interval": [
+    -0.038501507676721114,
+    0.019746853613761495
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-03#-3",
+   "metric": "shr",
+   "measured": 0.6900746182301182,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6839070273121923,
+   "deviation_ref": -0.006167590917925847,
+   "deviation_interval": [
+    -0.006861558344088858,
+    -0.005842048217923113
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-03#-3",
+   "metric": "water_dp",
+   "measured": 21345.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 16898.503445596492,
+   "deviation_ref": -0.20831560339205935,
+   "deviation_interval": [
+    -0.20855365565251083,
+    -0.20763742593891799
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-03#-4",
+   "metric": "heat_transfer",
+   "measured": 3388.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 3459.506386927317,
+   "deviation_ref": 0.021105781265441825,
+   "deviation_interval": [
+    -0.023305055608787928,
+    0.03717148518167335
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-03#-4",
+   "metric": "shr",
+   "measured": 0.7006763955030042,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6886642595409049,
+   "deviation_ref": -0.012012135962099268,
+   "deviation_interval": [
+    -0.013760260635806931,
+    -0.011664789548526344
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-03#-4",
+   "metric": "water_dp",
+   "measured": 22313.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 18302.97673278005,
+   "deviation_ref": -0.17971690347420555,
+   "deviation_interval": [
+    -0.1799789278090177,
+    -0.17897371858077604
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-03#-5",
+   "metric": "heat_transfer",
+   "measured": 3373.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 3421.4780788381954,
+   "deviation_ref": 0.0143723921844634,
+   "deviation_interval": [
+    -0.029694729836227896,
+    0.03027714513589097
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-03#-5",
+   "metric": "shr",
+   "measured": 0.6983089304528337,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6875344243457374,
+   "deviation_ref": -0.010774506107096293,
+   "deviation_interval": [
+    -0.012161521285985355,
+    -0.010463360411425149
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-03#-5",
+   "metric": "water_dp",
+   "measured": 20282.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 18352.477103530255,
+   "deviation_ref": -0.09513474492011365,
+   "deviation_interval": [
+    -0.09541774763356714,
+    -0.09433195968715191
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-03#-6",
+   "metric": "heat_transfer",
+   "measured": 3295.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 3373.2323166582173,
+   "deviation_ref": 0.02374273646683389,
+   "deviation_interval": [
+    -0.02043496840691661,
+    0.039706668419666746
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-03#-6",
+   "metric": "shr",
+   "measured": 0.6963733114966997,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6887265340844625,
+   "deviation_ref": -0.007646777412237182,
+   "deviation_interval": [
+    -0.009238457192309646,
+    -0.0073675970818782854
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-03#-6",
+   "metric": "water_dp",
+   "measured": 21284.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 17507.306876669463,
+   "deviation_ref": -0.17744282669284617,
+   "deviation_interval": [
+    -0.17770318576105304,
+    -0.1767031356081309
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-03#-7",
+   "metric": "heat_transfer",
+   "measured": 3294.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 3348.6960891940857,
+   "deviation_ref": 0.01660476296116742,
+   "deviation_interval": [
+    -0.027208843305533192,
+    0.032406677172610365
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-03#-7",
+   "metric": "shr",
+   "measured": 0.6965209444111597,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6873629764111145,
+   "deviation_ref": -0.009157968000045202,
+   "deviation_interval": [
+    -0.010426745820236949,
+    -0.008688859269858962
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-03#-7",
+   "metric": "water_dp",
+   "measured": 27238.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 17510.678715833754,
+   "deviation_ref": -0.35712318394031306,
+   "deviation_interval": [
+    -0.35732403580533867,
+    -0.3565522070967303
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-04#-1",
+   "metric": "heat_transfer",
+   "measured": 4090.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 4200.108416277024,
+   "deviation_ref": 0.02692137317286658,
+   "deviation_interval": [
+    -0.0191678242215767,
+    0.04353523470241516
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-04#-1",
+   "metric": "shr",
+   "measured": 0.7021090587432476,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6825624493417348,
+   "deviation_ref": -0.01954660940151276,
+   "deviation_interval": [
+    -0.020871793905965386,
+    -0.019093959524499993
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-04#-1",
+   "metric": "water_dp",
+   "measured": 34130.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 29278.135448538116,
+   "deviation_ref": -0.1421583519326658,
+   "deviation_interval": [
+    -0.14243248741457037,
+    -0.14138664829188552
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-04#-2",
+   "metric": "heat_transfer",
+   "measured": 4105.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 4216.604456843023,
+   "deviation_ref": 0.027187443810724243,
+   "deviation_interval": [
+    -0.018953810771624835,
+    0.0438469779728794
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-04#-2",
+   "metric": "shr",
+   "measured": 0.7037895485383368,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.683525011682352,
+   "deviation_ref": -0.020264536855984727,
+   "deviation_interval": [
+    -0.02166603988877569,
+    -0.019546292548748845
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-04#-2",
+   "metric": "water_dp",
+   "measured": 34468.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 29335.971226489346,
+   "deviation_ref": -0.14889256044768062,
+   "deviation_interval": [
+    -0.1491661119113844,
+    -0.148122039048605
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-04#-3",
+   "metric": "heat_transfer",
+   "measured": 4188.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 4266.163441530687,
+   "deviation_ref": 0.01866366798727004,
+   "deviation_interval": [
+    -0.02743295047124117,
+    0.03526841874387743
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-04#-3",
+   "metric": "shr",
+   "measured": 0.6993885083256494,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6816517924752952,
+   "deviation_ref": -0.01773671585035419,
+   "deviation_interval": [
+    -0.019099812119542148,
+    -0.017244894568585245
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-04#-3",
+   "metric": "water_dp",
+   "measured": 34972.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 30766.362694749492,
+   "deviation_ref": -0.12025727168164557,
+   "deviation_interval": [
+    -0.12053589676541299,
+    -0.11947502867569193
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-04#-4",
+   "metric": "heat_transfer",
+   "measured": 4155.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 4256.278368343481,
+   "deviation_ref": 0.024375058566421304,
+   "deviation_interval": [
+    -0.021737532696885165,
+    0.041055505533818204
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-04#-4",
+   "metric": "shr",
+   "measured": 0.7040734507441008,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6845915265830522,
+   "deviation_ref": -0.019481924161048547,
+   "deviation_interval": [
+    -0.021219888355765604,
+    -0.01898128498487739
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-04#-4",
+   "metric": "water_dp",
+   "measured": 31392.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 29552.23486557236,
+   "deviation_ref": -0.05860617782962663,
+   "deviation_interval": [
+    -0.05891207723661118,
+    -0.057744438880308446
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-04#-5",
+   "metric": "heat_transfer",
+   "measured": 4127.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 4248.288251130599,
+   "deviation_ref": 0.02938896320101736,
+   "deviation_interval": [
+    -0.01688325198372287,
+    0.04609898331475604
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-04#-5",
+   "metric": "shr",
+   "measured": 0.7034277091393583,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6832023639034283,
+   "deviation_ref": -0.020225345235930003,
+   "deviation_interval": [
+    -0.02166623581111249,
+    -0.019487153337690133
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-04#-5",
+   "metric": "water_dp",
+   "measured": 30850.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 29348.223910684872,
+   "deviation_ref": -0.04867993806532023,
+   "deviation_interval": [
+    -0.048989420370900705,
+    -0.04780878146680534
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-04#-6",
+   "metric": "heat_transfer",
+   "measured": 4109.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 4225.564483493099,
+   "deviation_ref": 0.028368090409612856,
+   "deviation_interval": [
+    -0.01782222477220541,
+    0.04504484831515554
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-04#-6",
+   "metric": "shr",
+   "measured": 0.7032113654946385,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6834234213257845,
+   "deviation_ref": -0.019787944168853988,
+   "deviation_interval": [
+    -0.02119774258910212,
+    -0.019065565021391895
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-04#-6",
+   "metric": "water_dp",
+   "measured": 30860.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 29273.578988952737,
+   "deviation_ref": -0.05140703211429887,
+   "deviation_interval": [
+    -0.05171349503738054,
+    -0.050543983735993114
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-04#-7",
+   "metric": "heat_transfer",
+   "measured": 4153.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 4235.321526330522,
+   "deviation_ref": 0.019822183079827083,
+   "deviation_interval": [
+    -0.02611795665637051,
+    0.036383903809805496
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-04#-7",
+   "metric": "shr",
+   "measured": 0.7151817069375696,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6825578690471226,
+   "deviation_ref": -0.03262383789044698,
+   "deviation_interval": [
+    -0.03398476646843762,
+    -0.03214779513085364
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-04#-7",
+   "metric": "water_dp",
+   "measured": 37429.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 29910.55182368605,
+   "deviation_ref": -0.2008722695320192,
+   "deviation_interval": [
+    -0.20112730801815604,
+    -0.2001550782176289
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-05#-1",
+   "metric": "heat_transfer",
+   "measured": 4990.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 5113.651223221282,
+   "deviation_ref": 0.024779804252761828,
+   "deviation_interval": [
+    0.018386725834591777,
+    0.04088940997929069
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-05#-1",
+   "metric": "shr",
+   "measured": 0.7136339135636767,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6827816041076322,
+   "deviation_ref": -0.030852309456044447,
+   "deviation_interval": [
+    -0.031010814193777936,
+    -0.030534457027662776
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-05#-1",
+   "metric": "water_dp",
+   "measured": 25886.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 24536.7649228918,
+   "deviation_ref": -0.05212219257931694,
+   "deviation_interval": [
+    -0.052368097373356015,
+    -0.052023890929765004
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-05#-2",
+   "metric": "heat_transfer",
+   "measured": 4998.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 5101.022700222461,
+   "deviation_ref": 0.02061278515855558,
+   "deviation_interval": [
+    0.01423748372452649,
+    0.03667674298247059
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-05#-2",
+   "metric": "shr",
+   "measured": 0.7133878402256818,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.683637615265578,
+   "deviation_ref": -0.02975022496010382,
+   "deviation_interval": [
+    -0.029906785637568767,
+    -0.029437698171466686
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-05#-2",
+   "metric": "water_dp",
+   "measured": 23796.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 24540.251058700203,
+   "deviation_ref": 0.03127630940915305,
+   "deviation_interval": [
+    0.031009558248777935,
+    0.03138296047876521
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-05#-3",
+   "metric": "heat_transfer",
+   "measured": 5106.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 5213.3684172903995,
+   "deviation_ref": 0.02102789214461409,
+   "deviation_interval": [
+    0.014704349228054081,
+    0.03697107559744284
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-05#-3",
+   "metric": "shr",
+   "measured": 0.7142521818147114,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6840127667535768,
+   "deviation_ref": -0.03023941506113459,
+   "deviation_interval": [
+    -0.030409643396134167,
+    -0.029889550451977387
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-05#-3",
+   "metric": "water_dp",
+   "measured": 23712.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 25367.586773180345,
+   "deviation_ref": 0.0698206297731252,
+   "deviation_interval": [
+    0.06954383607271408,
+    0.06993117362862811
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-05#-4",
+   "metric": "heat_transfer",
+   "measured": 5111.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 5228.4638337530405,
+   "deviation_ref": 0.022982554050682946,
+   "deviation_interval": [
+    0.016670686323912776,
+    0.03889915276295097
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-05#-4",
+   "metric": "shr",
+   "measured": 0.713201750161205,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6846797637304769,
+   "deviation_ref": -0.02852198643072812,
+   "deviation_interval": [
+    -0.02869846102688589,
+    -0.02815582912393655
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-05#-4",
+   "metric": "water_dp",
+   "measured": 22393.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 25412.954086757265,
+   "deviation_ref": 0.13486152309906063,
+   "deviation_interval": [
+    0.13456703997354724,
+    0.13497908140465054
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-05#-5",
+   "metric": "heat_transfer",
+   "measured": 5023.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 5141.050137922953,
+   "deviation_ref": 0.02350191875830232,
+   "deviation_interval": [
+    0.017105627001703594,
+    0.0396205661337774
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-05#-5",
+   "metric": "shr",
+   "measured": 0.7130461949255891,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6798374933114167,
+   "deviation_ref": -0.03320870161417233,
+   "deviation_interval": [
+    -0.033363061246300285,
+    -0.032899926448502814
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-05#-5",
+   "metric": "water_dp",
+   "measured": 24490.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 25027.67370458605,
+   "deviation_ref": 0.021954826647041736,
+   "deviation_interval": [
+    0.021692473417497027,
+    0.022059714705941813
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-05#-6",
+   "metric": "heat_transfer",
+   "measured": 5067.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 5104.649167789258,
+   "deviation_ref": 0.007430267967092563,
+   "deviation_interval": [
+    0.0011137418621991468,
+    0.023345902381365136
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-05#-6",
+   "metric": "shr",
+   "measured": 0.7149602066518388,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6837494238491632,
+   "deviation_ref": -0.03121078280267564,
+   "deviation_interval": [
+    -0.03136127154024926,
+    -0.03091343156310311
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-05#-6",
+   "metric": "water_dp",
+   "measured": 25872.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 25076.75833131303,
+   "deviation_ref": -0.030737541306701033,
+   "deviation_interval": [
+    -0.030983786018520032,
+    -0.030639053394625915
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-05#-7",
+   "metric": "heat_transfer",
+   "measured": 5010.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 5050.954077602773,
+   "deviation_ref": 0.00817446658737997,
+   "deviation_interval": [
+    0.0018124850353029576,
+    0.024197794820111973
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-05#-7",
+   "metric": "shr",
+   "measured": 0.7108797879976637,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6824261653068273,
+   "deviation_ref": -0.0284536226908364,
+   "deviation_interval": [
+    -0.02859300886607874,
+    -0.02818574007362684
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-05#-7",
+   "metric": "water_dp",
+   "measured": 24754.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 24644.647642279975,
+   "deviation_ref": -0.0044175631300001905,
+   "deviation_interval": [
+    -0.004670378195451685,
+    -0.004316360197010871
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-06#-1",
+   "metric": "heat_transfer",
+   "measured": 6024.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 6194.433488923976,
+   "deviation_ref": 0.028292411839969445,
+   "deviation_interval": [
+    0.02183666208598245,
+    0.04457934877959313
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-06#-1",
+   "metric": "shr",
+   "measured": 0.7045884270943632,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6776280964871321,
+   "deviation_ref": -0.02696033060723113,
+   "deviation_interval": [
+    -0.027104701923061802,
+    -0.026669775624496128
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-06#-1",
+   "metric": "water_dp",
+   "measured": 40622.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 38515.64286113929,
+   "deviation_ref": -0.05185262022698811,
+   "deviation_interval": [
+    -0.05209194691815244,
+    -0.051756997779417335
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-06#-2",
+   "metric": "heat_transfer",
+   "measured": 5957.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 6190.848001596761,
+   "deviation_ref": 0.03925600161100573,
+   "deviation_interval": [
+    0.032772819153986665,
+    0.05561547224274932
+   ],
+   "pass_ref": true,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-06#-2",
+   "metric": "shr",
+   "measured": 0.7092552972506243,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.67949394940633,
+   "deviation_ref": -0.029761347844294295,
+   "deviation_interval": [
+    -0.0299165065648741,
+    -0.029443698704621712
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-06#-2",
+   "metric": "water_dp",
+   "measured": 41635.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 37928.40098868287,
+   "deviation_ref": -0.08902603605901593,
+   "deviation_interval": [
+    -0.08925927029329972,
+    -0.08893292252379437
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-06#-3",
+   "metric": "heat_transfer",
+   "measured": 6407.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 6548.507865720433,
+   "deviation_ref": 0.022086446967447104,
+   "deviation_interval": [
+    0.015788801408860298,
+    0.03799893485263306
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-06#-3",
+   "metric": "shr",
+   "measured": 0.702207625051308,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6762579665863999,
+   "deviation_ref": -0.025949658464908043,
+   "deviation_interval": [
+    -0.02611838221385654,
+    -0.025590625373542397
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-06#-3",
+   "metric": "water_dp",
+   "measured": 50276.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 42917.00552931876,
+   "deviation_ref": -0.1463719164349041,
+   "deviation_interval": [
+    -0.14658344374661791,
+    -0.14628761029821002
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-06#-4",
+   "metric": "heat_transfer",
+   "measured": 6269.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 6636.355674862784,
+   "deviation_ref": 0.05859876772416395,
+   "deviation_interval": [
+    0.0522645310772325,
+    0.07461766035147388
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-06#-4",
+   "metric": "shr",
+   "measured": 0.7059753414663554,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6817661955876367,
+   "deviation_ref": -0.024209145878718696,
+   "deviation_interval": [
+    -0.02442239203212293,
+    -0.023736211832355858
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-06#-4",
+   "metric": "water_dp",
+   "measured": 47610.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 40840.94812997509,
+   "deviation_ref": -0.1421771029200779,
+   "deviation_interval": [
+    -0.14240285953939702,
+    -0.14208738487022088
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-06#-5",
+   "metric": "heat_transfer",
+   "measured": 6229.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 6591.328689130746,
+   "deviation_ref": 0.05816803485804245,
+   "deviation_interval": [
+    0.051824442658098935,
+    0.07420982692854383
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-06#-5",
+   "metric": "shr",
+   "measured": 0.707330984927349,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.68229075818522,
+   "deviation_ref": -0.025040226742129024,
+   "deviation_interval": [
+    -0.025251538149601682,
+    -0.02457268587147421
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-06#-5",
+   "metric": "water_dp",
+   "measured": 48110.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 40895.67942181506,
+   "deviation_ref": -0.1499546991932018,
+   "deviation_interval": [
+    -0.15017644490425897,
+    -0.14986656341334048
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-06#-6",
+   "metric": "heat_transfer",
+   "measured": 6251.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 6570.433515211403,
+   "deviation_ref": 0.051101186244025376,
+   "deviation_interval": [
+    0.04478072281982426,
+    0.06708171015509845
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-06#-6",
+   "metric": "shr",
+   "measured": 0.7074260575577158,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6807353140461324,
+   "deviation_ref": -0.026690743511583404,
+   "deviation_interval": [
+    -0.026897043088987882,
+    -0.026236126001996762
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-06#-6",
+   "metric": "water_dp",
+   "measured": 48618.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 40581.773747598665,
+   "deviation_ref": -0.16529322992310125,
+   "deviation_interval": [
+    -0.16551150600771325,
+    -0.16520644067859713
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-06#-7",
+   "metric": "heat_transfer",
+   "measured": 6173.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 6206.247062626506,
+   "deviation_ref": 0.005385884112506956,
+   "deviation_interval": [
+    -0.0009578012409550141,
+    0.021391355215328423
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-06#-7",
+   "metric": "shr",
+   "measured": 0.6959251018700912,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6767189610255655,
+   "deviation_ref": -0.019206140844525654,
+   "deviation_interval": [
+    -0.019342613913998052,
+    -0.018934691436015227
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "post-06#-7",
+   "metric": "water_dp",
+   "measured": 55556.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 40419.94033223746,
+   "deviation_ref": -0.27244689444457026,
+   "deviation_interval": [
+    -0.2726233752275815,
+    -0.2723763526428026
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-03#-1",
+   "metric": "heat_transfer",
+   "measured": 3396.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 3425.241969722065,
+   "deviation_ref": 0.008610709576579723,
+   "deviation_interval": [
+    -0.011447595120709697,
+    0.008610709576579723
+   ],
+   "pass_ref": true,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-03#-1",
+   "metric": "shr",
+   "measured": 0.7032138841842854,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6765085313345064,
+   "deviation_ref": -0.02670535284977904,
+   "deviation_interval": [
+    -0.027993412303719212,
+    -0.02670535284977904
+   ],
+   "pass_ref": true,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-03#-1",
+   "metric": "water_dp",
+   "measured": 30980.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 20691.88016964472,
+   "deviation_ref": -0.3320890842593699,
+   "deviation_interval": [
+    -0.3320890842593699,
+    -0.3318886464984989
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-03#-2",
+   "metric": "heat_transfer",
+   "measured": 3346.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 3428.2291852207154,
+   "deviation_ref": 0.024575369163393646,
+   "deviation_interval": [
+    0.004044400902769585,
+    0.032358753170619536
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-03#-2",
+   "metric": "shr",
+   "measured": 0.7043089525692884,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6801788662955919,
+   "deviation_ref": -0.024130086273696505,
+   "deviation_interval": [
+    -0.025398336008369715,
+    -0.024130086273696505
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-03#-2",
+   "metric": "water_dp",
+   "measured": 26156.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 20628.834552830085,
+   "deviation_ref": -0.21131539406522082,
+   "deviation_interval": [
+    -0.21140316217586919,
+    -0.21107771245314266
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-03#-3",
+   "metric": "heat_transfer",
+   "measured": 3356.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 3395.9181180952414,
+   "deviation_ref": 0.011894552471764408,
+   "deviation_interval": [
+    -0.008255672194703134,
+    0.01952494446266373
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-03#-3",
+   "metric": "shr",
+   "measured": 0.7033324960806493,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6815728123623256,
+   "deviation_ref": -0.021759683718323708,
+   "deviation_interval": [
+    -0.022983825186485674,
+    -0.021257307117759527
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-03#-3",
+   "metric": "water_dp",
+   "measured": 25972.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 19916.658924168267,
+   "deviation_ref": -0.23314881702724988,
+   "deviation_interval": [
+    -0.23323461219895225,
+    -0.23291631652224687
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-03#-4",
+   "metric": "heat_transfer",
+   "measured": 3407.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 3387.9314594688117,
+   "deviation_ref": -0.005596871303548134,
+   "deviation_interval": [
+    -0.025118372153703494,
+    -0.005596871303548134
+   ],
+   "pass_ref": true,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-03#-4",
+   "metric": "shr",
+   "measured": 0.69744955345219,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6775426731892426,
+   "deviation_ref": -0.019906880262947402,
+   "deviation_interval": [
+    -0.021148764261084918,
+    -0.019906880262947402
+   ],
+   "pass_ref": true,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-03#-4",
+   "metric": "water_dp",
+   "measured": 31576.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 20707.784085535037,
+   "deviation_ref": -0.3441922952389461,
+   "deviation_interval": [
+    -0.3441922952389461,
+    -0.34400214869034496
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-03#-5",
+   "metric": "heat_transfer",
+   "measured": 3412.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 3412.2539333903937,
+   "deviation_ref": 7.442361969345335e-05,
+   "deviation_interval": [
+    -0.019695854320050832,
+    7.442361969345335e-05
+   ],
+   "pass_ref": true,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-03#-5",
+   "metric": "shr",
+   "measured": 0.6993866034945229,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.677957612680668,
+   "deviation_ref": -0.021428990813854853,
+   "deviation_interval": [
+    -0.02267972653284389,
+    -0.021428990813854853
+   ],
+   "pass_ref": true,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-03#-5",
+   "metric": "water_dp",
+   "measured": 26399.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 20645.37915600423,
+   "deviation_ref": -0.2179484391073817,
+   "deviation_interval": [
+    -0.2179484391073817,
+    -0.2177168140538398
+   ],
+   "pass_ref": true,
+   "robust": false,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-03#-6",
+   "metric": "heat_transfer",
+   "measured": 3325.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 3401.8408805320805,
+   "deviation_ref": 0.023110039257768555,
+   "deviation_interval": [
+    0.0027672733852153186,
+    0.030810224723695212
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-03#-6",
+   "metric": "shr",
+   "measured": 0.6983607607655452,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6793121934281838,
+   "deviation_ref": -0.019048567337361377,
+   "deviation_interval": [
+    -0.020294347443490013,
+    -0.018536046345237867
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-03#-6",
+   "metric": "water_dp",
+   "measured": 25563.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 19740.415645791043,
+   "deviation_ref": -0.22777390580952772,
+   "deviation_interval": [
+    -0.22786160237451325,
+    -0.22753646698119168
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-03#-7",
+   "metric": "heat_transfer",
+   "measured": 3275.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 3371.6675562065534,
+   "deviation_ref": 0.029516811055436243,
+   "deviation_interval": [
+    0.00907689227710784,
+    0.03726340840057807
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-03#-7",
+   "metric": "shr",
+   "measured": 0.7008063723152834,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.68178888908366,
+   "deviation_ref": -0.019017483231623444,
+   "deviation_interval": [
+    -0.020218471189413334,
+    -0.019017483231623444
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-03#-7",
+   "metric": "water_dp",
+   "measured": 24700.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 19320.18002118013,
+   "deviation_ref": -0.2178064768752983,
+   "deviation_interval": [
+    -0.21789514293452783,
+    -0.2175663675079056
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-04#-1",
+   "metric": "heat_transfer",
+   "measured": 4136.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 4359.372524036343,
+   "deviation_ref": 0.054006896527162285,
+   "deviation_interval": [
+    0.031553275989278706,
+    0.06253420531665044
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-04#-1",
+   "metric": "shr",
+   "measured": 0.7295306910768468,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6993426399662437,
+   "deviation_ref": -0.030188051110603076,
+   "deviation_interval": [
+    -0.03152935398020296,
+    -0.0287365060592788
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-04#-1",
+   "metric": "water_dp",
+   "measured": 15040.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 12195.041772496072,
+   "deviation_ref": -0.18915945661595268,
+   "deviation_interval": [
+    -0.18925497749480702,
+    -0.18889836165079887
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-04#-2",
+   "metric": "heat_transfer",
+   "measured": 4069.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 4355.926314122229,
+   "deviation_ref": 0.07051519147756924,
+   "deviation_interval": [
+    0.04762931237529244,
+    0.07927063177333693
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-04#-2",
+   "metric": "shr",
+   "measured": 0.7231161555154032,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.7005026649784833,
+   "deviation_ref": -0.022613490536919856,
+   "deviation_interval": [
+    -0.02578690497178704,
+    -0.022613490536919856
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-04#-2",
+   "metric": "water_dp",
+   "measured": 16602.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 11703.0324270032,
+   "deviation_ref": -0.29508297632796054,
+   "deviation_interval": [
+    -0.29516932372208804,
+    -0.29484872589901523
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-04#-3",
+   "metric": "heat_transfer",
+   "measured": 3987.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 4166.077186766946,
+   "deviation_ref": 0.04491527132353812,
+   "deviation_interval": [
+    0.023819949372337224,
+    0.05293178369408591
+   ],
+   "pass_ref": true,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-04#-3",
+   "metric": "shr",
+   "measured": 0.7145752541454091,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6943487015724371,
+   "deviation_ref": -0.020226552572972012,
+   "deviation_interval": [
+    -0.021488905259212876,
+    -0.018895777178483786
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-04#-3",
+   "metric": "water_dp",
+   "measured": 17093.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 11377.760335904197,
+   "deviation_ref": -0.33436141485378823,
+   "deviation_interval": [
+    -0.33443558220853953,
+    -0.3341578565643182
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-04#-4",
+   "metric": "heat_transfer",
+   "measured": 4253.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 4334.294304858509,
+   "deviation_ref": 0.019114579087352368,
+   "deviation_interval": [
+    -0.001612563624348362,
+    0.02702286639970075
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-04#-4",
+   "metric": "shr",
+   "measured": 0.7004090716137867,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6853387606504343,
+   "deviation_ref": -0.015070310963352429,
+   "deviation_interval": [
+    -0.016773832115970944,
+    -0.013573794346110502
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-04#-4",
+   "metric": "water_dp",
+   "measured": 41049.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 12928.54996236373,
+   "deviation_ref": -0.685045921645747,
+   "deviation_interval": [
+    -0.685081077680165,
+    -0.6849488950876343
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-04#-5",
+   "metric": "heat_transfer",
+   "measured": 4078.0000000000005,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 4210.344347752525,
+   "deviation_ref": 0.03245324859061416,
+   "deviation_interval": [
+    0.011439997802486612,
+    0.04044132939886724
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-04#-5",
+   "metric": "shr",
+   "measured": 0.707670090470902,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6928707197257514,
+   "deviation_ref": -0.014799370745150586,
+   "deviation_interval": [
+    -0.01670715988930649,
+    -0.013968033312240613
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-04#-5",
+   "metric": "water_dp",
+   "measured": 36675.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 11542.282666256942,
+   "deviation_ref": -0.6852819995567296,
+   "deviation_interval": [
+    -0.6853178396752252,
+    -0.6851840747630569
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-04#-6",
+   "metric": "heat_transfer",
+   "measured": 4184.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 4374.233442038031,
+   "deviation_ref": 0.0454668838523018,
+   "deviation_interval": [
+    0.023512698971248636,
+    0.05382099251649297
+   ],
+   "pass_ref": true,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-04#-6",
+   "metric": "shr",
+   "measured": 0.7209749885457315,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6929675854050168,
+   "deviation_ref": -0.028007403140714704,
+   "deviation_interval": [
+    -0.030731321880386853,
+    -0.027085444203925668
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-04#-6",
+   "metric": "water_dp",
+   "measured": 16213.000000000002,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 12514.992852496332,
+   "deviation_ref": -0.2280890117500567,
+   "deviation_interval": [
+    -0.22817967816709206,
+    -0.227841727611113
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-04#-7",
+   "metric": "heat_transfer",
+   "measured": 4233.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 4401.524350271513,
+   "deviation_ref": 0.03981203644495945,
+   "deviation_interval": [
+    0.017481684032506717,
+    0.04829932386280156
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-04#-7",
+   "metric": "shr",
+   "measured": 0.7277957147735401,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6985601659088297,
+   "deviation_ref": -0.02923554886471036,
+   "deviation_interval": [
+    -0.03189591809284009,
+    -0.027741871065681156
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-04#-7",
+   "metric": "water_dp",
+   "measured": 14810.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 12393.810713742452,
+   "deviation_ref": -0.1631457992071268,
+   "deviation_interval": [
+    -0.16324582908208685,
+    -0.16287293990955354
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-05#-1",
+   "metric": "heat_transfer",
+   "measured": 4913.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 5115.002042560309,
+   "deviation_ref": 0.04111582384699952,
+   "deviation_interval": [
+    0.017970391827261123,
+    0.04998899425258663
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-05#-1",
+   "metric": "shr",
+   "measured": 0.7242657671297807,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6925332162181048,
+   "deviation_ref": -0.03173255091167593,
+   "deviation_interval": [
+    -0.03549926326754682,
+    -0.03173255091167593
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-05#-1",
+   "metric": "water_dp",
+   "measured": 22349.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 17829.191858138074,
+   "deviation_ref": -0.20223760087081866,
+   "deviation_interval": [
+    -0.2023367228846087,
+    -0.20196690912978388
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-05#-2",
+   "metric": "heat_transfer",
+   "measured": 4764.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 5119.136548046238,
+   "deviation_ref": 0.07454587490475184,
+   "deviation_interval": [
+    0.05030552052948134,
+    0.08381111014615117
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-05#-2",
+   "metric": "shr",
+   "measured": 0.7361087249397029,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6969998631279684,
+   "deviation_ref": -0.03910886181173456,
+   "deviation_interval": [
+    -0.042784106218780704,
+    -0.03910886181173456
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-05#-2",
+   "metric": "water_dp",
+   "measured": 20947.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 16913.31259678857,
+   "deviation_ref": -0.19256635333037797,
+   "deviation_interval": [
+    -0.1926712370340371,
+    -0.1922820741721979
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-05#-3",
+   "metric": "heat_transfer",
+   "measured": 4837.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 5142.25041513758,
+   "deviation_ref": 0.0631073837373537,
+   "deviation_interval": [
+    0.03914652543268238,
+    0.07224245362466952
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-05#-3",
+   "metric": "shr",
+   "measured": 0.7356789675389689,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6936590886422047,
+   "deviation_ref": -0.04201987889676417,
+   "deviation_interval": [
+    -0.04381323527095393,
+    -0.040327508020479796
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-05#-3",
+   "metric": "water_dp",
+   "measured": 27590.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 17436.941707991762,
+   "deviation_ref": -0.3679977633928321,
+   "deviation_interval": [
+    -0.36807840736397224,
+    -0.3677772446302676
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-05#-4",
+   "metric": "heat_transfer",
+   "measured": 4867.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 5094.438521136023,
+   "deviation_ref": 0.046730741963431965,
+   "deviation_interval": [
+    0.023676937684381727,
+    0.05551287320324971
+   ],
+   "pass_ref": true,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-05#-4",
+   "metric": "shr",
+   "measured": 0.7322738468180847,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6886443123502176,
+   "deviation_ref": -0.043629534467867104,
+   "deviation_interval": [
+    -0.0455022498489297,
+    -0.0419444459262206
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-05#-4",
+   "metric": "water_dp",
+   "measured": 21910.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 17687.744856830162,
+   "deviation_ref": -0.19270904350387208,
+   "deviation_interval": [
+    -0.19280878258080292,
+    -0.19243584669443836
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-05#-5",
+   "metric": "heat_transfer",
+   "measured": 4893.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 5101.752254740599,
+   "deviation_ref": 0.04266344875139971,
+   "deviation_interval": [
+    0.019592356594637428,
+    0.05147223940475354
+   ],
+   "pass_ref": true,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-05#-5",
+   "metric": "shr",
+   "measured": 0.7317140680081601,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6883401639297404,
+   "deviation_ref": -0.04337390407841968,
+   "deviation_interval": [
+    -0.045276055124017556,
+    -0.04167741311294526
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-05#-5",
+   "metric": "water_dp",
+   "measured": 21011.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 17645.26618446014,
+   "deviation_ref": -0.16018913024319936,
+   "deviation_interval": [
+    -0.160293660990807,
+    -0.1599021635478659
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-05#-6",
+   "metric": "heat_transfer",
+   "measured": 4811.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 5108.457425568589,
+   "deviation_ref": 0.061828606437037914,
+   "deviation_interval": [
+    0.037876732776719324,
+    0.07100041969747584
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-05#-6",
+   "metric": "shr",
+   "measured": 0.7377848826882711,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6968800499197944,
+   "deviation_ref": -0.040904832768476784,
+   "deviation_interval": [
+    -0.04459938260663876,
+    -0.040904832768476784
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-05#-6",
+   "metric": "water_dp",
+   "measured": 20315.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 17184.278280103405,
+   "deviation_ref": -0.15410887127229123,
+   "deviation_interval": [
+    -0.15421695881625763,
+    -0.15381517901358144
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-05#-7",
+   "metric": "heat_transfer",
+   "measured": 4572.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 5029.785274619377,
+   "deviation_ref": 0.10012801282138595,
+   "deviation_interval": [
+    0.07532888896786094,
+    0.1096063868649213
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-05#-7",
+   "metric": "shr",
+   "measured": 0.7292838768347685,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6992605217662625,
+   "deviation_ref": -0.030023355068505952,
+   "deviation_interval": [
+    -0.032248783330473985,
+    -0.029060009439481727
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-05#-7",
+   "metric": "water_dp",
+   "measured": 19208.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 16109.113626964623,
+   "deviation_ref": -0.1613331097998426,
+   "deviation_interval": [
+    -0.1614415355491874,
+    -0.16103753075888194
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-06#-1",
+   "metric": "heat_transfer",
+   "measured": 5713.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 6080.988412253826,
+   "deviation_ref": 0.06441246494903319,
+   "deviation_interval": [
+    0.03971629512397512,
+    0.07386028542352574
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-06#-1",
+   "metric": "shr",
+   "measured": 0.7344344402814269,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.691571022341109,
+   "deviation_ref": -0.042863417940317894,
+   "deviation_interval": [
+    -0.046830149782508435,
+    -0.042863417940317894
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-06#-1",
+   "metric": "water_dp",
+   "measured": 29058.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 25708.341245596297,
+   "deviation_ref": -0.11527492444090104,
+   "deviation_interval": [
+    -0.11539333911838834,
+    -0.11495331818959209
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-06#-2",
+   "metric": "heat_transfer",
+   "measured": 5748.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 6115.963168050788,
+   "deviation_ref": 0.064015860829991,
+   "deviation_interval": [
+    0.039447564164394544,
+    0.0733996498917191
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-06#-2",
+   "metric": "shr",
+   "measured": 0.7306912167231749,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6870997232254729,
+   "deviation_ref": -0.04359149349770208,
+   "deviation_interval": [
+    -0.04563514002377167,
+    -0.04179051662972011
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-06#-2",
+   "metric": "water_dp",
+   "measured": 29656.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 25584.17934673821,
+   "deviation_ref": -0.13730174849142807,
+   "deviation_interval": [
+    -0.13741845377559714,
+    -0.13698213312294394
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-06#-3",
+   "metric": "heat_transfer",
+   "measured": 5901.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 6259.982932446927,
+   "deviation_ref": 0.06083425393101627,
+   "deviation_interval": [
+    0.03591059973523647,
+    0.07033432102549408
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-06#-3",
+   "metric": "shr",
+   "measured": 0.7280777946795559,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.687660042094583,
+   "deviation_ref": -0.04041775258497293,
+   "deviation_interval": [
+    -0.04395517383196568,
+    -0.0385306478413614
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-06#-3",
+   "metric": "water_dp",
+   "measured": 30609.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 27495.776320350647,
+   "deviation_ref": -0.10170942140054728,
+   "deviation_interval": [
+    -0.10183114732979759,
+    -0.10137786195907816
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-06#-4",
+   "metric": "heat_transfer",
+   "measured": 5818.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 6167.635770357754,
+   "deviation_ref": 0.060095526015427,
+   "deviation_interval": [
+    0.03539920608837788,
+    0.06950721871208931
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-06#-4",
+   "metric": "shr",
+   "measured": 0.7232096314353476,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6887722463363817,
+   "deviation_ref": -0.03443738509896588,
+   "deviation_interval": [
+    -0.037186737072451015,
+    -0.03260135313468282
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-06#-4",
+   "metric": "water_dp",
+   "measured": 35875.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 27120.56772696582,
+   "deviation_ref": -0.24402598670478548,
+   "deviation_interval": [
+    -0.24412563110784324,
+    -0.24375391088371923
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-06#-6",
+   "metric": "heat_transfer",
+   "measured": 6201.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 6451.084124388444,
+   "deviation_ref": 0.040329644313569446,
+   "deviation_interval": [
+    0.015426682226265864,
+    0.04985740292104879
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-06#-6",
+   "metric": "shr",
+   "measured": 0.7197225925783515,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6843315329661576,
+   "deviation_ref": -0.03539105961219391,
+   "deviation_interval": [
+    -0.03783023631136384,
+    -0.03338161091526004
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-06#-6",
+   "metric": "water_dp",
+   "measured": 42005.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 30459.318565322785,
+   "deviation_ref": -0.2748644550571888,
+   "deviation_interval": [
+    -0.2749618063631094,
+    -0.27459761326988297
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-06#-7",
+   "metric": "heat_transfer",
+   "measured": 6163.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 6435.0009059612885,
+   "deviation_ref": 0.0441344971541926,
+   "deviation_interval": [
+    0.019156892757334232,
+    0.05371886602464393
+   ],
+   "pass_ref": true,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-06#-7",
+   "metric": "shr",
+   "measured": 0.7191546766051192,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6863010869658523,
+   "deviation_ref": -0.03285358963926688,
+   "deviation_interval": [
+    -0.03665254239149196,
+    -0.03223307987083468
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-06#-7",
+   "metric": "water_dp",
+   "measured": 40882.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 30033.94753008685,
+   "deviation_ref": -0.26535033682092724,
+   "deviation_interval": [
+    -0.2654497689110735,
+    -0.26507851017244477
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-14#-1",
+   "metric": "heat_transfer",
+   "measured": 13758.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 14385.040408040217,
+   "deviation_ref": 0.04557642157582609,
+   "deviation_interval": [
+    0.01889097917807403,
+    0.0558173146808032
+   ],
+   "pass_ref": true,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-14#-1",
+   "metric": "shr",
+   "measured": 0.7567394085621665,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.7053342008761659,
+   "deviation_ref": -0.05140520768600054,
+   "deviation_interval": [
+    -0.05448797914257664,
+    -0.050857729350824665
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-14#-1",
+   "metric": "water_dp",
+   "measured": 39979.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 37779.09620602813,
+   "deviation_ref": -0.05502648375326724,
+   "deviation_interval": [
+    -0.05516867469593123,
+    -0.054642004108768516
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-14#-2",
+   "metric": "heat_transfer",
+   "measured": 13098.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 14222.544195131943,
+   "deviation_ref": 0.08585617614383434,
+   "deviation_interval": [
+    0.05822627895509225,
+    0.09647452250090116
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-14#-2",
+   "metric": "shr",
+   "measured": 0.7397911409580323,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6980910860753545,
+   "deviation_ref": -0.041700054882677806,
+   "deviation_interval": [
+    -0.04493577127022941,
+    -0.04110520060526579
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-14#-2",
+   "metric": "water_dp",
+   "measured": 38304.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 34651.22323669429,
+   "deviation_ref": -0.09536280188245894,
+   "deviation_interval": [
+    -0.09550876875102321,
+    -0.09496925231199438
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-14#-3",
+   "metric": "heat_transfer",
+   "measured": 12748.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 14084.996686176448,
+   "deviation_ref": 0.10487893678823723,
+   "deviation_interval": [
+    0.0769110394064858,
+    0.11561715985671883
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-14#-3",
+   "metric": "shr",
+   "measured": 0.7365863283559352,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6998667977076312,
+   "deviation_ref": -0.03671953064830402,
+   "deviation_interval": [
+    -0.039866854119918305,
+    -0.0361483168518435
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-14#-3",
+   "metric": "water_dp",
+   "measured": 37764.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 34210.435978182824,
+   "deviation_ref": -0.0940992485387453,
+   "deviation_interval": [
+    -0.09424345780643562,
+    -0.09371028755979816
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-14#-4",
+   "metric": "heat_transfer",
+   "measured": 13508.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 15064.989376288093,
+   "deviation_ref": 0.11526424165591442,
+   "deviation_interval": [
+    0.08490339000938918,
+    0.12684040966523757
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-14#-4",
+   "metric": "shr",
+   "measured": 0.7503369985206761,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.7038624321137005,
+   "deviation_ref": -0.04647456640697567,
+   "deviation_interval": [
+    -0.05093185275176615,
+    -0.04638487168123262
+   ],
+   "pass_ref": true,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-14#-4",
+   "metric": "water_dp",
+   "measured": 43251.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 38388.6254431961,
+   "deviation_ref": -0.11242224588573446,
+   "deviation_interval": [
+    -0.11257558190093442,
+    -0.11201297349858719
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-14#-5",
+   "metric": "heat_transfer",
+   "measured": 13198.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 14261.058507997497,
+   "deviation_ref": 0.08054693953610381,
+   "deviation_interval": [
+    0.05294584206216246,
+    0.09107559655129771
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-14#-5",
+   "metric": "shr",
+   "measured": 0.7402739991095272,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6955800415132429,
+   "deviation_ref": -0.04469395759628425,
+   "deviation_interval": [
+    -0.04557356662695067,
+    -0.04093762502474396
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-14#-5",
+   "metric": "water_dp",
+   "measured": 39328.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 35632.56664260937,
+   "deviation_ref": -0.09396443646741848,
+   "deviation_interval": [
+    -0.094107542285232,
+    -0.09357632350170142
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-14#-6",
+   "metric": "heat_transfer",
+   "measured": 12821.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 14073.7023301206,
+   "deviation_ref": 0.0977070688807895,
+   "deviation_interval": [
+    0.06994296697395463,
+    0.10837418578909652
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-14#-6",
+   "metric": "shr",
+   "measured": 0.7471540536161426,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.7000512232856932,
+   "deviation_ref": -0.047102830330449375,
+   "deviation_interval": [
+    -0.051037985617226056,
+    -0.047102830330449375
+   ],
+   "pass_ref": true,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-14#-6",
+   "metric": "water_dp",
+   "measured": 36952.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 33703.81655148865,
+   "deviation_ref": -0.08790277788783696,
+   "deviation_interval": [
+    -0.08804967594774082,
+    -0.08750775053588888
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-14#-7",
+   "metric": "heat_transfer",
+   "measured": 13101.0,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 14388.432611708133,
+   "deviation_ref": 0.09826979709244577,
+   "deviation_interval": [
+    0.06994495140359658,
+    0.10915107856891848
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-14#-7",
+   "metric": "shr",
+   "measured": 0.7396014835995097,
+   "category": "counted",
+   "tolerance": 0.05,
+   "kind": "absolute",
+   "model_ref": 0.6997767114708027,
+   "deviation_ref": -0.03982477212870705,
+   "deviation_interval": [
+    -0.04311925415904683,
+    -0.0392136160140093
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "tan2015",
+   "id": "pre-14#-7",
+   "metric": "water_dp",
+   "measured": 39493.0,
+   "category": "scope_mismatch",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 35765.60558229283,
+   "deviation_ref": -0.0943811414100516,
+   "deviation_interval": [
+    -0.09452764618637588,
+    -0.09398636416350681
+   ],
+   "pass_ref": true,
+   "robust": true,
+   "scope_note": "表中水阻力含集管与接头；产品口径 a 为直管+回弯，水侧集管尚未建模"
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R410A-1",
+   "metric": "heat_transfer",
+   "measured": 13310.0,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 13412.63301739031,
+   "deviation_ref": 0.007710970502652792,
+   "deviation_interval": [
+    0.005804459900659031,
+    0.008367640435508639
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R410A-1",
+   "metric": "subcooling",
+   "measured": 6.2,
+   "category": "extrapolated",
+   "tolerance": 2.0,
+   "kind": "absolute",
+   "model_ref": 7.400734827712029,
+   "deviation_ref": 1.2007348277120284,
+   "deviation_interval": [
+    0.988830692371482,
+    1.273861129856459
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R410A-1",
+   "metric": "refrigerant_dp",
+   "measured": 18000,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 2353.2594544277526,
+   "deviation_ref": -0.8692633636429026,
+   "deviation_interval": [
+    -0.8702539803103233,
+    -0.8665312876428943
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中压降含集管支路（几何未给），与口径 a 不同口径；见 B7 诊断"
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R410A-2",
+   "metric": "heat_transfer",
+   "measured": 15290.0,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 15416.938568830446,
+   "deviation_ref": 0.008302064671710019,
+   "deviation_interval": [
+    0.005914071608951188,
+    0.009128496764808869
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R410A-2",
+   "metric": "subcooling",
+   "measured": 6.6,
+   "category": "extrapolated",
+   "tolerance": 2.0,
+   "kind": "absolute",
+   "model_ref": 7.623884508377955,
+   "deviation_ref": 1.0238845083779555,
+   "deviation_interval": [
+    0.7675456200094803,
+    1.1128118116262957
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R410A-2",
+   "metric": "refrigerant_dp",
+   "measured": 18000,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 2994.532101607416,
+   "deviation_ref": -0.8336371054662547,
+   "deviation_interval": [
+    -0.8349563171552598,
+    -0.830012061564821
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中压降含集管支路（几何未给），与口径 a 不同口径；见 B7 诊断"
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R410A-3",
+   "metric": "heat_transfer",
+   "measured": 17800.0,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 18238.37652443747,
+   "deviation_ref": 0.024627894631318537,
+   "deviation_interval": [
+    0.020778221614200065,
+    0.025965077123936364
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R410A-3",
+   "metric": "subcooling",
+   "measured": 4.8,
+   "category": "extrapolated",
+   "tolerance": 2.0,
+   "kind": "absolute",
+   "model_ref": 7.064732648044355,
+   "deviation_ref": 2.2647326480443555,
+   "deviation_interval": [
+    1.8821328152706203,
+    2.3982075712728035
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R410A-3",
+   "metric": "refrigerant_dp",
+   "measured": 23000,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 4196.115701571107,
+   "deviation_ref": -0.8175601868882127,
+   "deviation_interval": [
+    -0.8190979858092235,
+    -0.8138013630272294
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中压降含集管支路（几何未给），与口径 a 不同口径；见 B7 诊断"
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R410A-4",
+   "metric": "heat_transfer",
+   "measured": 19250.0,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 19568.464543250182,
+   "deviation_ref": 0.01654361263637316,
+   "deviation_interval": [
+    0.012056058845827389,
+    0.0181012650987451
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R410A-4",
+   "metric": "subcooling",
+   "measured": 4.0,
+   "category": "extrapolated",
+   "tolerance": 2.0,
+   "kind": "absolute",
+   "model_ref": 6.761632433448767,
+   "deviation_ref": 2.761632433448767,
+   "deviation_interval": [
+    2.3259286719653005,
+    2.9135005212409624
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R410A-4",
+   "metric": "refrigerant_dp",
+   "measured": 21000,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 4831.978857671842,
+   "deviation_ref": -0.7699057686822932,
+   "deviation_interval": [
+    -0.7714926568081469,
+    -0.7645769446712608
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中压降含集管支路（几何未给），与口径 a 不同口径；见 B7 诊断"
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R32-1",
+   "metric": "heat_transfer",
+   "measured": 17780.0,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 17945.629486396716,
+   "deviation_ref": 0.00931549417304356,
+   "deviation_interval": [
+    0.005527067565521238,
+    0.01053178627911433
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R32-1",
+   "metric": "subcooling",
+   "measured": 4.4,
+   "category": "extrapolated",
+   "tolerance": 2.0,
+   "kind": "absolute",
+   "model_ref": 6.977123833091412,
+   "deviation_ref": 2.5771238330914112,
+   "deviation_interval": [
+    2.0925637781870474,
+    2.733328422074271
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R32-1",
+   "metric": "refrigerant_dp",
+   "measured": 16000,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 3230.1964224805124,
+   "deviation_ref": -0.798112723594968,
+   "deviation_interval": [
+    -0.79985190397728,
+    -0.7933202494458529
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中压降含集管支路（几何未给），与口径 a 不同口径；见 B7 诊断"
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R32-2",
+   "metric": "heat_transfer",
+   "measured": 20100.0,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 20528.740316913583,
+   "deviation_ref": 0.02133036402555133,
+   "deviation_interval": [
+    0.016793903969220647,
+    0.022837326570719574
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R32-2",
+   "metric": "subcooling",
+   "measured": 4.3,
+   "category": "extrapolated",
+   "tolerance": 2.0,
+   "kind": "absolute",
+   "model_ref": 7.103055616230392,
+   "deviation_ref": 2.8030556162303926,
+   "deviation_interval": [
+    2.2545872402817624,
+    2.9861586017273796
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R32-2",
+   "metric": "refrigerant_dp",
+   "measured": 17000,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 4054.1908510020003,
+   "deviation_ref": -0.7615181852351764,
+   "deviation_interval": [
+    -0.7636748452840154,
+    -0.7556612465926447
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中压降含集管支路（几何未给），与口径 a 不同口径；见 B7 诊断"
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R32-3",
+   "metric": "heat_transfer",
+   "measured": 23440.0,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 24081.782028813723,
+   "deviation_ref": 0.027379779386250913,
+   "deviation_interval": [
+    0.02085132102970877,
+    0.029574363155854044
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R32-3",
+   "metric": "subcooling",
+   "measured": 3.3,
+   "category": "extrapolated",
+   "tolerance": 2.0,
+   "kind": "absolute",
+   "model_ref": 6.319937303798781,
+   "deviation_ref": 3.0199373037987813,
+   "deviation_interval": [
+    2.2955641575283154,
+    3.2653349125036586
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R32-3",
+   "metric": "refrigerant_dp",
+   "measured": 20000,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 5531.603689039126,
+   "deviation_ref": -0.7234198155480437,
+   "deviation_interval": [
+    -0.726108446772187,
+    -0.7163533783083782
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中压降含集管支路（几何未给），与口径 a 不同口径；见 B7 诊断"
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R32-4",
+   "metric": "heat_transfer",
+   "measured": 25450.0,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 25860.516855956084,
+   "deviation_ref": 0.016130328328333388,
+   "deviation_interval": [
+    0.01134499162716418,
+    0.017712716018141617
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R32-4",
+   "metric": "subcooling",
+   "measured": 5.7,
+   "category": "extrapolated",
+   "tolerance": 2.0,
+   "kind": "absolute",
+   "model_ref": 8.410692769650439,
+   "deviation_ref": 2.7106927696504384,
+   "deviation_interval": [
+    2.177848944352877,
+    2.8879296710682523
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "C-R32-4",
+   "metric": "refrigerant_dp",
+   "measured": 21000,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 5720.275070576463,
+   "deviation_ref": -0.7276059490201685,
+   "deviation_interval": [
+    -0.7301781412836696,
+    -0.7212487144707924
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中压降含集管支路（几何未给），与口径 a 不同口径；见 B7 诊断"
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R410A-1",
+   "metric": "heat_transfer",
+   "measured": 12200.0,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 12341.586503942632,
+   "deviation_ref": 0.01160545114283873,
+   "deviation_interval": [
+    0.011247083979958106,
+    0.011716284035793834
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R410A-1",
+   "metric": "superheat",
+   "measured": 16.6,
+   "category": "extrapolated",
+   "tolerance": 3.0,
+   "kind": "absolute",
+   "model_ref": 17.927446963143154,
+   "deviation_ref": 1.327446963143153,
+   "deviation_interval": [
+    1.2593711645858647,
+    1.3473193990243075
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R410A-1",
+   "metric": "refrigerant_dp",
+   "measured": 22000,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 15662.398349701543,
+   "deviation_ref": -0.2880728022862935,
+   "deviation_interval": [
+    -0.29123353615648706,
+    -0.2879282800317583
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中压降含集管支路（几何未给），与口径 a 不同口径；见 B7 诊断"
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R410A-4",
+   "metric": "heat_transfer",
+   "measured": 11900.0,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 12028.035474308947,
+   "deviation_ref": 0.010759283555373589,
+   "deviation_interval": [
+    0.010410471745964767,
+    0.010877831862601273
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R410A-4",
+   "metric": "superheat",
+   "measured": 11.7,
+   "category": "extrapolated",
+   "tolerance": 3.0,
+   "kind": "absolute",
+   "model_ref": 12.651982756925975,
+   "deviation_ref": 0.9519827569259753,
+   "deviation_interval": [
+    0.8890257990430435,
+    0.9735110091532313
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R410A-4",
+   "metric": "refrigerant_dp",
+   "measured": 20000,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 14915.795204468188,
+   "deviation_ref": -0.25421023977659063,
+   "deviation_interval": [
+    -0.2565792113030795,
+    -0.2529347095671983
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中压降含集管支路（几何未给），与口径 a 不同口径；见 B7 诊断"
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R32-1",
+   "metric": "heat_transfer",
+   "measured": 17400.0,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 17713.410291096112,
+   "deviation_ref": 0.01801208569517887,
+   "deviation_interval": [
+    0.013371750245349423,
+    0.019559527174312086
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R32-1",
+   "metric": "superheat",
+   "measured": 12.7,
+   "category": "extrapolated",
+   "tolerance": 3.0,
+   "kind": "absolute",
+   "model_ref": 14.059167048164397,
+   "deviation_ref": 1.359167048164398,
+   "deviation_interval": [
+    0.22690143903132665,
+    1.7391806130399239
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R32-1",
+   "metric": "refrigerant_dp",
+   "measured": 29000,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 20079.794960360974,
+   "deviation_ref": -0.3075932772289319,
+   "deviation_interval": [
+    -0.31057734285235994,
+    -0.30507924985775625
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中压降含集管支路（几何未给），与口径 a 不同口径；见 B7 诊断"
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R32-4",
+   "metric": "heat_transfer",
+   "measured": 17500.0,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 17638.1636905797,
+   "deviation_ref": 0.007895068033125563,
+   "deviation_interval": [
+    0.00666653742021639,
+    0.008310570701621334
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R32-4",
+   "metric": "superheat",
+   "measured": 11.0,
+   "category": "extrapolated",
+   "tolerance": 3.0,
+   "kind": "absolute",
+   "model_ref": 13.01200596154763,
+   "deviation_ref": 2.0120059615476293,
+   "deviation_interval": [
+    1.7107048814434052,
+    2.1141886794929405
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R32-4",
+   "metric": "refrigerant_dp",
+   "measured": 29000,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 20942.215519771213,
+   "deviation_ref": -0.2778546372492685,
+   "deviation_interval": [
+    -0.2813362202819092,
+    -0.27615286059635047
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中压降含集管支路（几何未给），与口径 a 不同口径；见 B7 诊断"
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R410A-2",
+   "metric": "heat_transfer",
+   "measured": 14300.0,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 14517.135078632602,
+   "deviation_ref": 0.015184271233048996,
+   "deviation_interval": [
+    0.014442500066788044,
+    0.01543845427772439
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R410A-2",
+   "metric": "superheat",
+   "measured": 17.6,
+   "category": "extrapolated",
+   "tolerance": 3.0,
+   "kind": "absolute",
+   "model_ref": 18.886351410625252,
+   "deviation_ref": 1.286351410625251,
+   "deviation_interval": [
+    1.1424705082403293,
+    1.3360604307052526
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R410A-2",
+   "metric": "refrigerant_dp",
+   "measured": 36000,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 21510.874308106024,
+   "deviation_ref": -0.4024757136637216,
+   "deviation_interval": [
+    -0.4061483337606575,
+    -0.40058240301229264
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中压降含集管支路（几何未给），与口径 a 不同口径；见 B7 诊断"
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R410A-5",
+   "metric": "heat_transfer",
+   "measured": 14100.0,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 14278.732128330765,
+   "deviation_ref": 0.012676037470267021,
+   "deviation_interval": [
+    0.012414801796374775,
+    0.012772143411107884
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R410A-5",
+   "metric": "superheat",
+   "measured": 15.1,
+   "category": "extrapolated",
+   "tolerance": 3.0,
+   "kind": "absolute",
+   "model_ref": 16.030545550691556,
+   "deviation_ref": 0.9305455506915568,
+   "deviation_interval": [
+    0.8806859648325034,
+    0.9492601896660293
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R410A-5",
+   "metric": "refrigerant_dp",
+   "measured": 37000,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 22354.228459621896,
+   "deviation_ref": -0.3958316632534623,
+   "deviation_interval": [
+    -0.3974537667735115,
+    -0.3946333242060862
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中压降含集管支路（几何未给），与口径 a 不同口径；见 B7 诊断"
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R410A-3",
+   "metric": "heat_transfer",
+   "measured": 17500.0,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 17774.174726250087,
+   "deviation_ref": 0.015667127214290755,
+   "deviation_interval": [
+    0.014057841748521538,
+    0.016213615415822114
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R410A-3",
+   "metric": "superheat",
+   "measured": 18.5,
+   "category": "extrapolated",
+   "tolerance": 3.0,
+   "kind": "absolute",
+   "model_ref": 20.256029469514715,
+   "deviation_ref": 1.756029469514715,
+   "deviation_interval": [
+    1.4392133281323254,
+    1.8635522412341174
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R410A-3",
+   "metric": "refrigerant_dp",
+   "measured": 52000,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 32846.16577284341,
+   "deviation_ref": -0.36834296590685756,
+   "deviation_interval": [
+    -0.372209719309037,
+    -0.3671737031641219
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中压降含集管支路（几何未给），与口径 a 不同口径；见 B7 诊断"
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R410A-6",
+   "metric": "heat_transfer",
+   "measured": 17300.0,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 17485.659997281928,
+   "deviation_ref": 0.010731791750400399,
+   "deviation_interval": [
+    0.010177122511050074,
+    0.010936555175072193
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R410A-6",
+   "metric": "superheat",
+   "measured": 16.0,
+   "category": "extrapolated",
+   "tolerance": 3.0,
+   "kind": "absolute",
+   "model_ref": 16.981221800231992,
+   "deviation_ref": 0.9812218002319923,
+   "deviation_interval": [
+    0.8739390005046062,
+    1.0209155168936945
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R410A-6",
+   "metric": "refrigerant_dp",
+   "measured": 52000,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 33215.82532559545,
+   "deviation_ref": -0.36123412835393365,
+   "deviation_interval": [
+    -0.36330210191265533,
+    -0.36038844903295886
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中压降含集管支路（几何未给），与口径 a 不同口径；见 B7 诊断"
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R32-2",
+   "metric": "heat_transfer",
+   "measured": 21100.0,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 21351.24238962162,
+   "deviation_ref": 0.011907222256948735,
+   "deviation_interval": [
+    0.010422544626931263,
+    0.012405024915357332
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R32-2",
+   "metric": "superheat",
+   "measured": 20.9,
+   "category": "extrapolated",
+   "tolerance": 3.0,
+   "kind": "absolute",
+   "model_ref": 23.207298551339022,
+   "deviation_ref": 2.3072985513390236,
+   "deviation_interval": [
+    1.9012082104705783,
+    2.446105380337521
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R32-2",
+   "metric": "refrigerant_dp",
+   "measured": 59000,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 34509.27902799577,
+   "deviation_ref": -0.41509696562719034,
+   "deviation_interval": [
+    -0.4170373910610442,
+    -0.4129617863965509
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中压降含集管支路（几何未给），与口径 a 不同口径；见 B7 诊断"
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R32-3",
+   "metric": "heat_transfer",
+   "measured": 25100.0,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 25379.329450559286,
+   "deviation_ref": 0.011128663368895841,
+   "deviation_interval": [
+    0.0038619444285692417,
+    0.013655320795720183
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R32-3",
+   "metric": "superheat",
+   "measured": 12.5,
+   "category": "extrapolated",
+   "tolerance": 3.0,
+   "kind": "absolute",
+   "model_ref": 15.808089689173926,
+   "deviation_ref": 3.3080896891739258,
+   "deviation_interval": [
+    1.4233616953844717,
+    3.9671334713103192
+   ],
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R32-3",
+   "metric": "refrigerant_dp",
+   "measured": 78000,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 47455.86407805502,
+   "deviation_ref": -0.3915914861787818,
+   "deviation_interval": [
+    -0.39633293369800326,
+    -0.39038755085176746
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中压降含集管支路（几何未给），与口径 a 不同口径；见 B7 诊断"
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R32-5",
+   "metric": "heat_transfer",
+   "measured": 20600.0,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 20778.680824642408,
+   "deviation_ref": 0.00867382643895187,
+   "deviation_interval": [
+    0.007104435612741211,
+    0.009195129723948092
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R32-5",
+   "metric": "superheat",
+   "measured": 12.4,
+   "category": "extrapolated",
+   "tolerance": 3.0,
+   "kind": "absolute",
+   "model_ref": 14.423894599357766,
+   "deviation_ref": 2.0238945993577655,
+   "deviation_interval": [
+    1.6290692509173024,
+    2.155144106033992
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R32-5",
+   "metric": "refrigerant_dp",
+   "measured": 46000,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 29592.458286555717,
+   "deviation_ref": -0.35668568942270185,
+   "deviation_interval": [
+    -0.360233835372474,
+    -0.35570950059501616
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中压降含集管支路（几何未给），与口径 a 不同口径；见 B7 诊断"
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R32-6",
+   "metric": "heat_transfer",
+   "measured": 25200.0,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 25505.76902840055,
+   "deviation_ref": 0.01213369160319644,
+   "deviation_interval": [
+    0.009985754390535506,
+    0.012848622161543588
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R32-6",
+   "metric": "superheat",
+   "measured": 14.0,
+   "category": "extrapolated",
+   "tolerance": 3.0,
+   "kind": "absolute",
+   "model_ref": 16.467883669319747,
+   "deviation_ref": 2.467883669319747,
+   "deviation_interval": [
+    1.9089675134327422,
+    2.6540810822977505
+   ],
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "cetiat2021",
+   "id": "E-R32-6",
+   "metric": "refrigerant_dp",
+   "measured": 77000,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 46298.279199275305,
+   "deviation_ref": -0.39872364676265837,
+   "deviation_interval": [
+    -0.40272249894352274,
+    -0.39757501526856376
+   ],
+   "pass_ref": false,
+   "robust": false,
+   "scope_note": "表中压降含集管支路（几何未给），与口径 a 不同口径；见 B7 诊断"
+  },
+  {
+   "dataset": "batista2022",
+   "id": "case-1",
+   "metric": "heat_transfer",
+   "measured": 3013.5,
+   "category": "rejected",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "detail": "ModelRangeError: Wang & Chi 2000 平片关联式 的套管外径 Dc = 0.0163 超出原文样本范围 [0.0069, 0.0136]，不能计算（Wang plain-fin collar diameter=0.0163 outside validated correlation range [0.0069,0.0136]）"
+  },
+  {
+   "dataset": "batista2022",
+   "id": "case-1",
+   "metric": "air_dp_dry",
+   "measured": 1.52,
+   "category": "rejected",
+   "tolerance": 0.15,
+   "kind": "relative",
+   "detail": "ModelRangeError: Wang & Chi 2000 平片关联式 的套管外径 Dc = 0.0163 超出原文样本范围 [0.0069, 0.0136]，不能计算（Wang plain-fin collar diameter=0.0163 outside validated correlation range [0.0069,0.0136]）"
+  },
+  {
+   "dataset": "batista2022",
+   "id": "case-2",
+   "metric": "heat_transfer",
+   "measured": 4231.5,
+   "category": "rejected",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "detail": "ModelRangeError: Wang & Chi 2000 平片关联式 的套管外径 Dc = 0.0163 超出原文样本范围 [0.0069, 0.0136]，不能计算（Wang plain-fin collar diameter=0.0163 outside validated correlation range [0.0069,0.0136]）"
+  },
+  {
+   "dataset": "batista2022",
+   "id": "case-2",
+   "metric": "air_dp_dry",
+   "measured": 2.01,
+   "category": "rejected",
+   "tolerance": 0.15,
+   "kind": "relative",
+   "detail": "ModelRangeError: Wang & Chi 2000 平片关联式 的套管外径 Dc = 0.0163 超出原文样本范围 [0.0069, 0.0136]，不能计算（Wang plain-fin collar diameter=0.0163 outside validated correlation range [0.0069,0.0136]）"
+  },
+  {
+   "dataset": "batista2022",
+   "id": "case-3",
+   "metric": "heat_transfer",
+   "measured": 5181.2,
+   "category": "rejected",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "detail": "ModelRangeError: Wang & Chi 2000 平片关联式 的套管外径 Dc = 0.0163 超出原文样本范围 [0.0069, 0.0136]，不能计算（Wang plain-fin collar diameter=0.0163 outside validated correlation range [0.0069,0.0136]）"
+  },
+  {
+   "dataset": "batista2022",
+   "id": "case-3",
+   "metric": "air_dp_dry",
+   "measured": 2.49,
+   "category": "rejected",
+   "tolerance": 0.15,
+   "kind": "relative",
+   "detail": "ModelRangeError: Wang & Chi 2000 平片关联式 的套管外径 Dc = 0.0163 超出原文样本范围 [0.0069, 0.0136]，不能计算（Wang plain-fin collar diameter=0.0163 outside validated correlation range [0.0069,0.0136]）"
+  },
+  {
+   "dataset": "batista2022",
+   "id": "case-4",
+   "metric": "heat_transfer",
+   "measured": 6462.1,
+   "category": "rejected",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "detail": "ModelRangeError: Wang & Chi 2000 平片关联式 的套管外径 Dc = 0.0163 超出原文样本范围 [0.0069, 0.0136]，不能计算（Wang plain-fin collar diameter=0.0163 outside validated correlation range [0.0069,0.0136]）"
+  },
+  {
+   "dataset": "batista2022",
+   "id": "case-4",
+   "metric": "air_dp_dry",
+   "measured": 3.79,
+   "category": "rejected",
+   "tolerance": 0.15,
+   "kind": "relative",
+   "detail": "ModelRangeError: Wang & Chi 2000 平片关联式 的套管外径 Dc = 0.0163 超出原文样本范围 [0.0069, 0.0136]，不能计算（Wang plain-fin collar diameter=0.0163 outside validated correlation range [0.0069,0.0136]）"
+  },
+  {
+   "dataset": "batista2022",
+   "id": "case-5",
+   "metric": "heat_transfer",
+   "measured": 7735.8,
+   "category": "rejected",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "detail": "ModelRangeError: Wang & Chi 2000 平片关联式 的套管外径 Dc = 0.0163 超出原文样本范围 [0.0069, 0.0136]，不能计算（Wang plain-fin collar diameter=0.0163 outside validated correlation range [0.0069,0.0136]）"
+  },
+  {
+   "dataset": "batista2022",
+   "id": "case-5",
+   "metric": "air_dp_dry",
+   "measured": 5.2,
+   "category": "rejected",
+   "tolerance": 0.15,
+   "kind": "relative",
+   "detail": "ModelRangeError: Wang & Chi 2000 平片关联式 的套管外径 Dc = 0.0163 超出原文样本范围 [0.0069, 0.0136]，不能计算（Wang plain-fin collar diameter=0.0163 outside validated correlation range [0.0069,0.0136]）"
+  },
+  {
+   "dataset": "batista2022",
+   "id": "case-6",
+   "metric": "heat_transfer",
+   "measured": 8288.7,
+   "category": "rejected",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "detail": "ModelRangeError: Wang & Chi 2000 平片关联式 的套管外径 Dc = 0.0163 超出原文样本范围 [0.0069, 0.0136]，不能计算（Wang plain-fin collar diameter=0.0163 outside validated correlation range [0.0069,0.0136]）"
+  },
+  {
+   "dataset": "batista2022",
+   "id": "case-6",
+   "metric": "air_dp_dry",
+   "measured": 6.47,
+   "category": "rejected",
+   "tolerance": 0.15,
+   "kind": "relative",
+   "detail": "ModelRangeError: Wang & Chi 2000 平片关联式 的套管外径 Dc = 0.0163 超出原文样本范围 [0.0069, 0.0136]，不能计算（Wang plain-fin collar diameter=0.0163 outside validated correlation range [0.0069,0.0136]）"
+  },
+  {
+   "dataset": "batista2022",
+   "id": "case-7",
+   "metric": "heat_transfer",
+   "measured": 14439.3,
+   "category": "rejected",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "detail": "ModelRangeError: Wang & Chi 2000 平片关联式 的套管外径 Dc = 0.0163 超出原文样本范围 [0.0069, 0.0136]，不能计算（Wang plain-fin collar diameter=0.0163 outside validated correlation range [0.0069,0.0136]）"
+  },
+  {
+   "dataset": "batista2022",
+   "id": "case-7",
+   "metric": "air_dp_dry",
+   "measured": 6.48,
+   "category": "rejected",
+   "tolerance": 0.15,
+   "kind": "relative",
+   "detail": "ModelRangeError: Wang & Chi 2000 平片关联式 的套管外径 Dc = 0.0163 超出原文样本范围 [0.0069, 0.0136]，不能计算（Wang plain-fin collar diameter=0.0163 outside validated correlation range [0.0069,0.0136]）"
+  },
+  {
+   "dataset": "batista2022",
+   "id": "case-8",
+   "metric": "heat_transfer",
+   "measured": 12733.9,
+   "category": "rejected",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "detail": "ModelRangeError: Wang & Chi 2000 平片关联式 的套管外径 Dc = 0.0163 超出原文样本范围 [0.0069, 0.0136]，不能计算（Wang plain-fin collar diameter=0.0163 outside validated correlation range [0.0069,0.0136]）"
+  },
+  {
+   "dataset": "batista2022",
+   "id": "case-8",
+   "metric": "air_dp_dry",
+   "measured": 6.5,
+   "category": "rejected",
+   "tolerance": 0.15,
+   "kind": "relative",
+   "detail": "ModelRangeError: Wang & Chi 2000 平片关联式 的套管外径 Dc = 0.0163 超出原文样本范围 [0.0069, 0.0136]，不能计算（Wang plain-fin collar diameter=0.0163 outside validated correlation range [0.0069,0.0136]）"
+  },
+  {
+   "dataset": "batista2022",
+   "id": "case-9",
+   "metric": "heat_transfer",
+   "measured": 11549.8,
+   "category": "rejected",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "detail": "ModelRangeError: Wang & Chi 2000 平片关联式 的套管外径 Dc = 0.0163 超出原文样本范围 [0.0069, 0.0136]，不能计算（Wang plain-fin collar diameter=0.0163 outside validated correlation range [0.0069,0.0136]）"
+  },
+  {
+   "dataset": "batista2022",
+   "id": "case-9",
+   "metric": "air_dp_dry",
+   "measured": 6.49,
+   "category": "rejected",
+   "tolerance": 0.15,
+   "kind": "relative",
+   "detail": "ModelRangeError: Wang & Chi 2000 平片关联式 的套管外径 Dc = 0.0163 超出原文样本范围 [0.0069, 0.0136]，不能计算（Wang plain-fin collar diameter=0.0163 outside validated correlation range [0.0069,0.0136]）"
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "A-28.8-repeat1",
+   "metric": "heat_transfer",
+   "measured": 1152.4903503640114,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 1221.6021377388029,
+   "deviation_ref": 0.05996734580290641,
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "A-28.8-repeat1",
+   "metric": "refrigerant_dp",
+   "measured": 14749.580110908684,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 16106.882313113192,
+   "deviation_ref": 0.09202310791211321,
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "A-28.8-repeat2",
+   "metric": "heat_transfer",
+   "measured": 1164.0761607139257,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 1221.6021377388029,
+   "deviation_ref": 0.04941770905229825,
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "A-28.8-repeat2",
+   "metric": "refrigerant_dp",
+   "measured": 14966.95164826647,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 16106.882313113192,
+   "deviation_ref": 0.0761631821653379,
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "A-34.2-repeat1",
+   "metric": "heat_transfer",
+   "measured": 1363.207276103078,
+   "category": "rejected",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "detail": "ModelRangeError: 排数外推在此 Re 下不适用：第 6 排局部 j6 = 0.0109012，须在 0.5×6 排平均值 0.00578311 与 1 排值 0.0104572 之间（差分外推在低 Re 下病态，拒绝以免静默失真）"
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "A-34.2-repeat1",
+   "metric": "refrigerant_dp",
+   "measured": 18331.68190361718,
+   "category": "rejected",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "detail": "ModelRangeError: 排数外推在此 Re 下不适用：第 6 排局部 j6 = 0.0109012，须在 0.5×6 排平均值 0.00578311 与 1 排值 0.0104572 之间（差分外推在低 Re 下病态，拒绝以免静默失真）"
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "A-34.2-repeat2",
+   "metric": "heat_transfer",
+   "measured": 1381.3101047748191,
+   "category": "rejected",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "detail": "ModelRangeError: 排数外推在此 Re 下不适用：第 6 排局部 j6 = 0.0109012，须在 0.5×6 排平均值 0.00578311 与 1 排值 0.0104572 之间（差分外推在低 Re 下病态，拒绝以免静默失真）"
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "A-34.2-repeat2",
+   "metric": "refrigerant_dp",
+   "measured": 21531.929889701794,
+   "category": "rejected",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "detail": "ModelRangeError: 排数外推在此 Re 下不适用：第 6 排局部 j6 = 0.0109012，须在 0.5×6 排平均值 0.00578311 与 1 排值 0.0104572 之间（差分外推在低 Re 下病态，拒绝以免静默失真）"
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "A-39.3-repeat1",
+   "metric": "heat_transfer",
+   "measured": 1554.7390145719246,
+   "category": "rejected",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "detail": "ModelRangeError: 排数外推在此 Re 下不适用：第 6 排局部 j6 = 0.0103382，须在 0.5×6 排平均值 0.00531355 与 1 排值 0.00930788 之间（差分外推在低 Re 下病态，拒绝以免静默失真）"
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "A-39.3-repeat1",
+   "metric": "refrigerant_dp",
+   "measured": 24166.737254660256,
+   "category": "rejected",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "detail": "ModelRangeError: 排数外推在此 Re 下不适用：第 6 排局部 j6 = 0.0103382，须在 0.5×6 排平均值 0.00531355 与 1 排值 0.00930788 之间（差分外推在低 Re 下病态，拒绝以免静默失真）"
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "A-39.3-repeat2",
+   "metric": "heat_transfer",
+   "measured": 1583.0530710668593,
+   "category": "rejected",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "detail": "ModelRangeError: 排数外推在此 Re 下不适用：第 6 排局部 j6 = 0.0103382，须在 0.5×6 排平均值 0.00531355 与 1 排值 0.00930788 之间（差分外推在低 Re 下病态，拒绝以免静默失真）"
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "A-39.3-repeat2",
+   "metric": "refrigerant_dp",
+   "measured": 28441.983540141686,
+   "category": "rejected",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "detail": "ModelRangeError: 排数外推在此 Re 下不适用：第 6 排局部 j6 = 0.0103382，须在 0.5×6 排平均值 0.00531355 与 1 排值 0.00930788 之间（差分外推在低 Re 下病态，拒绝以免静默失真）"
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "B-31.6-repeat1",
+   "metric": "heat_transfer",
+   "measured": 1237.2115885477597,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 1313.168413496121,
+   "deviation_ref": 0.06139356085204439,
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "B-31.6-repeat1",
+   "metric": "refrigerant_dp",
+   "measured": 17493.895770050716,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 19575.48739046394,
+   "deviation_ref": 0.11898959773024798,
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "B-31.6-repeat2",
+   "metric": "heat_transfer",
+   "measured": 1275.589585331851,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 1313.168413496121,
+   "deviation_ref": 0.029459967842630164,
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "B-31.6-repeat2",
+   "metric": "refrigerant_dp",
+   "measured": 18987.25323762337,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 19575.48739046394,
+   "deviation_ref": 0.03098047650594249,
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "B-37.8-repeat1",
+   "metric": "heat_transfer",
+   "measured": 1468.3077465639958,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 1594.121783769392,
+   "deviation_ref": 0.08568642200507015,
+   "pass_ref": false,
+   "robust": false
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "B-37.8-repeat1",
+   "metric": "refrigerant_dp",
+   "measured": 21995.298022834846,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 26357.945586261572,
+   "deviation_ref": 0.19834455340853108,
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "B-37.8-repeat2",
+   "metric": "heat_transfer",
+   "measured": 1525.4086210018781,
+   "category": "extrapolated",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "model_ref": 1594.121783769392,
+   "deviation_ref": 0.045045741725508126,
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "B-37.8-repeat2",
+   "metric": "refrigerant_dp",
+   "measured": 27609.4677124039,
+   "category": "extrapolated",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "model_ref": 26357.945586261572,
+   "deviation_ref": -0.04532945506877939,
+   "pass_ref": true,
+   "robust": true
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "B-43.4-repeat1",
+   "metric": "heat_transfer",
+   "measured": 1676.7761192032826,
+   "category": "rejected",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "detail": "ModelRangeError: 排数外推在此 Re 下不适用：第 6 排局部 j6 = 0.0104284，须在 0.5×6 排平均值 0.00553353 与 1 排值 0.0101054 之间（差分外推在低 Re 下病态，拒绝以免静默失真）"
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "B-43.4-repeat1",
+   "metric": "refrigerant_dp",
+   "measured": 32027.668492167493,
+   "category": "rejected",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "detail": "ModelRangeError: 排数外推在此 Re 下不适用：第 6 排局部 j6 = 0.0104284，须在 0.5×6 排平均值 0.00553353 与 1 排值 0.0101054 之间（差分外推在低 Re 下病态，拒绝以免静默失真）"
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "B-43.4-repeat2",
+   "metric": "heat_transfer",
+   "measured": 1754.9524885595556,
+   "category": "rejected",
+   "tolerance": 0.05,
+   "kind": "relative",
+   "detail": "ModelRangeError: 排数外推在此 Re 下不适用：第 6 排局部 j6 = 0.0104284，须在 0.5×6 排平均值 0.00553353 与 1 排值 0.0101054 之间（差分外推在低 Re 下病态，拒绝以免静默失真）"
+  },
+  {
+   "dataset": "joppolo2015",
+   "id": "B-43.4-repeat2",
+   "metric": "refrigerant_dp",
+   "measured": 37928.11415988105,
+   "category": "rejected",
+   "tolerance": 0.25,
+   "kind": "relative",
+   "detail": "ModelRangeError: 排数外推在此 Re 下不适用：第 6 排局部 j6 = 0.0104284，须在 0.5×6 排平均值 0.00553353 与 1 排值 0.0101054 之间（差分外推在低 Re 下病态，拒绝以免静默失真）"
+  }
+ ],
+ "joppolo_product_path": [
+  {
+   "condenser": "A",
+   "kg_h": 28.8,
+   "v_m_s": 1.9,
+   "measured_d3": {
+    "q_w": [
+     1152.4903503640114,
+     1164.0761607139257
+    ],
+    "dp_kpa": [
+     14.749580110908685,
+     14.96695164826647
+    ]
+   },
+   "refused": null,
+   "dq_rel_each_repeat": [
+    0.05996734580290641,
+    0.04941770905229825
+   ],
+   "ddp_rel_each_repeat": [
+    0.09202310791211321,
+    0.0761631821653379
+   ]
+  },
+  {
+   "condenser": "A",
+   "kg_h": 34.2,
+   "v_m_s": 2.4,
+   "measured_d3": {
+    "q_w": [
+     1363.207276103078,
+     1381.3101047748191
+    ],
+    "dp_kpa": [
+     18.33168190361718,
+     21.531929889701793
+    ]
+   },
+   "refused": "ModelRangeError: 排数外推在此 Re 下不适用：第 6 排局部 j6 = 0.0109012，须在 0.5×6 排平均值 0.00578311 与 1 排值 0.0104572 之间（差分外推在低 Re 下病态，拒绝以免静默失真）",
+   "dq_rel_each_repeat": null,
+   "ddp_rel_each_repeat": null
+  },
+  {
+   "condenser": "A",
+   "kg_h": 39.3,
+   "v_m_s": 2.9,
+   "measured_d3": {
+    "q_w": [
+     1554.7390145719246,
+     1583.0530710668593
+    ],
+    "dp_kpa": [
+     24.166737254660255,
+     28.441983540141685
+    ]
+   },
+   "refused": "ModelRangeError: 排数外推在此 Re 下不适用：第 6 排局部 j6 = 0.0103382，须在 0.5×6 排平均值 0.00531355 与 1 排值 0.00930788 之间（差分外推在低 Re 下病态，拒绝以免静默失真）",
+   "dq_rel_each_repeat": null,
+   "ddp_rel_each_repeat": null
+  },
+  {
+   "condenser": "B",
+   "kg_h": 31.6,
+   "v_m_s": 1.9,
+   "measured_d3": {
+    "q_w": [
+     1237.2115885477597,
+     1275.589585331851
+    ],
+    "dp_kpa": [
+     17.493895770050717,
+     18.987253237623367
+    ]
+   },
+   "refused": null,
+   "dq_rel_each_repeat": [
+    0.06139356085204439,
+    0.029459967842630164
+   ],
+   "ddp_rel_each_repeat": [
+    0.11898959773024798,
+    0.03098047650594249
+   ]
+  },
+  {
+   "condenser": "B",
+   "kg_h": 37.8,
+   "v_m_s": 2.4,
+   "measured_d3": {
+    "q_w": [
+     1468.3077465639958,
+     1525.4086210018781
+    ],
+    "dp_kpa": [
+     21.995298022834845,
+     27.6094677124039
+    ]
+   },
+   "refused": null,
+   "dq_rel_each_repeat": [
+    0.08568642200507015,
+    0.045045741725508126
+   ],
+   "ddp_rel_each_repeat": [
+    0.1983445534085313,
+    -0.0453294550687795
+   ]
+  },
+  {
+   "condenser": "B",
+   "kg_h": 43.4,
+   "v_m_s": 2.9,
+   "measured_d3": {
+    "q_w": [
+     1676.7761192032826,
+     1754.9524885595556
+    ],
+    "dp_kpa": [
+     32.02766849216749,
+     37.92811415988105
+    ]
+   },
+   "refused": "ModelRangeError: 排数外推在此 Re 下不适用：第 6 排局部 j6 = 0.0104284，须在 0.5×6 排平均值 0.00553353 与 1 排值 0.0101054 之间（差分外推在低 Re 下病态，拒绝以免静默失真）",
+   "dq_rel_each_repeat": null,
+   "ddp_rel_each_repeat": null
+  }
+ ],
+ "cetiat_end_loss_diagnosis_B7": {
+  "conclusion": {
+   "condenser": {
+    "points": 8,
+    "excess_kpa": [
+     12.769803577519488,
+     18.803884298428894
+    ],
+    "accessory_explained_kpa": [
+     0.07703333583008498,
+     0.7618773579536937
+    ],
+    "max_explainable_fraction": [
+     0.2715309394551489,
+     0.3607128126971811
+    ],
+    "unexplained_min_kpa": [
+     8.163571811481907,
+     13.698047929470572
+    ]
+   },
+   "evaporator": {
+    "points": 12,
+    "excess_kpa": [
+     5.084204795531812,
+     30.701720800724697
+    ],
+    "accessory_explained_kpa": [
+     0.5771689881106431,
+     15.486827297330732
+    ],
+    "max_explainable_fraction": [
+     0.2114415503819074,
+     0.8218280892587395
+    ],
+    "unexplained_min_kpa": [
+     0.9058624830197823,
+     16.060584757358324
+    ]
+   }
+  },
+  "grid": {
+   "header_inner_diameter_m": [
+    0.012,
+    0.016,
+    0.02,
+    0.025
+   ],
+   "outlet_k": [
+    0.0,
+    0.5,
+    1.5
+   ],
+   "inlet_k": [
+    0.5,
+    1.0,
+    2.0
+   ],
+   "gravity_dz_m": [
+    0.3,
+    0.51
+   ]
+  },
+  "rows": [
+   {
+    "id": "C-R410A-1",
+    "kind": "condenser",
+    "measured_pa": 18000,
+    "scope_a_pa": 2353.2594544277526,
+    "excess_pa": 15646.740545572247,
+    "accessory_explained_pa": [
+     77.03333583008498,
+     308.1333433203399
+    ],
+    "max_explainable_fraction": 0.31829739149011615,
+    "unexplained_min_pa": 10666.423844593965
+   },
+   {
+    "id": "C-R410A-2",
+    "kind": "condenser",
+    "measured_pa": 18000,
+    "scope_a_pa": 2994.532101607416,
+    "excess_pa": 15005.467898392584,
+    "accessory_explained_pa": [
+     100.61857127770782,
+     402.4742851103656
+    ],
+    "max_explainable_fraction": 0.33387837475997817,
+    "unexplained_min_pa": 9995.466663964242
+   },
+   {
+    "id": "C-R410A-3",
+    "kind": "condenser",
+    "measured_pa": 23000,
+    "scope_a_pa": 4196.115701571107,
+    "excess_pa": 18803.884298428893,
+    "accessory_explained_pa": [
+     141.4711059620604,
+     565.8844238477759
+    ],
+    "max_explainable_fraction": 0.2715309394551489,
+    "unexplained_min_pa": 13698.047929470573
+   },
+   {
+    "id": "C-R410A-4",
+    "kind": "condenser",
+    "measured_pa": 21000,
+    "scope_a_pa": 4831.978857671842,
+    "excess_pa": 16168.021142328158,
+    "accessory_explained_pa": [
+     163.5508080930449,
+     654.2032323745079
+    ],
+    "max_explainable_fraction": 0.3193388234256444,
+    "unexplained_min_pa": 11004.944293616141
+   },
+   {
+    "id": "C-R32-1",
+    "kind": "condenser",
+    "measured_pa": 16000,
+    "scope_a_pa": 3230.1964224805124,
+    "excess_pa": 12769.803577519488,
+    "accessory_explained_pa": [
+     97.09647390060127,
+     388.38589560147375
+    ],
+    "max_explainable_fraction": 0.3607128126971811,
+    "unexplained_min_pa": 8163.571811481907
+   },
+   {
+    "id": "C-R32-2",
+    "kind": "condenser",
+    "measured_pa": 17000,
+    "scope_a_pa": 4054.1908510020003,
+    "excess_pa": 12945.809148998,
+    "accessory_explained_pa": [
+     125.21038804063573,
+     500.8415521616116
+    ],
+    "max_explainable_fraction": 0.3599344449477824,
+    "unexplained_min_pa": 8286.166518553482
+   },
+   {
+    "id": "C-R32-3",
+    "kind": "condenser",
+    "measured_pa": 20000,
+    "scope_a_pa": 5531.603689039126,
+    "excess_pa": 14468.396310960874,
+    "accessory_explained_pa": [
+     172.60109972395003,
+     690.4043988958001
+    ],
+    "max_explainable_fraction": 0.32981025238136374,
+    "unexplained_min_pa": 9696.570872089276
+   },
+   {
+    "id": "C-R32-4",
+    "kind": "condenser",
+    "measured_pa": 21000,
+    "scope_a_pa": 5720.275070576463,
+    "excess_pa": 15279.724929423537,
+    "accessory_explained_pa": [
+     190.46933948853984,
+     761.8773579536937
+    ],
+    "max_explainable_fraction": 0.31205086944923843,
+    "unexplained_min_pa": 10511.67348025172
+   },
+   {
+    "id": "E-R410A-1",
+    "kind": "evaporator",
+    "measured_pa": 22000,
+    "scope_a_pa": 15662.398349701543,
+    "excess_pa": 6337.601650298457,
+    "accessory_explained_pa": [
+     618.7088041450897,
+     4481.585064443243
+    ],
+    "max_explainable_fraction": 0.7071421196427188,
+    "unexplained_min_pa": 1856.0165858552136
+   },
+   {
+    "id": "E-R410A-4",
+    "kind": "evaporator",
+    "measured_pa": 20000,
+    "scope_a_pa": 14915.795204468188,
+    "excess_pa": 5084.204795531812,
+    "accessory_explained_pa": [
+     577.1689881106431,
+     4178.34231251203
+    ],
+    "max_explainable_fraction": 0.8218280892587395,
+    "unexplained_min_pa": 905.8624830197823
+   },
+   {
+    "id": "E-R32-1",
+    "kind": "evaporator",
+    "measured_pa": 29000,
+    "scope_a_pa": 20079.794960360974,
+    "excess_pa": 8920.205039639026,
+    "accessory_explained_pa": [
+     841.4558139221772,
+     6080.436266251309
+    ],
+    "max_explainable_fraction": 0.6816475898515182,
+    "unexplained_min_pa": 2839.7687733877174
+   },
+   {
+    "id": "E-R32-4",
+    "kind": "evaporator",
+    "measured_pa": 29000,
+    "scope_a_pa": 20942.215519771213,
+    "excess_pa": 8057.784480228787,
+    "accessory_explained_pa": [
+     837.2606037497862,
+     6062.678226134365
+    ],
+    "max_explainable_fraction": 0.7524001468406395,
+    "unexplained_min_pa": 1995.1062540944222
+   },
+   {
+    "id": "E-R410A-2",
+    "kind": "evaporator",
+    "measured_pa": 36000,
+    "scope_a_pa": 21510.874308106024,
+    "excess_pa": 14489.125691893976,
+    "accessory_explained_pa": [
+     891.7538181612108,
+     6414.657444785662
+    ],
+    "max_explainable_fraction": 0.4427221891224519,
+    "unexplained_min_pa": 8074.468247108314
+   },
+   {
+    "id": "E-R410A-5",
+    "kind": "evaporator",
+    "measured_pa": 37000,
+    "scope_a_pa": 22354.228459621896,
+    "excess_pa": 14645.771540378104,
+    "accessory_explained_pa": [
+     898.3707679480285,
+     3096.7246410367625
+    ],
+    "max_explainable_fraction": 0.2114415503819074,
+    "unexplained_min_pa": 11549.046899341341
+   },
+   {
+    "id": "E-R410A-3",
+    "kind": "evaporator",
+    "measured_pa": 52000,
+    "scope_a_pa": 32846.16577284341,
+    "excess_pa": 19153.834227156593,
+    "accessory_explained_pa": [
+     1438.8268099000052,
+     10265.50409209304
+    ],
+    "max_explainable_fraction": 0.5359503465649951,
+    "unexplained_min_pa": 8888.330135063552
+   },
+   {
+    "id": "E-R410A-6",
+    "kind": "evaporator",
+    "measured_pa": 52000,
+    "scope_a_pa": 33215.82532559545,
+    "excess_pa": 18784.174674404552,
+    "accessory_explained_pa": [
+     1404.7029218778844,
+     10021.750513426421
+    ],
+    "max_explainable_fraction": 0.5335209391489597,
+    "unexplained_min_pa": 8762.424160978131
+   },
+   {
+    "id": "E-R32-2",
+    "kind": "evaporator",
+    "measured_pa": 59000,
+    "scope_a_pa": 34509.27902799577,
+    "excess_pa": 24490.72097200423,
+    "accessory_explained_pa": [
+     1499.6146935922952,
+     10805.436485467428
+    ],
+    "max_explainable_fraction": 0.44120532416417263,
+    "unexplained_min_pa": 13685.284486536802
+   },
+   {
+    "id": "E-R32-3",
+    "kind": "evaporator",
+    "measured_pa": 78000,
+    "scope_a_pa": 47455.86407805502,
+    "excess_pa": 30544.13592194498,
+    "accessory_explained_pa": [
+     2174.6456908979308,
+     15486.827297330732
+    ],
+    "max_explainable_fraction": 0.5070311151347366,
+    "unexplained_min_pa": 15057.308624614248
+   },
+   {
+    "id": "E-R32-5",
+    "kind": "evaporator",
+    "measured_pa": 46000,
+    "scope_a_pa": 29592.458286555717,
+    "excess_pa": 16407.541713444283,
+    "accessory_explained_pa": [
+     1234.2900754311559,
+     8877.733261850059
+    ],
+    "max_explainable_fraction": 0.5410763791979681,
+    "unexplained_min_pa": 7529.808451594225
+   },
+   {
+    "id": "E-R32-6",
+    "kind": "evaporator",
+    "measured_pa": 77000,
+    "scope_a_pa": 46298.279199275305,
+    "excess_pa": 30701.720800724695,
+    "accessory_explained_pa": [
+     2049.914970963422,
+     14641.136043366372
+    ],
+    "max_explainable_fraction": 0.47688323851283204,
+    "unexplained_min_pa": 16060.584757358323
+   }
+  ]
+ }
+}
