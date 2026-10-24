@@ -431,7 +431,7 @@
     },
     {
       "path": "tools/legacy_snapshot.py",
-      "sha256": "e84d500e606d0848eaad9570af1eba35f0c96c33e3bd2a66d4fa85f8c0613652"
+      "sha256": "7203b5363306514878b7311784f73fb0510f28bf051bfd7f99446f80b5779910"
     },
     {
       "path": "tools/reproduce_external_review.py",

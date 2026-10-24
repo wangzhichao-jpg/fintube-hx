@@ -50,7 +50,11 @@ VOLATILE_KEYS = frozenset({
     'result_sha256', 'workset_sha256', 'snapshot_sha256',
 })
 # Version identity stored under a parent key (contract change C-2): (parent, key).
-VOLATILE_CHILD_KEYS = frozenset({('shared_core', 'api')})
+# ('provenance', 'windows_power_throttling'): Pro 0.7.0.dev2 records the Windows EcoQoS opt-out state there (Windows
+# only); it is process scheduling metadata, not a result (contract change C-8).
+# ('provenance', 'parallel_paths'): Pro 0.7.0.dev2 per-path process pool record (workers, fallback; C-9).
+VOLATILE_CHILD_KEYS = frozenset({('shared_core', 'api'), ('provenance', 'windows_power_throttling'),
+                                 ('provenance', 'parallel_paths')})
 # Random uuid4 identifiers (design/workset plans) are not deleted: they are mapped, in deterministic traversal order,
 # to '<uuid#n>' so that references between them (ranked ids, best candidate) are still compared.
 _UUID = r'(?:[0-9a-f]{32}|[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})'
