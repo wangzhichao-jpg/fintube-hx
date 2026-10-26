@@ -124,6 +124,11 @@ print(result["heat_transfer_w"], result["fluid_out"]["temperature_c"])
 
 三轮外部评审每一项的状态（已修复/已澄清/未解决）见[docs/EXTERNAL_REVIEW_STATUS.md](docs/EXTERNAL_REVIEW_STATUS.md)。[v3反馈复核](docs/EXTERNAL_REVIEW_V3.md)补充固定工况湿分支对照并更新版本状态。[外部评审复核](docs/EXTERNAL_REVIEW_2026-10-13.md)逐项列出判断、修正与依据。**0.1.0.dev5**修正对角最小流通间隙的翅片阻塞项与反求括根错误提示；现有横向间隙控制的基准容量不变。
 
+## 作者与引用
+
+项目负责人：[王智超](https://github.com/wangzhichao-jpg)（ORCID [0000-0001-6662-835X](https://orcid.org/0000-0001-6662-835X)）。
+在论文或工程报告中使用本软件，请按 [CITATION.cff](CITATION.cff) 引用（GitHub 页面右侧 **Cite this repository** 可直接导出 BibTeX/APA）。如果对你有帮助，欢迎在 GitHub 或 [Gitee](https://gitee.com/bigtaurus/fintube-hx) 点 Star，方便更多同行找到它。问题反馈与公开数据合作请提 [Issue](https://github.com/wangzhichao-jpg/fintube-hx/issues)。
+
 ## 许可
 
 原创代码遵循[MIT](LICENSE)；第三方依赖及python-hvac改编表达式保留各自许可与署名。见[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)、[CORE_API.md](CORE_API.md)、[CONTRIBUTING.md](CONTRIBUTING.md)。

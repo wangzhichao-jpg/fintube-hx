@@ -18,6 +18,10 @@
       "sha256": "f7132079fe22f4f3f7d44e7f829c1d0ac83d227482c49023bd9da79c8d0315b6"
     },
     {
+      "path": "CITATION.cff",
+      "sha256": "3692af6e4751d87b9507b2f451f03c30efd6a8124112a6cc2a94e7f530eb8503"
+    },
+    {
       "path": "CONTRIBUTING.md",
       "sha256": "daeaf6afd1e5008f8e03833d3adeb2482a41fb5c082243c9854d478ef5266950"
     },
@@ -35,11 +39,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "7e401bc02243321875d103e09b5862ca244ec4a421972af899705db508d9912c"
+      "sha256": "b6b161626d0d447630d3f859f648a54f1287b5d42ded191d89a36ff39807d1ff"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "fc586cc77cd862f88d85e9145f8109bfdb50a2840504a7171bf4988a8b47316b"
+      "sha256": "df82d5d2a77d299c33c24c78eac1a7e0461277ad8bf526a7914f4cd0b13c35b1"
     },
     {
       "path": "RELEASE_CHECKLIST.md",

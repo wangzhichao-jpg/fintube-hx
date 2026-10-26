@@ -124,6 +124,11 @@ For lumped refrigerant models, an omitted `solver.max_iterations` defaults to `m
 
 The status of every review item (fixed / clarified / open) is tracked in [docs/EXTERNAL_REVIEW_STATUS.md](docs/EXTERNAL_REVIEW_STATUS.md). The [v3 follow-up](docs/EXTERNAL_REVIEW_V3.md) records the controlled wet-branch diagnostic and corrected current-version status. The [external review response](docs/EXTERNAL_REVIEW_2026-10-13.md) records confirmed issues, corrections and reasons for disputed claims. Version **0.1.0.dev5** corrects fin blockage in the diagonal minimum-flow gap and the misleading inverse-bracket error message; existing transverse-gap reference capacities are unchanged.
 
+## Author and citation
+
+Project lead: [Zhichao Wang](https://github.com/wangzhichao-jpg) (ORCID [0000-0001-6662-835X](https://orcid.org/0000-0001-6662-835X)).
+If you use this software in a paper or an engineering report, please cite it as described in [CITATION.cff](CITATION.cff) (the **Cite this repository** button on GitHub exports BibTeX/APA). If it is useful to you, a star on GitHub or [Gitee](https://gitee.com/bigtaurus/fintube-hx) helps other engineers find it. Questions, bug reports and public data: [Issues](https://github.com/wangzhichao-jpg/fintube-hx/issues).
+
 ## License
 
 Original code: [MIT](LICENSE). Dependencies and adapted python-hvac expressions have separate licences and attribution; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md), [CORE_API.md](CORE_API.md) and [CONTRIBUTING.md](CONTRIBUTING.md).
