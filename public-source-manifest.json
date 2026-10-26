@@ -14,6 +14,10 @@
       "sha256": "44049a3f53d3302baf9bedd4b5f432d748a997776e8b0a917f0f78212a3eb4c2"
     },
     {
+      "path": ".github/workflows/publish.yml",
+      "sha256": "2db1e606d064dbb2cea0126744bc23968600dea9958e640e6ba570ab35cc5388"
+    },
+    {
       "path": ".gitignore",
       "sha256": "f7132079fe22f4f3f7d44e7f829c1d0ac83d227482c49023bd9da79c8d0315b6"
     },
