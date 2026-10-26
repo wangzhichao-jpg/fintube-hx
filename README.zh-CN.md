@@ -129,6 +129,8 @@ print(result["heat_transfer_w"], result["fluid_out"]["temperature_c"])
 项目负责人：[王智超](https://github.com/wangzhichao-jpg)（ORCID [0000-0001-6662-835X](https://orcid.org/0000-0001-6662-835X)）。
 在论文或工程报告中使用本软件，请按 [CITATION.cff](CITATION.cff) 引用（GitHub 页面右侧 **Cite this repository** 可直接导出 BibTeX/APA）。如果对你有帮助，欢迎在 GitHub 或 [Gitee](https://gitee.com/bigtaurus/fintube-hx) 点 Star，方便更多同行找到它。问题反馈与公开数据合作请提 [Issue](https://github.com/wangzhichao-jpg/fintube-hx/issues)。
 
+合作与咨询：[wangzhichao@chinaibee.com](mailto:wangzhichao@chinaibee.com)
+
 ## 许可
 
 原创代码遵循[MIT](LICENSE)；第三方依赖及python-hvac改编表达式保留各自许可与署名。见[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)、[CORE_API.md](CORE_API.md)、[CONTRIBUTING.md](CONTRIBUTING.md)。

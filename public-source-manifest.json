@@ -43,11 +43,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "9b95cda808f2ec5d9f7f96b5edc7064530165c856e48bc83c66104329cc81921"
+      "sha256": "ca103c85202f958e3c68efa2d00dce030595644f68c5cb8d023228b02ed81475"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "df82d5d2a77d299c33c24c78eac1a7e0461277ad8bf526a7914f4cd0b13c35b1"
+      "sha256": "abb7d0afd4c9f98d57f4de74b6ba80b75a44eb0d3ac270a5f9efeaadc85ba0b2"
     },
     {
       "path": "RELEASE_CHECKLIST.md",
