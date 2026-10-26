@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fintube-hx"
-version = "0.1.0.dev17"
+version = "0.1.0.dev18"
 description = "Open-source fin-tube heat exchanger thermal-hydraulic simulation and rating core (water coils, evaporators, condensers)"
 readme = "README.md"
 license = "MIT"
 keywords = ["heat-exchanger", "hvac", "fin-tube", "coolprop", "thermal-engineering", "water-coil", "evaporator", "condenser"]
 license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md", "third_party_licenses/**/*"]
-requires-python = ">=3.12,<3.13"
+requires-python = ">=3.12"
 dependencies = ["CoolProp==8.0.0", "scipy==1.18.1", "ht==1.2.0", "fluids==1.3.1", "openpyxl==3.1.5"]
 
 [project.urls]

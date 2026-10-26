@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0.dev17",
+  "version": "0.1.0.dev18",
   "edition": "community",
   "publication_status": "reviewed_public_source_candidate",
   "original_license_status": "MIT_owner_approved",
@@ -11,7 +11,7 @@
     },
     {
       "path": ".github/workflows/ci.yml",
-      "sha256": "44049a3f53d3302baf9bedd4b5f432d748a997776e8b0a917f0f78212a3eb4c2"
+      "sha256": "b4b3b4017e4a2a6eeca9e2c95db8328455509cbe1779c89da44f433ac598ff1b"
     },
     {
       "path": ".github/workflows/publish.yml",
@@ -27,7 +27,7 @@
     },
     {
       "path": "CONTRIBUTING.md",
-      "sha256": "daeaf6afd1e5008f8e03833d3adeb2482a41fb5c082243c9854d478ef5266950"
+      "sha256": "d2fd11738289ec1c0b07c03d2f8fc5e62f13c080ab12a77eb0297bca50157659"
     },
     {
       "path": "CORE_API.md",
@@ -43,11 +43,11 @@
     },
     {
       "path": "README.md",
-      "sha256": "ca103c85202f958e3c68efa2d00dce030595644f68c5cb8d023228b02ed81475"
+      "sha256": "6a32951b15049ae80c83f61e0a261696d60d6a78eaa3ba49074fc784ded7f857"
     },
     {
       "path": "README.zh-CN.md",
-      "sha256": "abb7d0afd4c9f98d57f4de74b6ba80b75a44eb0d3ac270a5f9efeaadc85ba0b2"
+      "sha256": "1b0a1ecd5ecf68441cdf1a6530d1ea1e06f1012b165887d6d81087db94e6a436"
     },
     {
       "path": "RELEASE_CHECKLIST.md",
@@ -119,7 +119,7 @@
     },
     {
       "path": "pyproject.toml",
-      "sha256": "956077b27ffb3d1f393bffd0543bcc75f7e5c85871d5f855327dcd6b1974f90d"
+      "sha256": "b9e8fcfe876a52f8b98f5e2c4472211d413013789c897c160c78aa36f6eda914"
     },
     {
       "path": "references/python-hvac/README.md",
@@ -163,7 +163,7 @@
     },
     {
       "path": "src/fintube_hx/__init__.py",
-      "sha256": "5110bcc4441d26ac565be90a2e99d9389982d86ee743f1f6e2aa1437575b227e"
+      "sha256": "f60be46e70010e5b9dd37b0a0d00d4328e04d60a600e0ae58e2069fd65f7758c"
     },
     {
       "path": "src/fintube_hx/__main__.py",

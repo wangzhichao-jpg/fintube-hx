@@ -7,12 +7,13 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
+        python: ['3.12', '3.13', '3.14']
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: ${{ matrix.python }}
       - name: Install pinned dependencies (TLS enabled)
         run: python -m pip install --index-url https://pypi.tuna.tsinghua.edu.cn/simple -c requirements-development-lock.txt ".[test]"
       - name: Source regression
@@ -24,7 +25,7 @@ jobs:
       - name: Artifact (not a PyPI or remote release publication)
         uses: actions/upload-artifact@v4
         with:
-          name: community-checks-${{ matrix.os }}
+          name: community-checks-${{ matrix.os }}-py${{ matrix.python }}
           path: |
             community-tests.xml
             dist/*.whl

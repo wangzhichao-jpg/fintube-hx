@@ -4,7 +4,7 @@
 
 [![CI](https://github.com/wangzhichao-jpg/fintube-hx/actions/workflows/ci.yml/badge.svg)](https://github.com/wangzhichao-jpg/fintube-hx/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Python: 3.12](https://img.shields.io/badge/Python-3.12-brightgreen.svg)](pyproject.toml)
+[![Python: 3.12–3.14](https://img.shields.io/badge/Python-3.12–3.14-brightgreen.svg)](pyproject.toml)
 [![Bilibili](https://img.shields.io/badge/Bilibili-项目宣传片-00A1D6?logo=bilibili&logoColor=white)](https://www.bilibili.com/video/BV1Y1JC6FEs9/)
 [![YouTube](https://img.shields.io/badge/YouTube-Overview_Video-FF0000?logo=youtube&logoColor=white)](https://youtu.be/anapOEsmAU0)
 
@@ -42,7 +42,7 @@ Fintube HX 采用“开源研究核心 → 专业工程工作台 → 实验驱�
 
 ## 快速开始
 
-**要求Python 3.12（`>=3.12,<3.13`）；当前锁定环境不支持Python 3.13。** 请显式选解释器，避免直接使用系统默认版本：
+**支持Python 3.12、3.13、3.14（`>=3.12`）**，下列锁定依赖在三个版本上均已测试。从PyPI安装：`pip install fintube-hx`。开发时请显式选解释器，避免直接使用系统默认版本：
 
 ```bash
 uv venv --python 3.12 .venv
@@ -108,6 +108,8 @@ print(result["heat_transfer_w"], result["fluid_out"]["temperature_c"])
 ## 可复现的软件对照
 
 [`references/python-hvac/`](references/python-hvac/README.md)提供固定版本上游复现与水例映射。映射水例为**4363.49W**，参考复现为**4084.46W**，差异+6.83%。这是几何/模型定义不同的软件交叉比较，不是实测精度或拟合结果。
+
+**0.1.0.dev18**：支持的Python版本放宽为3.12～3.14，锁定依赖不变，计算结果不变（全部230项测试，含逐位基准比对，在3.12、3.13、3.14上均通过）。
 
 **0.1.0.dev16**（核心 API 2）新增以下内容，所有旧结果保持逐位不变（Community 72 例、专业版 289 例逐位核对）：
 

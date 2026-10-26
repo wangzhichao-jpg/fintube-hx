@@ -4,7 +4,7 @@
 
 [![CI](https://github.com/wangzhichao-jpg/fintube-hx/actions/workflows/ci.yml/badge.svg)](https://github.com/wangzhichao-jpg/fintube-hx/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Python: 3.12](https://img.shields.io/badge/Python-3.12-brightgreen.svg)](pyproject.toml)
+[![Python: 3.12–3.14](https://img.shields.io/badge/Python-3.12–3.14-brightgreen.svg)](pyproject.toml)
 [![YouTube](https://img.shields.io/badge/YouTube-Overview_Video-FF0000?logo=youtube&logoColor=white)](https://youtu.be/anapOEsmAU0)
 [![Bilibili](https://img.shields.io/badge/Bilibili-中文宣传片-00A1D6?logo=bilibili&logoColor=white)](https://www.bilibili.com/video/BV1Y1JC6FEs9/)
 
@@ -42,7 +42,7 @@ Features: JSON input validation, isolated input/result snapshots, CLI single-cas
 
 ## Quick start
 
-**Python 3.12 is required (`>=3.12,<3.13`). Python 3.13 is not supported by this pinned environment.** Select the interpreter explicitly rather than using the system default:
+**Python 3.12, 3.13 or 3.14 (`>=3.12`)**; the pinned dependencies below are tested on all three. From PyPI: `pip install fintube-hx`. For development, select the interpreter explicitly rather than using the system default:
 
 ```bash
 uv venv --python 3.12 .venv
@@ -108,6 +108,8 @@ The earlier v5 set ([`validation/measured/`](validation/measured/README.md), six
 ## Reproducible comparisons
 
 [`references/python-hvac/`](references/python-hvac/README.md) contains a pinned source reproduction and a mapped water case. The mapped case produces **4363.49 W**, versus **4084.46 W** in the reproduced reference (+6.83%); this is a **software comparison with differing geometry/model definitions**, not a measured accuracy result or a fitted calibration.
+
+Version **0.1.0.dev18** widens the supported Python range to 3.12–3.14 with the same pinned dependencies; no calculation changes (all 230 tests, including the bit-for-bit baselines, pass on 3.12, 3.13 and 3.14).
 
 Version **0.1.0.dev16** (core API 2) adds, without changing any legacy result (bit-for-bit checked on 72 Community and 289 Professional cases):
 
