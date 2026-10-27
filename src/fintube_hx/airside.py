@@ -329,7 +329,7 @@ def wang_lin_lee_2000_wet_plain(Re, dc, dh, pt, pl, pf, rows, ao_apo, re_film, *
     if rows_extrapolated:
         vals.pop('rows')
     limits = WET_PLAIN_RANGE
-    if fin_pitch_extended:                    # declared (core 0.1.0.dev18): fin-pitch upper bound only, 3.2 -> 4.0 mm
+    if fin_pitch_extended:                    # declared (core 0.1.0.dev19): fin-pitch upper bound only, 3.2 -> 4.0 mm
         from .errors import WET_FRICTION_FIN_PITCH_EXTRAPOLATION_MAX_M
         limits = {**WET_PLAIN_RANGE, 'fin pitch': (WET_PLAIN_RANGE['fin pitch'][0], WET_FRICTION_FIN_PITCH_EXTRAPOLATION_MAX_M)}
     _check('Wang, Lin & Lee 2000 wet plain', vals, limits)

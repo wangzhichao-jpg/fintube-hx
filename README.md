@@ -109,6 +109,8 @@ The earlier v5 set ([`validation/measured/`](validation/measured/README.md), six
 
 [`references/python-hvac/`](references/python-hvac/README.md) contains a pinned source reproduction and a mapped water case. The mapped case produces **4363.49 W**, versus **4084.46 W** in the reproduced reference (+6.83%); this is a **software comparison with differing geometry/model definitions**, not a measured accuracy result or a fitted calibration.
 
+Version **0.1.0.dev19** adds an optional, declared extrapolation of the wet-friction correlation's fin pitch (plain bare-aluminium fins, 3.2–4.0 mm; flagged as extrapolated, never silent); results without the new key are unchanged.
+
 Version **0.1.0.dev18** widens the supported Python range to 3.12–3.14 with the same pinned dependencies; no calculation changes (all 230 tests, including the bit-for-bit baselines, pass on 3.12, 3.13 and 3.14).
 
 Version **0.1.0.dev16** (core API 2) adds, without changing any legacy result (bit-for-bit checked on 72 Community and 289 Professional cases):
@@ -117,8 +119,6 @@ Version **0.1.0.dev16** (core API 2) adds, without changing any legacy result (b
 - **Wet-surface air friction** for non-hydrophilic plain fins: Wang, Lin & Lee 2000 (IJHMT 43:1869, Eqs. 11–15; 31 uncoated samples, Re 300–5000, Fp 1.19–3.2 mm). Hydrophilic coatings, louver and herringbone fins, or values outside the sample range report the wet increment as `not_computed` with the reason; capacity is unaffected.
 - **Declared extrapolations**: `geometry.fin_pitch_extrapolation: true` for plain fins 8.7–12 mm (only the pitch and the Dh it implies are extended), and `geometry.row_extrapolation: "saturate_at_row_6"` with the per-row API `air_side_factors_by_row` for 7–12-row tube networks (rows 1–6 use the 6-row average, rows 7+ the row-6 local value 6·j(6)−5·j(5)). The lumped models here still reject more than 6 rows. All extrapolated results are flagged and are not validation evidence.
 - **Structured Chinese errors** `fintube_hx.errors.ModelRangeError` (a `ValueError`) with field, allowed range, source and suggested fallbacks; planned-but-unsupported items (slit fins, Dc < 6.9 mm, inline banks, flat tubes, mixtures that CoolProp does not provide such as R454B) say so explicitly.
-
-Version **0.1.0.dev18** adds an optional, declared extrapolation of the wet-friction correlation's fin pitch (plain bare-aluminium fins, 3.2–4.0 mm; flagged as extrapolated, never silent) and removes a private product name from a docstring; results without the new key are unchanged.
 
 Version **0.1.0.dev17** adds exact (bit-identical) shortcuts for the humid-air states used inside the root solvers, about 1.2–1.9× faster tube networks in the Professional edition with unchanged results, an optional `solver.time_limit_s`, and a lower bound j6 ≥ 0.5·j(6) for declared row extrapolation (the difference formula is ill-conditioned at low Re and is refused rather than silently distorted).
 

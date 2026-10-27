@@ -1,4 +1,4 @@
-"""Declared wet-friction fin-pitch extrapolation (core 0.1.0.dev18; Pro 0.7.0.dev3 rework R6d, demand-side decision Q6).
+"""Declared wet-friction fin-pitch extrapolation (core 0.1.0.dev19; Pro 0.7.0.dev3 rework R6d, demand-side decision Q6).
 
 Wang, Lin & Lee 2000 (wet, plain, non-hydrophilic) was fitted on 31 coils with fin pitch 1.19..3.2 mm.  With
 geometry.wet_friction_fin_pitch_extrapolation = true the fin-pitch upper bound - and only that bound - is raised to
@@ -91,16 +91,56 @@ def test_a_negative_extrapolated_increment_is_not_reported(monkeypatch):
     assert 'wet_friction_fin_pitch_extrapolated' not in coverage_ids(r, 'extrapolated')
 
 
+def _same(a, b, path='', rel=1e-8, floor=1e-12):
+    """Platform-independent equality: identical keys, list lengths, types and strings; numbers within a relative 1e-8
+    (absolute 1e-12 for values that are numerical noise around zero).
+
+    Floating point from CoolProp / libm is not bit-identical between Linux and Windows, so a digest of the whole JSON
+    cannot be compared across platforms (it failed on Windows / CPython 3.12.13).  Measured: Linux CPython 3.12/3.13/3.14
+    agree with the dev17 reference within 1e-12; Windows CPython 3.12.7 (Wine) differs by at most 2.5e-10 relative
+    (air_out.cp_j_kg_da_k after the iterative solve) with an identical structure.  1e-8 keeps a 40x margin and is still
+    far below any model change (a changed correlation or term moves results by 1e-4 and more).  On the reference
+    platform the Professional legacy snapshot compares the same paths bit for bit."""
+    import math
+    if isinstance(a, dict) or isinstance(b, dict):
+        assert isinstance(a, dict) and isinstance(b, dict), path
+        assert set(a) == set(b), (path, sorted(set(a) ^ set(b)))
+        for k in a:
+            _same(a[k], b[k], f'{path}.{k}', rel, floor)
+    elif isinstance(a, list) or isinstance(b, list):
+        assert isinstance(a, list) and isinstance(b, list) and len(a) == len(b), path
+        for i, (x, y) in enumerate(zip(a, b)):
+            _same(x, y, f'{path}[{i}]', rel, floor)
+    elif isinstance(a, bool) or isinstance(b, bool) or isinstance(a, str) or a is None:
+        assert a == b and type(a) is type(b), (path, a, b)
+    else:
+        assert type(a) is type(b), (path, type(a), type(b))
+        assert math.isclose(a, b, rel_tol=rel, abs_tol=floor), (path, a, b)
+
+
 def test_absent_key_leaves_results_unchanged_against_dev17():
-    """Review A/M3: compared with results computed by core 0.1.0.dev17 itself (frozen digests), not with dev18."""
-    import hashlib
-    ref = json.loads((Path(__file__).parent / 'data/wet_absent_key_dev17_reference.json').read_text(encoding='utf8'))['cases']
-    for key, digest in ref.items():
+    """Review A/M3 + Windows CI: compared with the full results computed by core 0.1.0.dev17 itself (Linux, CPython
+    3.12; tests/data/wet_absent_key_dev17_reference.json.gz) - same structure, numbers within 1e-8 relative."""
+    import gzip
+    ref = json.loads(gzip.decompress((Path(__file__).parent / 'data/wet_absent_key_dev17_reference.json.gz').read_bytes()))
+    assert ref['core_version'] == '0.1.0.dev17' and len(ref['cases']) == 8
+    for key, expected in ref['cases'].items():
         pitch, rh = (float(x) for x in key.split('-'))
         c = wet_case(pitch); c['air']['relative_humidity'] = rh
-        r = {k: v for k, v in run_case(c).items() if k != 'provenance'}
-        assert hashlib.sha256(json.dumps(r, sort_keys=True, ensure_ascii=False, allow_nan=False).encode()).hexdigest() == digest, key
+        r = run_case(c); r.pop('provenance', None)
+        _same(json.loads(json.dumps(r)), expected, key)
         assert 'fin_pitch_extrapolated' not in r.get('air_wet_friction', {})
+
+
+def test_the_comparison_is_not_vacuous():
+    import pytest as _p
+    _same({'a': [1.0, 'x']}, {'a': [1.0 * (1 + 3e-10), 'x']})            # the measured Windows deviation passes
+    with _p.raises(AssertionError):
+        _same({'a': 1.0}, {'a': 1.0 * (1 + 1e-6)})                          # a model-sized change does not
+    with _p.raises(AssertionError):
+        _same({'a': 1.0}, {'a': 1.0, 'b': 2})
+    with _p.raises(AssertionError):
+        _same({'a': 1}, {'a': 1.0})
 
 
 def test_a_dry_coil_with_the_declaration_has_no_extrapolated_item():
