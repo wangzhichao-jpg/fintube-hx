@@ -3,6 +3,10 @@ import json,ast
 import pytest
 from fintube_hx.engine import run_case
 ROOT=Path(__file__).resolve().parents[1]/'references/python-hvac'
+REPO=Path(__file__).resolve().parents[1]
+# Former customer / private product names must not appear in the public repository, in any letter case; stored
+# encoded so that this file passes its own check.
+PRIVATE_NAMES=tuple(__import__('base64').b64decode(b).decode() for b in ('amllZmVuZw==','5o235Liw','Y29pbGxhYg=='))
 
 
 @pytest.mark.parametrize('kind',['water','evaporator','condenser'])
@@ -27,8 +31,18 @@ def test_water_explicit_mapping_reproduces_candidate_not_exact_geometry():
 def test_public_reproducer_and_data_have_no_private_imports_or_host_paths():
     for p in ROOT.rglob('*'):
         if not p.is_file() or p.suffix not in ('.py','.json','.txt','.md'):continue
-        s=p.read_text(encoding='utf8');assert not any(x in s for x in ('D:/Users','D:\\Users')+tuple(__import__('base64').b64decode(b).decode() for b in ('amllZmVuZw==','5o235Liw')))
+        s=p.read_text(encoding='utf8');assert not any(x in s.lower() for x in ('d:/users','d:\\users')+PRIVATE_NAMES)
         if p.suffix=='.py':
             for n in ast.walk(ast.parse(s)):
                 if isinstance(n,ast.ImportFrom):assert not (n.module or '').startswith('fintube_hx_pro')
     ledger=json.loads((ROOT/'source-tree.json').read_text(encoding='utf8'));assert len(ledger['files'])==419
+
+
+@pytest.mark.parametrize('folder',['src','tests','validation','docs'])
+def test_public_tree_has_no_private_names_in_any_case(folder):
+    bad=[]
+    for p in (REPO/folder).rglob('*'):
+        if not p.is_file() or '__pycache__' in p.parts or p.suffix not in ('.py','.json','.txt','.md','.csv','.toml','.cfg'):continue
+        low=(p.name+'\n'+p.read_text(encoding='utf8',errors='replace')).lower()
+        bad+=[f'{p.relative_to(REPO)}: {w}' for w in PRIVATE_NAMES if w in low]
+    assert bad==[]

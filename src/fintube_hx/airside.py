@@ -319,7 +319,8 @@ WET_PLAIN_RANGE = {'Re': (300., 5000.), 'collar diameter': (.00753, .01034), 'fi
                    'longitudinal pitch': (.0124, .022), 'transverse pitch': (.021, .0254), 'rows': (1, 6)}
 
 
-def wang_lin_lee_2000_wet_plain(Re, dc, dh, pt, pl, pf, rows, ao_apo, re_film, *, rows_extrapolated=False):
+def wang_lin_lee_2000_wet_plain(Re, dc, dh, pt, pl, pf, rows, ao_apo, re_film, *, rows_extrapolated=False,
+                                 fin_pitch_extended=False):
     """Fanning f of a fully wet, non-hydrophilic plain-fin coil (entrance/exit losses included, Eq. 6).
 
     Re_film = 2*Gamma/mu_water, Gamma = condensate mass flow / (N * W) [kg/(s m)].  Rows enter only
@@ -327,7 +328,11 @@ def wang_lin_lee_2000_wet_plain(Re, dc, dh, pt, pl, pf, rows, ao_apo, re_film, *
     vals = {'Re': Re, 'collar diameter': dc, 'fin pitch': pf, 'longitudinal pitch': pl, 'transverse pitch': pt, 'rows': rows}
     if rows_extrapolated:
         vals.pop('rows')
-    _check('Wang, Lin & Lee 2000 wet plain', vals, WET_PLAIN_RANGE)
+    limits = WET_PLAIN_RANGE
+    if fin_pitch_extended:                    # declared (core 0.1.0.dev18): fin-pitch upper bound only, 3.2 -> 4.0 mm
+        from .errors import WET_FRICTION_FIN_PITCH_EXTRAPOLATION_MAX_M
+        limits = {**WET_PLAIN_RANGE, 'fin pitch': (WET_PLAIN_RANGE['fin pitch'][0], WET_FRICTION_FIN_PITCH_EXTRAPOLATION_MAX_M)}
+    _check('Wang, Lin & Lee 2000 wet plain', vals, limits)
     if not (math.isfinite(re_film) and re_film > 0):
         raise ValueError('Condensate film Reynolds number must be positive and finite')
     ln = math.log
@@ -339,8 +344,14 @@ def wang_lin_lee_2000_wet_plain(Re, dc, dh, pt, pl, pf, rows, ao_apo, re_film, *
          * math.exp(dh / dc) ** -1.117)                                      # (11)
     if not (math.isfinite(f) and f > 0):
         raise ValueError('Wet friction correlation returned a non-physical value')
-    return {'fanning_friction_factor': f, 're_film': re_film, 'exponents': {'f1': f1, 'f2': f2, 'f3': f3, 'f4': f4},
-            'source': WET_PLAIN_SOURCE, 'friction_definition': 'Fanning, entrance/exit losses included (paper Eq. 6)'}
+    out = {'fanning_friction_factor': f, 're_film': re_film, 'exponents': {'f1': f1, 'f2': f2, 'f3': f3, 'f4': f4},
+           'source': WET_PLAIN_SOURCE, 'friction_definition': 'Fanning, entrance/exit losses included (paper Eq. 6)'}
+    if fin_pitch_extended and pf > WET_PLAIN_RANGE['fin pitch'][1] * (1 + 1e-9):
+        from .errors import WET_FRICTION_FIN_PITCH_EXTRAPOLATION_MAX_M
+        out['fin_pitch_extrapolated'] = {'value_m': pf, 'published_range_m': list(WET_PLAIN_RANGE['fin pitch']),
+                                         'declared_limit_m': WET_FRICTION_FIN_PITCH_EXTRAPOLATION_MAX_M,
+                                         'basis': 'geometry.wet_friction_fin_pitch_extrapolation'}
+    return out
 
 
 WET_FRICTION_UNAVAILABLE = {
@@ -363,7 +374,8 @@ def wet_friction_factor(g: dict, metrics: dict, Re: float, condensate_kg_s: floa
         r = wang_lin_lee_2000_wet_plain(Re, metrics['collar_diameter_m'], metrics['air_hydraulic_diameter_m'],
                                         g['transverse_pitch_m'], g['longitudinal_pitch_m'], g['fin_pitch_m'], rows,
                                         metrics['total_outer_area_m2'] / metrics['bare_outer_area_m2'], re_film,
-                                        rows_extrapolated=rows > 6 and g.get('row_extrapolation') == 'saturate_at_row_6')
+                                        rows_extrapolated=rows > 6 and g.get('row_extrapolation') == 'saturate_at_row_6',
+                                        fin_pitch_extended=g.get('wet_friction_fin_pitch_extrapolation') is True)
     except ModelRangeError as exc:
         return {'not_computed': '湿工况摩擦关联式超出适用范围：' + exc.message_zh, 're_film': re_film}
     except ValueError as exc:

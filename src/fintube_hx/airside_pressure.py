@@ -33,6 +33,18 @@ def friction_pa(f: float, depth: float, dh: float, G: float, rho_in: float) -> f
     return f * 4 * depth / dh * G ** 2 / (2 * rho_in)
 
 
+NEGATIVE_EXTRAPOLATED_INCREMENT = '湿工况片距外推得到的湿附加为负（湿表面摩擦系数小于干表面），视为外推失效，湿附加未计算'
+
+
+def checked_wet_increment(wet: dict, increment_pa: float):
+    """(increment, reason): a declared fin-pitch extrapolation that gives a negative wet increment is a failed
+    extrapolation (validity guard, not a physical correction); everything else is returned unchanged."""
+    if 'fin_pitch_extrapolated' in wet and increment_pa < 0:
+        wet['not_computed'] = NEGATIVE_EXTRAPOLATED_INCREMENT
+        return None, NEGATIVE_EXTRAPOLATED_INCREMENT
+    return increment_pa, None
+
+
 def breakdown(*, fin_type: str, core_friction_pa: float, acceleration: float, wet_fraction: float,
               wet_increment_pa: float | None, wet_reason: str | None) -> dict:
     """Assemble the contract fields.  wet_increment_pa None with wet_fraction > 0 means 'not computed'."""

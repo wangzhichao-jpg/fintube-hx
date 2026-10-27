@@ -18,7 +18,8 @@ def validate_geometry(value: dict, equal_circuits: bool = True) -> dict:
              'louver_pitch_m','louver_height_m','wave_height_m','wave_projected_length_m','fin_efficiency_method',
              'correlation_range_tolerance','microfin_count','microfin_height_m','microfin_apex_angle_deg',
              'microfin_helix_angle_deg','microfin_tip_thickness_m','contact_conductance_w_m2_k',
-             'inner_fouling_resistance_m2_k_w','fin_surface','row_extrapolation','fin_pitch_extrapolation'}
+             'inner_fouling_resistance_m2_k_w','fin_surface','row_extrapolation','fin_pitch_extrapolation',
+             'wet_friction_fin_pitch_extrapolation'}
     unknown=set(g)-allowed
     if unknown:
         raise ValueError('Unsupported active geometry fields: '+', '.join(sorted(unknown)))
@@ -109,6 +110,20 @@ def validate_geometry(value: dict, equal_circuits: bool = True) -> dict:
             raise ModelRangeError(f'大片距外推只适用于片距 8.7～{PLAIN_FIN_PITCH_EXTRAPOLATION_MAX_M*1000:g} mm（当前 {pf}）；'
                                   '片距 ≤ 8.7 mm 时不应声明，超过 12 mm 一律拒绝',field='geometry.fin_pitch_m',value=pf,
                                   allowed={'min':0.0087,'max':PLAIN_FIN_PITCH_EXTRAPOLATION_MAX_M})
+    if 'wet_friction_fin_pitch_extrapolation' in g:
+        from .errors import WET_FRICTION_FIN_PITCH_PUBLISHED_MAX_M as WLO,WET_FRICTION_FIN_PITCH_EXTRAPOLATION_MAX_M as WHI
+        pf=g.get('fin_pitch_m');fld='geometry.wet_friction_fin_pitch_extrapolation'
+        if g['wet_friction_fin_pitch_extrapolation'] is not True:
+            raise ModelRangeError('geometry.wet_friction_fin_pitch_extrapolation 只能为 true（不声明时请删除该字段）',
+                                  field=fld,value=g['wet_friction_fin_pitch_extrapolation'])
+        if g['fin_type']!='plain':
+            raise ModelRangeError('湿工况摩擦关联式片距外推只用于平片（Wang, Lin & Lee 2000 的样本均为平片）',field=fld,value=True)
+        if g.get('fin_surface')!='bare_aluminum':
+            raise ModelRangeError('湿工况摩擦关联式片距外推只用于裸铝翅片（原文样本均无亲水涂层）',field=fld,value=True)
+        if isinstance(pf,bool) or not isinstance(pf,(int,float)) or not WLO<pf<=WHI:
+            raise ModelRangeError(f'湿工况摩擦关联式片距外推只适用于片距 {WLO*1000:g}～{WHI*1000:g} mm（当前 {pf}）；'
+                                  f'片距 ≤ {WLO*1000:g} mm 时不应声明，超过 {WHI*1000:g} mm 一律拒绝',field='geometry.fin_pitch_m',value=pf,
+                                  allowed={'min':WLO,'max':WHI})
     if g['tubes_per_row']>500 or g['circuits_count']>500:
         raise ValueError('Geometry exceeds baseline size limit')
     for key in ['tube_length_m','tube_outer_diameter_m','tube_inner_diameter_m','transverse_pitch_m',

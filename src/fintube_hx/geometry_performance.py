@@ -54,6 +54,9 @@ def air_pressure_v1(detail: dict, case: dict, air_in: dict, air_out: dict, wet_f
             reason=wet['not_computed']
         else:
             inc=wet_fraction*(friction_pa(wet['fanning_friction_factor'],m['air_depth_m'],m['air_hydraulic_diameter_m'],G,rho_in)-core)
+            if 'fin_pitch_extrapolated' in wet:
+                from .airside_pressure import checked_wet_increment
+                inc,reason=checked_wet_increment(wet,inc)
     out=breakdown(fin_type=g['fin_type'],core_friction_pa=core,acceleration=acc,wet_fraction=wet_fraction,
                   wet_increment_pa=inc,wet_reason=reason)
     out['air_pressure_drop_pa']=core

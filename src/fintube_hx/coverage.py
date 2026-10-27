@@ -27,6 +27,7 @@ LABELS = {
     'rows_saturate_at_6': '排数 > 6：按声明逐排饱和外推',
     'plain_fin_pitch_gt_8_7mm': '平片片距 > 8.7 mm：按声明外推',
     'correlation_range_tolerance': '几何边界按声明容差（≤ 1%）外推',
+    'wet_friction_fin_pitch_extrapolated': '湿工况摩擦关联式片距外推（3.2～4.0 mm，按声明）',
     # degraded
     'default_subcooling_5k': '入口状态使用默认过冷度 5 K', 'accessory_rated_point_scaling': '附件压降按额定点换算',
     'accessory_not_computed': '附件压降未计算（无几何、无额定点）', 'louver_geometry_interval': '百叶几何未知，按区间输出',

@@ -26,6 +26,8 @@ The package is organized into decoupled layers:
   v1 air-pressure breakdown (acceleration, entrance/exit included in f, wet increment) and the `model_coverage` vocabulary; `schema.normalize_pressure_scope` validates `model.pressure_scope`.
 - **Exact fast paths** (0.1.0.dev17)  
   `properties.air_wh`, `properties.air_from_h_w_wh`, `thermal.air_with_h_w_wh` and `contact_air(..., wh_only=True)` return only the humidity ratio and enthalpy, bit-identical to the full routines (same CoolProp calls and refusals) without the unused volume/cp/dew-point evaluations; `contact_air(..., outlet_state=False)` is now bit-identical in the wet branch too. Optional `solver.time_limit_s` (wall-time fuse, enforced by tube networks). Row extrapolation additionally requires the local row-6 j ≥ 0.5·j(6).
+- **Declared wet-friction fin-pitch extrapolation** (0.1.0.dev18)  
+  Optional `geometry.wet_friction_fin_pitch_extrapolation: true` (plain, bare-aluminium fins, 3.2 mm < Fp ≤ 4.0 mm): only the fin-pitch upper bound of Wang, Lin & Lee 2000 is raised; the wet friction record carries `fin_pitch_extrapolated`, the coverage an `extrapolated` item `wet_friction_fin_pitch_extrapolated`; a negative extrapolated wet increment is reported as not computed (`airside_pressure.checked_wet_increment`). Invalid declarations raise `ModelRangeError`. Absent key: results unchanged.
 - **`fintube_hx.thermal.check_subzero_surface`** (0.1.0.dev12)  
   Optional dry sub-zero evaporating surfaces (`model.subzero_evaporation: dry_only`): accepted only at or above the local air frost point; frost deposition is rejected.
 - **`fintube_hx.microfin`** (0.1.0.dev11)  

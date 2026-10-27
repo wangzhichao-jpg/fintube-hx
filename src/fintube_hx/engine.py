@@ -35,6 +35,7 @@ def capabilities():
                                 'hydrophilic / louver / wavy_herringbone':'not computed; reported as not_computed (spec A4)'},
             'declared_extrapolations':{'correlation_range_tolerance':'louver/wavy_herringbone geometric bounds, <= 1 %',
                                        'fin_pitch_extrapolation':'plain fins, 8.7..12 mm',
+                                       'wet_friction_fin_pitch_extrapolation':'Wang, Lin & Lee 2000 wet friction, plain bare-aluminium fins, 3.2..4.0 mm (fin pitch only)',
                                        'row_extrapolation':'saturate_at_row_6, 7..12 rows, per-row API for tube networks only; '
                                                            'lumped models reject N > 6'},
             'structured_errors':'fintube_hx.errors.ModelRangeError (ValueError; Chinese message, field, allowed range, fallbacks)',
@@ -71,6 +72,8 @@ def model_coverage(c, result):
         deg.append(item('wet_increment_not_computed',detail=wet.get('not_computed')))
     elif result.get('air_pressure_drop_basis',{}).get('wet_fraction',0)>0:
         inc.insert(3,item('air_wet_increment',result.get('air_wet_friction',{}).get('source')))
+        ext_wet=result.get('air_wet_friction',{}).get('fin_pitch_extrapolated')
+        if ext_wet:ext.append(item('wet_friction_fin_pitch_extrapolated',detail=f"{ext_wet['value_m']*1000:g} mm"))
     return coverage(inc,exc,ext,deg)
 
 

@@ -52,6 +52,11 @@ PARAMETER_FIELDS = {
 }
 ROW_EXTRAPOLATION_MAX_ROWS = 12
 PLAIN_FIN_PITCH_EXTRAPOLATION_MAX_M = 0.012
+# Declared wet-friction fin-pitch extrapolation (Wang, Lin & Lee 2000 sample: 1.19..3.2 mm; core 0.1.0.dev18).
+# 4.0 mm = +25 % on the published bound, more conservative than the dry plain-fin +38 % (8.7 -> 12 mm): 31 wet samples
+# and an exponent with (Fp/Pl)^2.5 * ln(9 Re_film).  Only the fin pitch is extended.
+WET_FRICTION_FIN_PITCH_PUBLISHED_MAX_M = 0.0032
+WET_FRICTION_FIN_PITCH_EXTRAPOLATION_MAX_M = 0.004
 
 
 def range_error(correlation, parameter, value, lo, hi, *, message_en=None, source=None, fin_type=None):
