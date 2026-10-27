@@ -91,9 +91,20 @@ def test_a_negative_extrapolated_increment_is_not_reported(monkeypatch):
     assert 'wet_friction_fin_pitch_extrapolated' not in coverage_ids(r, 'extrapolated')
 
 
-def test_absent_key_leaves_results_unchanged():
-    a = run_case(wet_case(0.002)); b = run_case(wet_case(0.002))
-    for r in (a, b):
-        r['provenance'].pop('calculated_at_utc', None)
-    assert json.dumps(a, sort_keys=True) == json.dumps(b, sort_keys=True)
-    assert 'fin_pitch_extrapolated' not in a.get('air_wet_friction', {})
+def test_absent_key_leaves_results_unchanged_against_dev17():
+    """Review A/M3: compared with results computed by core 0.1.0.dev17 itself (frozen digests), not with dev18."""
+    import hashlib
+    ref = json.loads((Path(__file__).parent / 'data/wet_absent_key_dev17_reference.json').read_text(encoding='utf8'))['cases']
+    for key, digest in ref.items():
+        pitch, rh = (float(x) for x in key.split('-'))
+        c = wet_case(pitch); c['air']['relative_humidity'] = rh
+        r = {k: v for k, v in run_case(c).items() if k != 'provenance'}
+        assert hashlib.sha256(json.dumps(r, sort_keys=True, ensure_ascii=False, allow_nan=False).encode()).hexdigest() == digest, key
+        assert 'fin_pitch_extrapolated' not in r.get('air_wet_friction', {})
+
+
+def test_a_dry_coil_with_the_declaration_has_no_extrapolated_item():
+    c = wet_case(0.00324, wet_friction_fin_pitch_extrapolation=True); c['air']['relative_humidity'] = 0.2   # dry over 7 C water
+    r = run_case(c)
+    assert r['air_pressure_drop_basis']['wet_fraction'] == 0
+    assert 'wet_friction_fin_pitch_extrapolated' not in coverage_ids(r, 'extrapolated')

@@ -1,0 +1,13 @@
+{
+ "note": "sha256 of run_case results without provenance, computed with fintube-hx 0.1.0.dev17 (wheel sha256 66a182ef...7c026f); Pro 0.7.0.dev3 rework R6d, review A/M3",
+ "cases": {
+  "0.0018-0.2": "14f8f7db75dae35a7bdbb4ef5ddbfecb9e195e15cc9d13f27b8a3c92f326aa37",
+  "0.0018-0.6": "97a0bb468c762b6b06a91135ad06fc0d583b3bdb0f3056df23dfedcec068dc43",
+  "0.003-0.2": "501207f1e5bc90c83ece330e9e645ee31ab324c14ac9629328ed5f6f87efcb9d",
+  "0.003-0.6": "1dbe9f278a9ace3e32a30293cad141e6bf163a41fc03c7ce067ff242cfed393f",
+  "0.00324-0.2": "ace32d5607637d2e5b67899e1d3993956903dfab025ef6cc75ca6c3aba6038f0",
+  "0.00324-0.6": "5ad8faec59b66f366a20fa9507addce7b92192f5733ef8443daadc39218406e3",
+  "0.0045-0.2": "aacf6c78565d4dd9334b040c22857d1f3b6d1ddc6ea32c4901c3b6a2e37b241f",
+  "0.0045-0.6": "a44390261de7e0dbd2fe2461ff5dc3edbfb5feff0221cdc62f5875fd7f1ca383"
+ }
+}

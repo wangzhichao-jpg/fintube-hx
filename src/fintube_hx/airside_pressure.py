@@ -38,7 +38,9 @@ NEGATIVE_EXTRAPOLATED_INCREMENT = '湿工况片距外推得到的湿附加为负
 
 def checked_wet_increment(wet: dict, increment_pa: float):
     """(increment, reason): a declared fin-pitch extrapolation that gives a negative wet increment is a failed
-    extrapolation (validity guard, not a physical correction); everything else is returned unchanged."""
+    extrapolation (validity guard, not a physical correction); everything else is returned unchanged.
+    Note: ``wet`` is updated in place - it then holds both the extrapolated ``fanning_friction_factor`` and the
+    ``not_computed`` reason; consumers must check ``not_computed`` first."""
     if 'fin_pitch_extrapolated' in wet and increment_pa < 0:
         wet['not_computed'] = NEGATIVE_EXTRAPOLATED_INCREMENT
         return None, NEGATIVE_EXTRAPOLATED_INCREMENT
