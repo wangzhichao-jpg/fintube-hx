@@ -58,6 +58,10 @@
       "sha256": "9af6eaf75ad50616e7878205e8bfecaa8244bcc5e92fc6857b0690be3d7e5152"
     },
     {
+      "path": "docs/ABSENT_KEY_EQUIVALENCE.md",
+      "sha256": "2cdec10e890ef009d9d0f8278ee2153e37795a481e4f084b5a66d9d9001bc030"
+    },
+    {
       "path": "docs/EXTERNAL_REVIEW_2026-10-13.md",
       "sha256": "a4a8747ac7584bb683e75826aceb100d99fc59190649246535783f868c9a1df7"
     },
@@ -270,6 +274,10 @@
       "sha256": "1d7077791da41d49c64bf6840ff882eb0f3468456f991af0adcb14df6984d9e6"
     },
     {
+      "path": "tests/test_absent_key_dual_run.py",
+      "sha256": "0da32ece33bf70572cbf1e536b0035e7df5e121912b519fe5d523acb6de8332e"
+    },
+    {
       "path": "tests/test_airside_fin_types.py",
       "sha256": "6ba3899a853ae7439dbdc1fab9ed15b55fe77ad6edcd073f7923e5398dc46378"
     },
@@ -339,7 +347,7 @@
     },
     {
       "path": "tests/test_wet_pitch_extrapolation.py",
-      "sha256": "39e931562ed2e89bfdafdd65a8c71c1574bfd51df727e70ed2581d8f306584a9"
+      "sha256": "de458409517fbbff3719bff4d068d7eca53b19ee79b0edba3e3951a116cc7928"
     },
     {
       "path": "tests/test_wet_surface.py",
@@ -444,6 +452,10 @@
     {
       "path": "third_party_licenses/scipy/LICENSE.txt",
       "sha256": "f0f5c56b298ec9795df1199edc328a987242716d14a1bde6813112e22dc15f99"
+    },
+    {
+      "path": "tools/absent_key_dual_run.py",
+      "sha256": "9dc39600139d47ac17066a84e0d6397ef9cb1100780c04b0f08ef2a20042623c"
     },
     {
       "path": "tools/legacy_snapshot.py",

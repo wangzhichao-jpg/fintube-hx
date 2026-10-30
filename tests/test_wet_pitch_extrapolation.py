@@ -3,7 +3,11 @@
 Wang, Lin & Lee 2000 (wet, plain, non-hydrophilic) was fitted on 31 coils with fin pitch 1.19..3.2 mm.  With
 geometry.wet_friction_fin_pitch_extrapolation = true the fin-pitch upper bound - and only that bound - is raised to
 4.0 mm; the result carries an 'extrapolated' coverage item.  Without the declaration nothing changes (only the wet
-increment is refused).  A negative extrapolated increment (f_wet < f_dry) is treated as a failed extrapolation."""
+increment is refused).  A negative extrapolated increment (f_wet < f_dry) is treated as a failed extrapolation.
+
+The historical cross-platform 1e-8 reference comparison below is auxiliary, not the primary absent-key invariance
+proof. See tools/absent_key_dual_run.py and docs/ABSENT_KEY_EQUIVALENCE.md for exact same-platform dual runs.
+"""
 import json
 from copy import deepcopy
 from pathlib import Path
@@ -98,9 +102,9 @@ def _same(a, b, path='', rel=1e-8, floor=1e-12):
     Floating point from CoolProp / libm is not bit-identical between Linux and Windows, so a digest of the whole JSON
     cannot be compared across platforms (it failed on Windows / CPython 3.12.13).  Measured: Linux CPython 3.12/3.13/3.14
     agree with the dev17 reference within 1e-12; Windows CPython 3.12.7 (Wine) differs by at most 2.5e-10 relative
-    (air_out.cp_j_kg_da_k after the iterative solve) with an identical structure.  1e-8 keeps a 40x margin and is still
-    far below any model change (a changed correlation or term moves results by 1e-4 and more).  On the reference
-    platform the Professional legacy snapshot compares the same paths bit for bit."""
+    (air_out.cp_j_kg_da_k after the iterative solve) with an identical structure. This historical tolerance was not
+    approved as the acceptance threshold. It must not be used to claim exact invariance; the dual-run comparator
+    compares the original dev17 and published dev19 without any numerical tolerance."""
     import math
     if isinstance(a, dict) or isinstance(b, dict):
         assert isinstance(a, dict) and isinstance(b, dict), path
